@@ -34,7 +34,7 @@ class ProductTableSeeder extends Seeder
                 'brand' => 'The brand '.Str::random(10),
                 'qty' => rand(0, 99),
                 'unit_of_measure' => 'ML',
-                'measure' => rand(0, 99),
+                'content' => rand(0, 99),
                 'price' => rand(500, 1000),
                 'offer_price' => rand(300, 499),
                 'offer_duration' => rand(4, 15),

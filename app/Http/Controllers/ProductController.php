@@ -11,4 +11,8 @@ class ProductController extends Controller
         $products = Product::all();
         return view('home')->with('products', $products);
     }
+
+    public function edit(){
+        return view('product.edit');
+    }
 }

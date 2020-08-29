@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->text("description")->nullable();
             $table->string("brand")->nullable();
             $table->integer("qty")->nullable();
-            $table->integer("measure")->nullable();
+            $table->integer("content")->nullable();
             $table->string("unit_of_measure")->nullable();
             $table->integer("category_id")->nullable();
             $table->date("updated_date")->nullable();
@@ -29,6 +29,7 @@ class CreateProductsTable extends Migration
             $table->string("picture_2")->nullable();
             $table->string("picture_3")->nullable();
             $table->double("price")->nullable();
+            $table->boolean("show_price")->nullable()->default(false);
             $table->double("offer_price")->nullable();
             $table->integer("offer_duration")->nullable();
             $table->boolean("show_offer")->nullable()->default(false);

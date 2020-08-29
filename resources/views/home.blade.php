@@ -8,7 +8,10 @@
         <div class="card-body">
         <h5 class="card-title">{{$product->name}}</h5>
           <p class="card-text">{{$product->description}}</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <a href="#" class="btn btn-primary">Ver más</a>
+          @if ($product->show_price)
+          <p><strong>${{$product->price}}</strong></p>
+          @endif
         </div>
       </div>
     </div>

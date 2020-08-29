@@ -37,15 +37,8 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Content</h1>
           <div class="container">
-            <div class="row">
-              <div class="d-flex justify-content-around">
-                <div class="row">
                   @yield('content')
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <!-- /.container-fluid -->
