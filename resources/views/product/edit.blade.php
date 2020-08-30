@@ -32,31 +32,39 @@
 
     <div class="form-group col-md-2">
       <label for="price">Precio</label>
-      <input type="text" class="form-control">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">$</span>
+        </div>
+        <input type="text" class="form-control">
+      </div>
     </div>
+
     <div class="form-group col-md-2">
       <label for="offer_price">Precio de oferta</label>
-      <input type="text" class="form-control">
-    </div>
-
-    <div class="checkbox-product col-md-2 d-flex align-self-center pt-3">
-      <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="show_product">
-        <label for="show_product" class="custom-control-label">Mostrar producto</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            $
+          </span>
+        </div>
+        <input type="text" class="form-control">
       </div>
     </div>
 
-
-    <div class="checkbox-product col-md-2 d-flex align-self-center pt-3 ">
-      <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="show_price" disabled>
-        <label for="show_price" class="custom-control-label">Mostrar precio</label>
-      </div>
+    <div class="form-group col-md-2">
+      <label for="offer_duration">Duración</label>
+      <input type="text" class="form-control" disabled>
     </div>
-      
-    
   </div>
 
+  
+ <div class="form-row">
+      <div class="form-group col-md-8">
+        <label for="bar_code">Código de barras</label>
+        <input type="text" class="form-control">
+      </div>
+    </div>
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputEmail4">Email</label>
@@ -101,6 +109,23 @@
       </div>
     </div>
     <button type="submit" class="btn btn-primary">Sign in</button>
+
+
+
+    <div class="checkbox-product col-md-2 d-flex align-self-center pt-3">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="show_product">
+        <label for="show_product" class="custom-control-label">Mostrar producto</label>
+      </div>
+    </div>
+
+
+    <div class="checkbox-product col-md-2 d-flex align-self-center pt-3 ">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="show_price" disabled>
+        <label for="show_price" class="custom-control-label">Mostrar precio</label>
+      </div>
+    </div>
   </form>
 
 <style>
