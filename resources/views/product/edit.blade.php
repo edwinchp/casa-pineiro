@@ -62,13 +62,17 @@
         <div class="form-row">
             <div class="form-group col-md-8">
                 <label for="bar_code">Código de barras</label>
-
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-barcode"></i></span>
                   </div>
                   <input type="text" class="form-control">
                 </div>
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="qty">Cantidad</label>
+                <input type="text" class="form-control">
             </div>
         </div>
 
@@ -81,68 +85,98 @@
 
         <hr>
 
-        
-
-
         <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="inputEmail4">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+            <div class="form-group col-md-4">
+                <label for="location">Ubicación</label>
+                <input type="text" class="form-control">
             </div>
-            <div class="form-group col-md-6">
-                <label for="inputPassword4">Password</label>
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputAddress">Address</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-        </div>
-        <div class="form-group">
-            <label for="inputAddress2">Address 2</label>
-            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-7">
-                <label for="inputCity">City</label>
-                <input type="text" class="form-control" id="inputCity">
-            </div>
-            <div class="form-group col-md-3">
-                <label for="inputZip">Zip</label>
-                <input type="text" class="form-control" id="inputZip">
-            </div>
-            <div class="form-group col-md-2">
-                <label for="inputState">State</label>
-                <select id="inputState" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
+
+            <div class="form-group col-md-4">
+                <label for="delivery_option">Opción de envío</label>
+                <select name="delivery_option" id="" class="form-control custom-select">
+                    <option value="0">Seleccionar...</option>
+                    <option value="1">Recoger en tienda</option>
+                    <option value="2">Entrega a domicilio</option>
+                    <option value="3">Sistema de apartado</option>
                 </select>
             </div>
+
+            <div class="form-group col-md-4">
+                <label for="delivey_cost">Costo de envío</label>
+                <input type="text" class="form-control">
+            </div>
+
         </div>
-        <div class="form-group">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">
-                    Check me out
-                </label>
+
+        <hr>
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span id="image1" class="input-group-text"><i class="far fa-image"></i></span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="form-control custom-file-input" id="picture_1" aria-describedby="image1" lang="es">
+                        <label for="picture_1" class="custom-file-label">Seleccionar imagen...</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-image"></i></span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="form-control custom-file-input">
+                        <label class="custom-file-label">Seleccionar imagen...</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-image"></i></span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="form-control custom-file-input">
+                        <label for="" class="form-control custom-file-label">Seleccionar imagen...</label>
+                    </div>
+                </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Sign in</button>
 
-
-
-        <div class="checkbox-product col-md-2 d-flex align-self-center pt-3">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="show_product">
-                <label for="show_product" class="custom-control-label">Mostrar producto</label>
+        <div class="form-row">
+            <div class="form-group">
+                <div class="checkbox-product d-flex align-self-center pt-3">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="show_product">
+                        <label for="show_product" class="custom-control-label">Mostrar producto al público</label>
+                    </div>
+                </div>
             </div>
+        </div>   
+
+        <div class="form-row">
+                <div class="form-group">
+                    <div class="checkbox-product d-flex align-self-center pt-3 ">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="show_price" disabled>
+                            <label for="show_price" class="custom-control-label">Mostrar precio al público</label>
+                        </div>
+                    </div>
+                </div>
         </div>
 
+        <div class="form-row pt-3">
+            <div class="p-1">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
 
-        <div class="checkbox-product col-md-2 d-flex align-self-center pt-3 ">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="show_price" disabled>
-                <label for="show_price" class="custom-control-label">Mostrar precio</label>
+            <div class="p-1">
+                <button type="submit" class="btn btn-secondary">Cancelar</button>
             </div>
         </div>
     </form>
@@ -152,6 +186,7 @@
             .checkbox-product {
                 padding: 2em;
             }
+
         }
 
     </style>
