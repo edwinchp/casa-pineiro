@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Http\Requests\ProductCreateRequest;
 
 class ProductController extends Controller
 {
@@ -14,5 +15,13 @@ class ProductController extends Controller
 
     public function edit(){
         return view('product.edit');
+    }
+
+    public function create(){
+        return view('product.create');
+    }
+
+    public function store(ProductCreateRequest $request){
+        dd($request);
     }
 }
