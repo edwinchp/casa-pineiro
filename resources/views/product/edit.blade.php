@@ -2,7 +2,7 @@
 
 @section('content')
     <form>
-
+        <!--Name-->
         <div class="form-row">
             <div class="form-group col-md-7">
                 <label for="name">Nombre</label>
@@ -24,6 +24,7 @@
             </div>
         </div>
 
+        <!--Brand and prices-->
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="brand">Marca</label>
@@ -58,15 +59,15 @@
             </div>
         </div>
 
-
+        <!--Barcode and Quantity-->
         <div class="form-row">
             <div class="form-group col-md-8">
                 <label for="bar_code">Código de barras</label>
                 <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-barcode"></i></span>
-                  </div>
-                  <input type="text" class="form-control">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-barcode"></i></span>
+                    </div>
+                    <input type="text" class="form-control">
                 </div>
             </div>
 
@@ -76,15 +77,17 @@
             </div>
         </div>
 
+        <!--Description-->
         <div class="form-row">
-          <div class="form-group">
-            <label for="description">Descripción</label>
-            <textarea name="description" id="" cols="40" rows="5" class="form-control"></textarea>
-          </div>
+            <div class="form-group">
+                <label for="description">Descripción</label>
+                <textarea name="description" id="" cols="40" rows="5" class="form-control"></textarea>
+            </div>
         </div>
 
         <hr>
 
+        <!--Delivery options-->
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="location">Ubicación</label>
@@ -110,6 +113,7 @@
 
         <hr>
 
+        <!--Images-->
         <div class="form-row">
             <div class="form-group col-md-4">
                 <div class="input-group">
@@ -117,7 +121,8 @@
                         <span id="image1" class="input-group-text"><i class="far fa-image"></i></span>
                     </div>
                     <div class="custom-file">
-                        <input type="file" class="form-control custom-file-input" id="picture_1" aria-describedby="image1" lang="es">
+                        <input type="file" class="form-control custom-file-input" id="picture_1" aria-describedby="image1"
+                            lang="es">
                         <label for="picture_1" class="custom-file-label">Seleccionar imagen...</label>
                     </div>
                 </div>
@@ -148,6 +153,7 @@
             </div>
         </div>
 
+        <!--Other options-->
         <div class="form-row">
             <div class="form-group">
                 <div class="checkbox-product d-flex align-self-center pt-3">
@@ -157,19 +163,20 @@
                     </div>
                 </div>
             </div>
-        </div>   
-
-        <div class="form-row">
-                <div class="form-group">
-                    <div class="checkbox-product d-flex align-self-center pt-3 ">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="show_price" disabled>
-                            <label for="show_price" class="custom-control-label">Mostrar precio al público</label>
-                        </div>
-                    </div>
-                </div>
         </div>
 
+        <div class="form-row">
+            <div class="form-group">
+                <div class="checkbox-product d-flex align-self-center pt-3 ">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="show_price" disabled>
+                        <label for="show_price" class="custom-control-label">Mostrar precio al público</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Buttons-->
         <div class="form-row pt-3">
             <div class="p-1">
                 <button type="submit" class="btn btn-primary">Guardar</button>
