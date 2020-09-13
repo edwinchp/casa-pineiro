@@ -15,30 +15,36 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string("bar_code")->nullable();
             $table->string("name");
-            $table->text("description")->nullable();
-            $table->string("brand")->nullable();
-            $table->integer("qty")->nullable();
             $table->integer("content")->nullable();
             $table->string("unit_of_measure")->nullable();
-            $table->integer("category_id")->nullable();
-            $table->date("updated_date")->nullable();
-            $table->integer("updated_by")->nullable();
+            $table->string("bar_code")->nullable();
+            $table->string("brand")->nullable();
+            //Casa Pineiro
+            $table->double("cp_price")->nullable();
+            $table->integer("cp_qty")->nullable();
+            $table->double("cp_offer_price")->nullable();
+            $table->integer("cp_offer_duration")->nullable();
+            // Tendejón Evelyn
+            $table->double("te_price")->nullable();
+            $table->integer("te_qty")->nullable();
+            $table->double("te_offer_price")->nullable();
+            $table->integer("te_offer_duration")->nullable();
+            
+            $table->text("description")->nullable();
+            $table->string("delivery_option")->nullable();
+            $table->double("delivery_cost")->nullable();
             $table->string("picture_1")->nullable();
             $table->string("picture_2")->nullable();
             $table->string("picture_3")->nullable();
-            $table->double("price")->nullable();
             $table->boolean("show_price")->nullable()->default(false);
-            $table->double("offer_price")->nullable();
-            $table->integer("offer_duration")->nullable();
             $table->boolean("show_offer")->nullable()->default(false);
             $table->boolean("show_new")->nullable()->default(false);
             $table->integer("new_duration")->nullable();
             $table->boolean("show_product")->nullable()->default(false);
-            $table->string("delivery_option")->nullable();
-            $table->double("delivery_cost")->nullable();
             $table->string("location")->nullable();
+            $table->date("updated_date")->nullable();
+            $table->integer("updated_by")->nullable();
             $table->timestamps();
         });
     }

@@ -41,41 +41,6 @@
 
         <!--Brand and prices-->
         <div class="form-row">
-            <div class="form-group col-md-4">
-                <label for="brand">Marca</label>
-                <input type="text" class="form-control" name="brand">
-            </div>
-
-            <div class="form-group col-md-2">
-                <label for="price">Precio</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">$</span>
-                    </div>
-                    <input type="text" class="form-control" name="price">
-                </div>
-            </div>
-
-            <div class="form-group col-md-2">
-                <label for="offer_price">Precio de oferta</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            $
-                        </span>
-                    </div>
-                    <input type="text" class="form-control" name="offer_price">
-                </div>
-            </div>
-
-            <div class="form-group col-md-2">
-                <label for="offer_duration">Duración</label>
-                <input type="text" class="form-control" class="offer_duration">
-            </div>
-        </div>
-
-        <!--Barcode and Quantity-->
-        <div class="form-row">
             <div class="form-group col-md-8">
                 <label for="bar_code">Código de barras</label>
                 <div class="input-group">
@@ -86,9 +51,102 @@
                 </div>
             </div>
 
-            <div class="form-group col-md-2">
-                <label for="qty">Cantidad</label>
-                <input type="text" class="form-control" name="qty">
+            <div class="form-group col-md-4">
+                <label for="brand">Marca</label>
+                <input type="text" class="form-control" name="brand">
+            </div>
+        </div>
+
+        <!--Barcode and Quantity-->
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Casa Pineiro</h4>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="price">Precio</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="text" class="form-control" name="cp_price">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="qty">Cantidad</label>
+                            <input type="text" class="form-control" name="cp_qty">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="offer_price">Precio de oferta</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        $
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="cp_offer_price">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="offer_duration">Días en oferta</label>
+                            <input type="text" class="form-control" name="cp_offer_duration">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h4>Tendejón Evelyn</h4>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="price">Precio</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="text" class="form-control" name="te_price">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="qty">Cantidad</label>
+                            <input type="text" class="form-control" name="te_qty">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="offer_price">Precio de oferta</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        $
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" name="te_offer_price">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="offer_duration">Días en oferta</label>
+                            <input type="text" class="form-control" name="te_offer_duration">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

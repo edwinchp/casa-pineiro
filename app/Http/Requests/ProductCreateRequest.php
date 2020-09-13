@@ -28,7 +28,17 @@ class ProductCreateRequest extends FormRequest
             'content' => 'integer|nullable|max:10000',
             'unit_of_measure' => 'string|nullable|max:50',
             'brand' => 'string|nullable|max:100',
-            'price' => 'numeric|nullable|min:1|max:10000'
+            'cp_price' => 'numeric|nullable|min:1|max:100000',
+            'cp_qty' => 'numeric|nullable|min:1|max:100000',
+            'cp_offer_price' => 'numeric|nullable|min:1|max:100000',
+            'cp_offer_duration' => 'numeric|nullable|min:1|max:100000',
+            'te_price' => 'numeric|nullable|min:1|max:100000',
+            'te_qty' => 'numeric|nullable|min:1|max:100000',
+            'te_offer_price' => 'numeric|nullable|min:1|max:100000',
+            'te_offer_duration' => 'numeric|nullable|min:1|max:100000',
+            'description' => 'string|nullable|min:1|max:100000',
+            'delivery_option' => 'string|nullable|min:1|max:10',
+            'delivery_cost' => 'numeric|nullable|min:1|max:100000',
         ];
     }
 
@@ -36,8 +46,8 @@ class ProductCreateRequest extends FormRequest
     {
         return [
             'name.required' => 'El Nombre es obligatorio',
-            'content.integer' => 'El Precio debe ser un número entre 0 y 10000',
-            'content.max' => 'El Precio debe ser un número entre 0 y 10000'
+            'content.integer' => 'El Contenido debe ser un número entre 0 y 10000',
+            'content.max' => 'El Contenido debe ser un número entre 0 y 10000',
         ];
     }
 }
