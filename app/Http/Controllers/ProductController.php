@@ -22,6 +22,14 @@ class ProductController extends Controller
     }
 
     public function store(ProductCreateRequest $request){
-        dd($request);
+        $product = Product::create($request->all());
+        $product->save();
+        return redirect()->route('product.index');
+    }
+
+    // for admin
+    public function allProducts(){
+        $products = Product::all();
+        return view('product.admin_products')->with('products', $products);
     }
 }
