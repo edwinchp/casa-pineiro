@@ -14,13 +14,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'ProductController@index')->name('product.index');
-Route::get('/edit', 'ProductController@edit');
-Route::get('/agregar', [
-    'uses' => 'ProductController@create',
-    'as' => 'product.create']);
-Route::get('/productos', 'ProductController@allProducts')->name('product.all');
-
-
-Route::post('/agregar', [
-    'uses' => 'ProductController@store',
-    'as' => 'product.store']);
+Route::resource('products', 'ProductController');

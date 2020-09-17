@@ -10,11 +10,12 @@ class ProductController extends Controller
 {
     public function index(){
         $products = Product::all();
-        return view('home')->with('products', $products);
+        return view('product.admin_products')->with('products', $products);
     }
 
-    public function edit(){
-        return view('product.edit');
+    public function edit($id){
+        $product = Product::findOrFail($id);
+        return view('product.edit')->with('product', $product);
     }
 
     public function create(){
@@ -27,9 +28,7 @@ class ProductController extends Controller
         return redirect()->route('product.index');
     }
 
-    // for admin
-    public function allProducts(){
-        $products = Product::all();
-        return view('product.admin_products')->with('products', $products);
+    public function show(){
+
     }
 }
