@@ -15,17 +15,17 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('products.store') }}">
+    <form method="POST" action="{{ route('products.update', $product->id) }}">
         @csrf
         <!--Name-->
         <div class="form-row">
             <div class="form-group col-md-7">
                 <label for="name">Nombre</label>
-                <input type="text" class="form-control" name="name">
+                <input type="text" class="form-control" name="name" value="{{ $product->name }}">
             </div>
             <div class="form-group col-md-3">
                 <label for="content">Contenido</label>
-                <input type="text" class="form-control" name="content">
+                <input type="text" class="form-control" name="content" value="{{ $product->content }}">
             </div>
             <div class="form-group col-md-2">
                 <label for="unit_of_measure">Unidad de medida</label>
@@ -47,13 +47,13 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-barcode"></i></span>
                     </div>
-                    <input type="text" class="form-control" name="bar_code">
+                    <input type="text" class="form-control" name="bar_code" value="{{ $product->bar_code }}">
                 </div>
             </div>
 
             <div class="form-group col-md-4">
                 <label for="brand">Marca</label>
-                <input type="text" class="form-control" name="brand">
+                <input type="text" class="form-control" name="brand" value="{{ $product->brand }}">
             </div>
         </div>
 
@@ -69,18 +69,18 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">$</span>
                                 </div>
-                                <input type="text" class="form-control" name="cp_price">
+                                <input type="text" class="form-control" name="cp_price" value="{{ $product->cp_price }}">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="qty">Cantidad</label>
-                            <input type="text" class="form-control" name="cp_qty">
+                            <input type="text" class="form-control" name="cp_qty" value="{{ $product->cp_qty }}">
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -91,14 +91,16 @@
                                         $
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="cp_offer_price">
+                                <input type="text" class="form-control" name="cp_offer_price"
+                                    value="{{ $product->cp_offer_price }}">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="offer_duration">Días en oferta</label>
-                            <input type="text" class="form-control" name="cp_offer_duration">
+                            <input type="text" class="form-control" name="cp_offer_duration"
+                                value="{{ $product->cp_offer_duration }}">
                         </div>
                     </div>
                 </div>
@@ -114,18 +116,18 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">$</span>
                                 </div>
-                                <input type="text" class="form-control" name="te_price">
+                                <input type="text" class="form-control" name="te_price" value="{{ $product->te_price }}">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="qty">Cantidad</label>
-                            <input type="text" class="form-control" name="te_qty">
+                            <input type="text" class="form-control" name="te_qty" value="{{ $product->te_qty }}">
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -136,14 +138,16 @@
                                         $
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="te_offer_price">
+                                <input type="text" class="form-control" name="te_offer_price"
+                                    value="{{ $product->te_offer_price }}">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="offer_duration">Días en oferta</label>
-                            <input type="text" class="form-control" name="te_offer_duration">
+                            <input type="text" class="form-control" name="te_offer_duration"
+                                value="{{ $product->te_offer_duration }}">
                         </div>
                     </div>
                 </div>
@@ -154,7 +158,8 @@
         <div class="form-row">
             <div class="form-group">
                 <label for="description">Descripción</label>
-                <textarea name="description" id="" cols="40" rows="5" class="form-control"></textarea>
+                <textarea name="description" id="" cols="40" rows="5"
+                    class="form-control">{{ $product->description }}</textarea>
             </div>
         </div>
 
@@ -223,6 +228,18 @@
                         <label for="" class="form-control custom-file-label">Seleccionar imagen...</label>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-md-4">
+                <img src="{{ $product->picture_1 }}" alt="" style="width: 350px">
+            </div>
+            <div class="col-md-4">
+                <img src="{{ $product->picture_2 }}" alt="" style="width: 350px">
+            </div>
+            <div class="col-md-4">
+                <img src="{{ $product->picture_3 }}" alt="" style="width: 350px">
             </div>
         </div>
 
