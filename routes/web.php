@@ -15,3 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'ProductController@index')->name('product.index');
 Route::resource('products', 'ProductController');
+Route::get('/search', function(){
+    return view('product.search');
+})->name('search.products');
+Route::post('/search', 'ProductController@search')->name('search.products');
