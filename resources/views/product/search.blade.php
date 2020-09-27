@@ -24,17 +24,9 @@
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>Casa Pineiro</th>
-                                    <th>Tendejón Evelyn</th>
-                                    <th>Imagen</th>
-                                    <th>Opciones</th>
-                                </tr>
-                            </tfoot>
+                            
                             <tbody id="product-rows">
-                               asdasdasd
+                              
                             </tbody>
                         </table>
                     </div>
