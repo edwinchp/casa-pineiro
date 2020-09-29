@@ -18,6 +18,12 @@ class ProductController extends Controller
         return view('product.edit')->with('product', $product);
     }
 
+    public function update(Request $request, $id){
+        $product = Product::findOrFail($id);
+        return($product);//$product->update($request->all());
+        //return redirect()->route('product.index');
+    }
+
     public function create(){
         return view('product.create');
     }

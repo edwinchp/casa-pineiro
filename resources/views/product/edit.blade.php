@@ -15,8 +15,10 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('products.update', $product->id) }}">
+    <form method="POST" action="{{ route('products.update', $product->id) }}" role="form">
         @csrf
+        @method('PUT')
+       
         <!--Name-->
         <div class="form-row">
             <div class="form-group col-md-7">
@@ -269,11 +271,11 @@
         <!--Buttons-->
         <div class="form-row pt-3">
             <div class="p-1">
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <input type="submit" class="btn btn-primary" value="Guardar">
             </div>
 
             <div class="p-1">
-                <button type="submit" class="btn btn-secondary">Cancelar</button>
+                <a href="/products/" class="btn btn-secondary">Cancelar</a>
             </div>
         </div>
     </form>
