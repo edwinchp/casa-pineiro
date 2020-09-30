@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Http\Requests\ProductCreateRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -23,7 +24,14 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-        $product->update($request->all());
+        if($picture_1 = $request->file('picture_1')){
+            $name =  'p1_'. $id. date('_YmdHis') ;
+            $picture_1->move('images/products', $name);
+            Storage::delete($product->getPicture1()); // deletes old picture
+            $product->picture_1 = $name;
+        }
+
+        $product->update($request->except('picture_1'));
         return redirect()->route('product.index');
     }
 
@@ -35,6 +43,13 @@ class ProductController extends Controller
     public function store(ProductCreateRequest $request)
     {
         $product = Product::create($request->all());
+        
+        if($picture_1 = $request->file('picture_1')){
+            $name =  'p1_'. $product->id . date('_YmdHis') ;
+            $picture_1->move('images/products', $name);
+            $product->picture_1 = $name;
+        }
+        
         $product->save();
         return redirect()->route('product.index');
     }
@@ -45,7 +60,6 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-
         $products = Product::where('name', 'like', '%' . $request->get('searchRequest') . '%')->get();
         return json_encode($products);
     }

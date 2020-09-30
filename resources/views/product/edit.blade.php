@@ -15,7 +15,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('products.update', $product->id) }}" role="form">
+    <form method="POST" action="{{ route('products.update', $product->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
        
@@ -203,7 +203,7 @@
                     <div class="custom-file">
                         <input type="file" class="form-control custom-file-input" id="picture_1" aria-describedby="image1"
                             lang="es" name="picture_1">
-                        <label for="picture_1" class="custom-file-label">Seleccionar imagen...</label>
+                        <label for="picture_1" class="custom-file-label">{{$product->picture_1}}</label>
                     </div>
                 </div>
             </div>
@@ -235,7 +235,7 @@
 
         <div class="form-row">
             <div class="col-md-4">
-                <img src="{{ $product->picture_1 }}" alt="" style="width: 350px">
+                <img src="{{ URL::to($product->getPicture1()) }}" alt="" style="width: 350px">
             </div>
             <div class="col-md-4">
                 <img src="{{ $product->picture_2 }}" alt="" style="width: 350px">
