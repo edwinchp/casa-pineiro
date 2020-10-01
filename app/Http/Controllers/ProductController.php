@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Http\Requests\ProductCreateRequest;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -24,12 +25,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-        if($picture_1 = $request->file('picture_1')){
-            $name =  'p1_'. $id. date('_YmdHis') ;
-            $picture_1->move('images/products', $name);
-            Storage::delete($product->getPicture1()); // deletes old picture
-            $product->picture_1 = $name;
-        }
+        $this->savePicture($request, 'picture_1', $product, "update");
 
         $product->update($request->except('picture_1'));
         return redirect()->route('product.index');
@@ -43,15 +39,33 @@ class ProductController extends Controller
     public function store(ProductCreateRequest $request)
     {
         $product = Product::create($request->all());
-        
-        if($picture_1 = $request->file('picture_1')){
-            $name =  'p1_'. $product->id . date('_YmdHis') ;
-            $picture_1->move('images/products', $name);
-            $product->picture_1 = $name;
-        }
-        
+
+        $this->savePicture($request, "picture_1", $product, "store");
+
         $product->save();
         return redirect()->route('product.index');
+    }
+
+    /**
+     * $request - Input request from form
+     * $pictureNo - Attribute such as 'picture_1', 'picture_2' and 'picture_3'
+     * $product - Product object. Mandatory if Update or Destroy. Add null if Create
+     */
+    private function savePicture($request, $pictureNo, $product, $function)
+    {
+        $picture = $request->file($pictureNo);
+        $fileName = $pictureNo . date('_His-d-m-Y.') . $picture->extension();
+        // Save image in products directory
+        $picture->move('images/products/', $fileName);
+        // Modify previous image to have 400x400
+        Image::make('images/products/' . $fileName)->fit(400, 400)->save();
+
+        if ($function == "update") {
+            Storage::delete($product->getPicturePath($pictureNo));
+        }
+
+        // Save file name in the database
+        $product->setPicture($pictureNo, $fileName);
     }
 
     public function show()
