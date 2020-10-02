@@ -26,8 +26,10 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $this->savePicture($request, 'picture_1', $product, "update");
+        $this->savePicture($request, 'picture_2', $product, "update");
+        $this->savePicture($request, 'picture_3', $product, "update");
 
-        $product->update($request->except('picture_1'));
+        $product->update($request->except(['picture_1', 'picture_2', 'picture_3']));
         return redirect()->route('product.index');
     }
 
@@ -41,6 +43,8 @@ class ProductController extends Controller
         $product = Product::create($request->all());
 
         $this->savePicture($request, "picture_1", $product, "store");
+        $this->savePicture($request, "picture_2", $product, "store");
+        $this->savePicture($request, "picture_3", $product, "store");
 
         $product->save();
         return redirect()->route('product.index');
@@ -48,24 +52,30 @@ class ProductController extends Controller
 
     /**
      * $request - Input request from form
-     * $pictureNo - Attribute such as 'picture_1', 'picture_2' and 'picture_3'
-     * $product - Product object. Mandatory if Update or Destroy. Add null if Create
+     * $picture - Attribute such as 'picture_1', 'picture_2' and 'picture_3'
+     * $product - Product object. Mandatory if "update". Add null if "create"
+     * $function - "update", "store" or "destroy"
      */
-    private function savePicture($request, $pictureNo, $product, $function)
+    private function savePicture($request, $picture, $product, $function)
     {
-        $picture = $request->file($pictureNo);
-        $fileName = $pictureNo . date('_His-d-m-Y.') . $picture->extension();
-        // Save image in products directory
-        $picture->move('images/products/', $fileName);
-        // Modify previous image to have 400x400
-        Image::make('images/products/' . $fileName)->fit(400, 400)->save();
+        if ($function != "destroy") {
+            if ($file = $request->file($picture)) {
+                $fileName = $picture . date('_His-d-m-Y.') . $file->extension();
+                // Save image in products directory
+                Storage::putFileAs('images/products/', $file, $fileName);
+                // Modify previous image to have 400x400
+                Image::make('images/products/' . $fileName)->fit(400, 400)->save();
 
-        if ($function == "update") {
-            Storage::delete($product->getPicturePath($pictureNo));
+                if ($function == "update") {
+                    Storage::delete($product->getPicturePath($picture));
+                }
+
+                // Save file name in the database
+                $product->setPicture($picture, $fileName);
+            }
+        } else {
+            Storage::delete($product->getPicturePath($picture));
         }
-
-        // Save file name in the database
-        $product->setPicture($pictureNo, $fileName);
     }
 
     public function show()
