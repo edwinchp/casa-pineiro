@@ -16,8 +16,8 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->integer("content")->nullable();
-            $table->string("unit_of_measure")->nullable();
+            //$table->integer("content")->nullable();
+            //$table->string("unit_of_measure")->nullable();
             $table->string("bar_code")->nullable();
             $table->string("brand")->nullable();
             //Casa Pineiro

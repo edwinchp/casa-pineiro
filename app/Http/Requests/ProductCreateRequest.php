@@ -25,8 +25,8 @@ class ProductCreateRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255|string',
-            'content' => 'integer|nullable|max:10000',
-            'unit_of_measure' => 'string|nullable|max:50',
+            //'content' => 'integer|nullable|max:10000',
+            //'unit_of_measure' => 'string|nullable|max:50',
             'brand' => 'string|nullable|max:100',
             'cp_price' => 'numeric|nullable|min:1|max:100000',
             'cp_qty' => 'numeric|nullable|min:1|max:100000',

@@ -23,20 +23,6 @@
             <label for="name">Nombre</label>
             <input type="text" class="form-control" name="name">
         </div>
-        <div class="form-group col-md-3">
-            <label for="content">Contenido</label>
-            <input type="text" class="form-control" name="content">
-        </div>
-        <div class="form-group col-md-2">
-            <label for="unit_of_measure">Unidad de medida</label>
-            <select name="unit_of_measure" id="" class="form-control custom-select">
-                <option value="">Seleccionar...</option>
-                <option value="">LT</option>
-                <option value="">G</option>
-                <option value="">GM</option>
-                <option value="">ML</option>
-            </select>
-        </div>
     </div>
 
     <!--Brand and prices-->
