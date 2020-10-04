@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(15);
         return view('product.admin_products')->with('products', $products);
     }
 
@@ -48,6 +48,15 @@ class ProductController extends Controller
 
         $product->save();
         return redirect()->route('product.index');
+    }
+
+    public function destroy($id){
+        $product = Product::findOrFail($id);
+        $this->savePicture(null, 'picture_1', $product, "destroy");
+        $this->savePicture(null, 'picture_2', $product, "destroy");
+        $this->savePicture(null, 'picture_3', $product, "destroy");
+        $product->delete();
+        return redirect()->route('products.index');
     }
 
     /**

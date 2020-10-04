@@ -255,11 +255,15 @@
     <!--Buttons-->
     <div class="form-row pt-3">
         <div class="p-1">
-            <input type="submit" class="btn btn-primary" value="Guardar">
+            <input type="submit" class="btn btn-success" value="Guardar">
         </div>
 
         <div class="p-1">
-            <a href="/products/" class="btn btn-secondary">Cancelar</a>
+            <a href="{{route('products.index')}}" class="btn btn-secondary">Cancelar</a>
+        </div>
+
+        <div class="p-1">
+            <a href="#" class="btn btn-danger" data-target="#confirmDeleteModal" data-toggle="modal">Eliminar</a>
         </div>
     </div>
 </form>
@@ -272,6 +276,36 @@
 
     }
 </style>
+
+
+
+<!-- Confirm delete Modal-->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar producto</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">¿Seguro que desea eleminar el producto <strong>{{$product->name}}</strong>? <br> Esta opción no podrá deshacerse.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <form action="{{route('products.destroy', $product->id)}}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" href="#" class="btn btn-danger btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-trash"></i>
+                        </span>
+                        <span class="text">Eliminar</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @endsection
