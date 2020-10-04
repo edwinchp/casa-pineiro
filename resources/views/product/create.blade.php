@@ -33,7 +33,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-barcode"></i></span>
                 </div>
-                <input type="text" class="form-control" name="bar_code">
+                <input type="text" class="form-control" name="bar_code" autocomplete="off">
             </div>
         </div>
 
@@ -55,14 +55,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">$</span>
                             </div>
-                            <input type="text" class="form-control" name="cp_price">
+                            <input type="text" class="form-control" name="cp_price" autocomplete="off">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="qty">Cantidad</label>
-                        <input type="text" class="form-control" name="cp_qty">
+                        <input type="text" class="form-control" name="cp_qty" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -77,14 +77,14 @@
                                     $
                                 </span>
                             </div>
-                            <input type="text" class="form-control" name="cp_offer_price">
+                            <input type="text" class="form-control" name="cp_offer_price" autocomplete="off">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="offer_duration">Días en oferta</label>
-                        <input type="text" class="form-control" name="cp_offer_duration">
+                        <input type="text" class="form-control" name="cp_offer_duration" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -100,14 +100,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">$</span>
                             </div>
-                            <input type="text" class="form-control" name="te_price">
+                            <input type="text" class="form-control" name="te_price" autocomplete="off">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="qty">Cantidad</label>
-                        <input type="text" class="form-control" name="te_qty">
+                        <input type="text" class="form-control" name="te_qty" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -122,14 +122,14 @@
                                     $
                                 </span>
                             </div>
-                            <input type="text" class="form-control" name="te_offer_price">
+                            <input type="text" class="form-control" name="te_offer_price" autocomplete="off">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="offer_duration">Días en oferta</label>
-                        <input type="text" class="form-control" name="te_offer_duration">
+                        <input type="text" class="form-control" name="te_offer_duration" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -150,7 +150,7 @@
     <div class="form-row">
         <div class="form-group col-md-4">
             <label for="location">Ubicación</label>
-            <input type="text" class="form-control" name="location">
+            <input type="text" class="form-control" name="location" autocomplete="off">
         </div>
 
         <div class="form-group col-md-4">
@@ -165,7 +165,7 @@
 
         <div class="form-group col-md-4">
             <label for="delivey_cost">Costo de envío</label>
-            <input type="text" class="form-control" name="delivery_cost">
+            <input type="text" class="form-control" name="delivery_cost" autocomplete="off">
         </div>
 
     </div>
