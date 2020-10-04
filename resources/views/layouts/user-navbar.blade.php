@@ -120,7 +120,7 @@
                   <i class="fas fa-store fa-sm fa-fw mr-2 text-gray-700"></i>
                   Tendejón Evelyn
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{route('products.index')}}">
                   <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-700"></i>
                   Todos los productos
                 </a>
