@@ -69,7 +69,7 @@ class ProductTableSeeder extends Seeder
                 'cp_offer_price' => rand(300, 499),
                 'cp_offer_duration' => rand(4, 15),
                 'delivery_cost' => rand(10, 100),
-                'picture_1' => $picture,
+                //'picture_1' => $picture,
             ]);
         }
     }

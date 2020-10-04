@@ -45,4 +45,11 @@ class Product extends Model
                 break;
         }
     }
+
+    public function getMainPicture(){
+        if($this->picture_1 != null){
+            return $this->getPicturePath('picture_1');
+        }
+        return '/images/default.jpeg';
+    }
 }

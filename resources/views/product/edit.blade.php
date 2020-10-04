@@ -43,7 +43,7 @@
 
 
         <div class="form-group col-md-2 pt-4">
-            <img width="200px" src="{{ URL::to($product->getPicturePath('picture_1')) }}" class="img-thumbnail" alt="...">
+            <img width="200px" src="{{ URL::to($product->getMainPicture()) }}" class="img-thumbnail" alt="...">
         </div>
 
     </div>
