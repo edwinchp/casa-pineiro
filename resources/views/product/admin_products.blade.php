@@ -6,12 +6,23 @@
 
         <!-- DataTales Example -->
         <div class="card shadow mb-1">
-            <div class="card-header  d-flex bd-highlight">
-                <div class="mr-auto p-2 bd-highlight">
+            <div class="card-header  d-flex">
+                <div class="p-2 bd-highlight">
                     <h6 class="m-3 font-weight-bold text-primary">Todos los productos</h6>
                 </div>
 
-                <div class="py-3 bd-highlight">
+                <div class="p-2 py-3">
+                <div class="input-group">
+                    <input type="text" id="search-products" class="form-control bg-light border-0 small" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+                </div>
+
+                <div class="ml-auto p-2 py-3 bd-highlight">
                     <a href="{{route('products.create')}}" class="btn btn-primary">
                         <span class="text">Nuevo</span>
                     </a>
