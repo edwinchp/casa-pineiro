@@ -55,9 +55,10 @@
             </thead>
             <tbody>
               <user-table-component
-                v-for="user in users"
+                v-for="(user, index) in users"
                 :key="user.id"
                 :user="user"
+                @delete="deleteUser(index)"
               ></user-table-component>
             </tbody>
           </table>
@@ -87,6 +88,10 @@ export default {
   methods: {
     addUser(user) {
       this.users.push(user);
+    },
+
+    deleteUser(index) {
+      this.users.splice(index, 1);
     },
   },
 };

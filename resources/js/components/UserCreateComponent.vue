@@ -74,6 +74,12 @@ export default {
       };
 
       this.$emit("new", user);
+
+      // Clear inputs
+      (this.name = ""),
+        (this.lastName = ""),
+        (this.email = ""),
+        (this.password = "");
     },
   },
 };

@@ -15,9 +15,13 @@
       <a href="#" class="btn btn-success btn-circle"
         ><i class="far fa-edit"></i
       ></a>
-      <a href="#" class="btn btn-danger btn-circle"
-        ><i class="fas fa-trash"></i
-      ></a>
+      <button
+        v-on:click="onClickDelete()"
+        href="#"
+        class="btn btn-danger btn-circle"
+      >
+        <i class="fas fa-trash"></i>
+      </button>
     </td>
   </tr>
 </template>
@@ -27,6 +31,12 @@ export default {
   props: ["user"],
   data() {
     return {};
+  },
+
+  methods: {
+    onClickDelete() {
+      this.$emit("delete");
+    },
   },
 };
 </script>

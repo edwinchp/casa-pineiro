@@ -1978,6 +1978,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1993,6 +1994,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addUser: function addUser(user) {
       this.users.push(user);
+    },
+    deleteUser: function deleteUser(index) {
+      this.users.splice(index, 1);
     }
   }
 });
@@ -2081,7 +2085,9 @@ __webpack_require__.r(__webpack_exports__);
         email: this.email,
         password: this.password
       };
-      this.$emit("new", user);
+      this.$emit("new", user); // Clear inputs
+
+      this.name = "", this.lastName = "", this.email = "", this.password = "";
     }
   }
 });
@@ -2121,10 +2127,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user"],
   data: function data() {
     return {};
+  },
+  methods: {
+    onClickDelete: function onClickDelete() {
+      this.$emit("delete");
+    }
   }
 });
 
@@ -19802,10 +19817,15 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.users, function(user) {
+                _vm._l(_vm.users, function(user, index) {
                   return _c("user-table-component", {
                     key: user.id,
-                    attrs: { user: user }
+                    attrs: { user: user },
+                    on: {
+                      delete: function($event) {
+                        return _vm.deleteUser(index)
+                      }
+                    }
                   })
                 }),
                 1
@@ -20070,7 +20090,23 @@ var render = function() {
     _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),
-    _vm._m(1)
+    _c("td", [
+      _vm._m(1),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger btn-circle",
+          attrs: { href: "#" },
+          on: {
+            click: function($event) {
+              return _vm.onClickDelete()
+            }
+          }
+        },
+        [_c("i", { staticClass: "fas fa-trash" })]
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -20089,19 +20125,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "a",
-        { staticClass: "btn btn-success btn-circle", attrs: { href: "#" } },
-        [_c("i", { staticClass: "far fa-edit" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        { staticClass: "btn btn-danger btn-circle", attrs: { href: "#" } },
-        [_c("i", { staticClass: "fas fa-trash" })]
-      )
-    ])
+    return _c(
+      "a",
+      { staticClass: "btn btn-success btn-circle", attrs: { href: "#" } },
+      [_c("i", { staticClass: "far fa-edit" })]
+    )
   }
 ]
 render._withStripped = true
