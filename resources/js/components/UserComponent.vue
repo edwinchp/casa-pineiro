@@ -33,7 +33,7 @@
       </div>
 
       <div id="user-create">
-        <user-create-component></user-create-component>
+        <user-create-component @new="addUser"></user-create-component>
       </div>
 
       <div class="card-body">
@@ -76,9 +76,18 @@ export default {
         {
           id: 1,
           name: "Edwincito",
+          lastName: "",
+          email: "",
+          password: "",
         },
       ],
     };
+  },
+
+  methods: {
+    addUser(user) {
+      this.users.push(user);
+    },
   },
 };
 </script>

@@ -26,14 +26,7 @@
 export default {
   props: ["user"],
   data() {
-    return {
-      user: {
-        id: "",
-        name: "",
-        email: "",
-        password: "",
-      },
-    };
+    return {};
   },
 };
 </script>

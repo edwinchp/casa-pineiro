@@ -1983,9 +1983,17 @@ __webpack_require__.r(__webpack_exports__);
     return {
       users: [{
         id: 1,
-        name: "Edwincito"
+        name: "Edwincito",
+        lastName: "",
+        email: "",
+        password: ""
       }]
     };
+  },
+  methods: {
+    addUser: function addUser(user) {
+      this.users.push(user);
+    }
   }
 });
 
@@ -2057,6 +2065,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      id: "",
       name: "",
       lastName: "",
       email: "",
@@ -2065,7 +2074,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     newUser: function newUser() {
-      alert(this.name + this.lastName + this.email + this.password);
+      var user = {
+        id: 2,
+        name: this.name,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password
+      };
+      this.$emit("new", user);
     }
   }
 });
@@ -2108,14 +2124,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user"],
   data: function data() {
-    return {
-      user: {
-        id: "",
-        name: "",
-        email: "",
-        password: ""
-      }
-    };
+    return {};
   }
 });
 
@@ -19776,7 +19785,7 @@ var render = function() {
       _c(
         "div",
         { attrs: { id: "user-create" } },
-        [_c("user-create-component")],
+        [_c("user-create-component", { on: { new: _vm.addUser } })],
         1
       ),
       _vm._v(" "),
