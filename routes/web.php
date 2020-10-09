@@ -19,3 +19,4 @@ Route::get('/search', function(){
     return view('product.search');
 })->name('search.products');
 Route::post('/search', 'ProductController@search')->name('search.products');
+Route::resource('users', 'UserController');
