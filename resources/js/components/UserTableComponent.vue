@@ -1,8 +1,20 @@
 <template>
   <tr>
-    <td>{{ user.name }}</td>
-    <td>{{ user.email }}</td>
-    <td>{{ user.password }}</td>
+    <td v-if="editMode">
+      <input type="text" class="form-control" v-model="user.name" />
+    </td>
+    <td v-else>{{ user.name }}</td>
+
+    <td v-if="editMode">
+      <input type="text" class="form-control" v-model="user.email" />
+    </td>
+    <td v-else>{{ user.email }}</td>
+
+    <td v-if="editMode">
+      <input type="text" class="form-control" v-model="user.password" />
+    </td>
+    <td v-else>{{ user.password }}</td>
+
     <td>
       <img
         class="rounded-circle"
@@ -12,10 +24,39 @@
       />
     </td>
     <td>
-      <a href="#" class="btn btn-success btn-circle"
-        ><i class="far fa-edit"></i
-      ></a>
+      <!--UPDATE-->
       <button
+        v-if="editMode"
+        v-on:click="onClickUpdate()"
+        href="#"
+        class="btn btn-success btn-circle"
+      >
+        <i class="fas fa-save"></i>
+      </button>
+
+      <!--EDIT-->
+      <button
+        v-else
+        v-on:click="onClickEdit()"
+        href="#"
+        class="btn btn-success btn-circle"
+      >
+        <i class="far fa-edit"></i>
+      </button>
+
+      <!--CANCEL-->
+      <button
+        v-if="editMode"
+        v-on:click="onClickCancelChanges()"
+        href="#"
+        class="btn btn-danger btn-circle"
+      >
+        <i class="far fa-window-close"></i>
+      </button>
+
+      <!--DELETE-->
+      <button
+        v-else
         v-on:click="onClickDelete()"
         href="#"
         class="btn btn-danger btn-circle"
@@ -30,12 +71,28 @@
 export default {
   props: ["user"],
   data() {
-    return {};
+    return {
+      editMode: false,
+    };
   },
 
   methods: {
     onClickDelete() {
       this.$emit("delete");
+    },
+
+    onClickEdit() {
+      this.editMode = !this.editMode;
+    },
+
+    onClickUpdate() {
+      this.editMode = !this.editMode;
+      this.$emit("update", user);
+    },
+
+    onClickCancelChanges() {
+      this.name = "eeee"
+      this.editMode = !this.editMode;
     },
   },
 };

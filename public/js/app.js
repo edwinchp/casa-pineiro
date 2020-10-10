@@ -1979,6 +1979,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1997,6 +1998,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     deleteUser: function deleteUser(index) {
       this.users.splice(index, 1);
+    },
+    updateUser: function updateUser(index, user) {
+      this.users[index] = user;
     }
   }
 });
@@ -2131,14 +2135,68 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user"],
   data: function data() {
-    return {};
+    return {
+      editMode: false
+    };
   },
   methods: {
     onClickDelete: function onClickDelete() {
       this.$emit("delete");
+    },
+    onClickEdit: function onClickEdit() {
+      this.editMode = !this.editMode;
+    },
+    onClickUpdate: function onClickUpdate() {
+      this.editMode = !this.editMode;
+      this.$emit("update", user);
+    },
+    onClickCancelChanges: function onClickCancelChanges() {
+      this.name = "eeee";
+      this.editMode = !this.editMode;
     }
   }
 });
@@ -19824,6 +19882,15 @@ var render = function() {
                     on: {
                       delete: function($event) {
                         return _vm.deleteUser(index)
+                      },
+                      update: function($event) {
+                        var i = arguments.length,
+                          argsArray = Array(i)
+                        while (i--) argsArray[i] = arguments[i]
+                        return _vm.updateUser.apply(
+                          void 0,
+                          [index].concat(argsArray)
+                        )
                       }
                     }
                   })
@@ -20082,30 +20149,142 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("td", [_vm._v(_vm._s(_vm.user.name))]),
+    _vm.editMode
+      ? _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.user.name,
+                expression: "user.name"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.user.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.user, "name", $event.target.value)
+              }
+            }
+          })
+        ])
+      : _c("td", [_vm._v(_vm._s(_vm.user.name))]),
     _vm._v(" "),
-    _c("td", [_vm._v(_vm._s(_vm.user.email))]),
+    _vm.editMode
+      ? _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.user.email,
+                expression: "user.email"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.user.email },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.user, "email", $event.target.value)
+              }
+            }
+          })
+        ])
+      : _c("td", [_vm._v(_vm._s(_vm.user.email))]),
     _vm._v(" "),
-    _c("td", [_vm._v(_vm._s(_vm.user.password))]),
+    _vm.editMode
+      ? _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.user.password,
+                expression: "user.password"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.user.password },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.user, "password", $event.target.value)
+              }
+            }
+          })
+        ])
+      : _c("td", [_vm._v(_vm._s(_vm.user.password))]),
     _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),
     _c("td", [
-      _vm._m(1),
+      _vm.editMode
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-success btn-circle",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.onClickUpdate()
+                }
+              }
+            },
+            [_c("i", { staticClass: "fas fa-save" })]
+          )
+        : _c(
+            "button",
+            {
+              staticClass: "btn btn-success btn-circle",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.onClickEdit()
+                }
+              }
+            },
+            [_c("i", { staticClass: "far fa-edit" })]
+          ),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-danger btn-circle",
-          attrs: { href: "#" },
-          on: {
-            click: function($event) {
-              return _vm.onClickDelete()
-            }
-          }
-        },
-        [_c("i", { staticClass: "fas fa-trash" })]
-      )
+      _vm.editMode
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-danger btn-circle",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.onClickCancelChanges()
+                }
+              }
+            },
+            [_c("i", { staticClass: "far fa-window-close" })]
+          )
+        : _c(
+            "button",
+            {
+              staticClass: "btn btn-danger btn-circle",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.onClickDelete()
+                }
+              }
+            },
+            [_c("i", { staticClass: "fas fa-trash" })]
+          )
     ])
   ])
 }
@@ -20120,16 +20299,6 @@ var staticRenderFns = [
         attrs: { src: "https://picsum.photos/200", alt: "", width: "50px" }
       })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "btn btn-success btn-circle", attrs: { href: "#" } },
-      [_c("i", { staticClass: "far fa-edit" })]
-    )
   }
 ]
 render._withStripped = true

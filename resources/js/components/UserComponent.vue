@@ -59,6 +59,7 @@
                 :key="user.id"
                 :user="user"
                 @delete="deleteUser(index)"
+                @update="updateUser(index, ...arguments)"
               ></user-table-component>
             </tbody>
           </table>
@@ -93,6 +94,9 @@ export default {
     deleteUser(index) {
       this.users.splice(index, 1);
     },
+    updateUser(index, user){
+      this.users[index] = user;
+    }
   },
 };
 </script>
