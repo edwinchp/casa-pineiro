@@ -74,16 +74,14 @@
 export default {
   data() {
     return {
-      users: [
-        {
-          id: 1,
-          name: "Edwincito",
-          lastName: "",
-          email: "",
-          password: "",
-        },
-      ],
+      users: [],
     };
+  },
+
+  mounted(){
+    axios.get('/apiUsers').then((response)=>{
+      this.users = response.data;
+    });
   },
 
   methods: {
@@ -94,9 +92,9 @@ export default {
     deleteUser(index) {
       this.users.splice(index, 1);
     },
-    updateUser(index, user){
+    updateUser(index, user) {
       this.users[index] = user;
-    }
+    },
   },
 };
 </script>

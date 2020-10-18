@@ -65,17 +65,21 @@ export default {
   },
   methods: {
     newUser() {
-      let user = {
-        id: 2,
+      const params = {
         name: this.name,
         lastName: this.lastName,
         email: this.email,
         password: this.password,
       };
 
-      this.$emit("new", user);
 
-      // Clear inputs
+      axios.post("/apiUsers", params).then((response) => {
+        console.log(response);
+        const user = response.data;
+        this.$emit("new", user);
+      });
+
+       // Clear inputs
       (this.name = ""),
         (this.lastName = ""),
         (this.email = ""),

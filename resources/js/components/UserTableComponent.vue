@@ -13,7 +13,7 @@
     <td v-if="editMode">
       <input type="text" class="form-control" v-model="user.password" />
     </td>
-    <td v-else>{{ user.password }}</td>
+    <td v-else>{{ user.password }}aaaaaaaaaaaaa</td>
 
     <td>
       <img
@@ -86,12 +86,14 @@ export default {
     },
 
     onClickUpdate() {
-      this.editMode = !this.editMode;
-      this.$emit("update", user);
+      axios.put('/apiUsers/${this.user.id}').then((response) => {
+        this.editMode = !this.editMode;
+        const user = response.data;
+        this.$emit("update", user);
+      });
     },
 
     onClickCancelChanges() {
-      this.name = "eeee"
       this.editMode = !this.editMode;
     },
   },

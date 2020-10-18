@@ -1983,14 +1983,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      users: [{
-        id: 1,
-        name: "Edwincito",
-        lastName: "",
-        email: "",
-        password: ""
-      }]
+      users: []
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/apiUsers').then(function (response) {
+      _this.users = response.data;
+    });
   },
   methods: {
     addUser: function addUser(user) {
@@ -2082,14 +2083,20 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     newUser: function newUser() {
-      var user = {
-        id: 2,
+      var _this = this;
+
+      var params = {
         name: this.name,
         lastName: this.lastName,
         email: this.email,
         password: this.password
       };
-      this.$emit("new", user); // Clear inputs
+      axios.post("/apiUsers", params).then(function (response) {
+        console.log(response);
+        var user = response.data;
+
+        _this.$emit("new", user);
+      }); // Clear inputs
 
       this.name = "", this.lastName = "", this.email = "", this.password = "";
     }
@@ -2191,11 +2198,16 @@ __webpack_require__.r(__webpack_exports__);
       this.editMode = !this.editMode;
     },
     onClickUpdate: function onClickUpdate() {
-      this.editMode = !this.editMode;
-      this.$emit("update", user);
+      var _this = this;
+
+      axios.put('/apiUsers/${this.user.id}').then(function (response) {
+        _this.editMode = !_this.editMode;
+        var user = response.data;
+
+        _this.$emit("update", user);
+      });
     },
     onClickCancelChanges: function onClickCancelChanges() {
-      this.name = "eeee";
       this.editMode = !this.editMode;
     }
   }
@@ -20225,7 +20237,7 @@ var render = function() {
             }
           })
         ])
-      : _c("td", [_vm._v(_vm._s(_vm.user.password))]),
+      : _c("td", [_vm._v(_vm._s(_vm.user.password) + "aaaaaaaaaaaaa")]),
     _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),
