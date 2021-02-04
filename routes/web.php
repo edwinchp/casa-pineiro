@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
 Route::get('/', 'ProductController@index')->name('product.index');
 Route::resource('products', 'ProductController');
 Route::get('/search', function(){
@@ -23,3 +24,5 @@ Route::get('/users', function(){
     return view('user.admin.index');
 });
 Route::apiResource('apiUsers', 'UserController');
+
+Route::get('/home', 'HomeController@index')->name('home');

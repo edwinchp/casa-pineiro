@@ -7,3 +7,4 @@
 
 <!-- Custom styles for this page -->
 <link href="{{URL::to('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="{{asset('css/app.css')}}">
