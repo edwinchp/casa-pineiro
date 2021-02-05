@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::get('/', 'ProductController@index')->name('product.index');
+Route::get('/products', 'ProductController@index')->name('product.index');
 Route::resource('products', 'ProductController');
 Route::get('/search', function(){
     return view('product.search');
@@ -26,3 +26,12 @@ Route::get('/users', function(){
 Route::apiResource('apiUsers', 'UserController');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/sell/create', function(){
+    return view('sell.create');
+});
+
+Route::get('/', function(){
+    return view('index');
+});

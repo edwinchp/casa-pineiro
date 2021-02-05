@@ -19,6 +19,207 @@
     @csrf
     @method('PUT')
 
+    <div class="col-md-12 col-xl-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>{{ $product->name }}</h4>
+                <div class="card-header-left ">
+                </div>
+
+            </div>
+            <div class="card-block">
+
+                <div class="row">
+
+
+                    <div class="col-md-12">
+                        <div class="form-row">
+                            <div class="col-md-8">
+                                <label for="name">Nombre</label>
+                                <input type="text" class="form-control" name="name" value="{{ $product->name }}">
+                            </div>
+
+
+                            <div class="col-md-3 offset-1 product-picture">
+                                <div class="form-group">
+                                    <img src="{{ URL::to($product->getMainPicture()) }}" class="img-thumbnail"
+                                        alt="...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row pt-3">
+                            <div class="col-md-4">
+                                <label for="bar_code">Código de barras</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-barcode"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="bar_code"
+                                        value="{{ $product->bar_code }}" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+
+                                <label for="brand">Marca</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-circle"></i></span>
+
+                                    </div>
+                                    <input type="text" class="form-control" name="brand" value="{{ $product->brand }}"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                            <br>
+
+                        </div>
+
+
+                        <div class="form-row pt-4">
+                            <div class="col-md-4">
+                                <label for="cp_price">Precio al público</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+
+                                    </div>
+                                    <input type="text" class="form-control" name="cp_price"
+                                        value="{{ $product->cp_price }}" autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="cp_price">Precio de compra</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-search-dollar"></i></span>
+
+                                    </div>
+                                    <input type="text" class="form-control" name="cp_price"
+                                        value="{{ $product->cp_price }}" autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="cp_qty">Cantidad</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-boxes"></i></span>
+
+                                    </div>
+                                    <input type="text" class="form-control" name="cp_qty"
+                                        value="{{ $product->cp_price }}" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="col-md-4">
+                                <label for="cp_offer_price">Precio de oferta</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-certificate"></i></span>
+
+                                    </div>
+                                    <input type="text" class="form-control" name="cp_offer_price"
+                                        value="{{ $product->cp_price }}" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="cp_offer_duration">Días en oferta</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+
+                                    </div>
+                                    <input type="text" class="form-control" name="cp_offer_duration"
+                                        value="{{ $product->cp_price }}" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-12">
+                        <div class="form-row">
+                            <div class="form-group pl-1">
+                                <label for="description">Descripción</label>
+                                <textarea name="description" id="" cols="40" rows="5"
+                                    class="form-control">{{ $product->description }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-md-12">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="location">Ubicación</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+
+                                    </div>
+                                    <input type="text" class="form-control" name="location"
+                                        value="{{ $product->cp_price }}" autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="delivery_option">Opción de envío</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-truck"></i></span>
+
+                                    </div>
+                                    <select name="delivery_option" id="" class="form-control custom-select">
+                                        <option value="0">Seleccionar...</option>
+                                        <option value="1">Recoger en tienda</option>
+                                        <option value="2">Entrega a domicilio</option>
+                                        <option value="3">Sistema de apartado</option>
+                                    </select>
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="delivey_cost">Costo de envío</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-dolly"></i></span>
+
+                                    </div>
+                                    <input type="text" class="form-control" name="delivey_cost"
+                                        value="{{ $product->cp_price }}" autocomplete="off">
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
     <!--Name-->
     <div class="form-row">
         <div class="col-md-10">
@@ -32,12 +233,14 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-barcode"></i></span>
                         </div>
-                        <input type="text" class="form-control" name="bar_code" value="{{ $product->bar_code }}" autocomplete="off">
+                        <input type="text" class="form-control" name="bar_code" value="{{ $product->bar_code }}"
+                            autocomplete="off">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <label for="brand">Marca</label>
-                    <input type="text" class="form-control" name="brand" value="{{ $product->brand }}"> </div>
+                    <input type="text" class="form-control" name="brand" value="{{ $product->brand }}">
+                </div>
             </div>
         </div>
 
@@ -61,14 +264,16 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">$</span>
                             </div>
-                            <input type="text" class="form-control" name="cp_price" value="{{ $product->cp_price }}" autocomplete="off">
+                            <input type="text" class="form-control" name="cp_price" value="{{ $product->cp_price }}"
+                                autocomplete="off">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="qty">Cantidad</label>
-                        <input type="text" class="form-control" name="cp_qty" value="{{ $product->cp_qty }}" autocomplete="off">
+                        <input type="text" class="form-control" name="cp_qty" value="{{ $product->cp_qty }}"
+                            autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -83,14 +288,16 @@
                                     $
                                 </span>
                             </div>
-                            <input type="text" class="form-control" name="cp_offer_price" value="{{ $product->cp_offer_price }}" autocomplete="off">
+                            <input type="text" class="form-control" name="cp_offer_price"
+                                value="{{ $product->cp_offer_price }}" autocomplete="off">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="offer_duration">Días en oferta</label>
-                        <input type="text" class="form-control" name="cp_offer_duration" value="{{ $product->cp_offer_duration }}" autocomplete="off">
+                        <input type="text" class="form-control" name="cp_offer_duration"
+                            value="{{ $product->cp_offer_duration }}" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -106,14 +313,16 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">$</span>
                             </div>
-                            <input type="text" class="form-control" name="te_price" value="{{ $product->te_price }}" autocomplete="off">
+                            <input type="text" class="form-control" name="te_price" value="{{ $product->te_price }}"
+                                autocomplete="off">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="qty">Cantidad</label>
-                        <input type="text" class="form-control" name="te_qty" value="{{ $product->te_qty }}" autocomplete="off">
+                        <input type="text" class="form-control" name="te_qty" value="{{ $product->te_qty }}"
+                            autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -128,14 +337,16 @@
                                     $
                                 </span>
                             </div>
-                            <input type="text" class="form-control" name="te_offer_price" value="{{ $product->te_offer_price }}" autocomplete="off">
+                            <input type="text" class="form-control" name="te_offer_price"
+                                value="{{ $product->te_offer_price }}" autocomplete="off">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="offer_duration">Días en oferta</label>
-                        <input type="text" class="form-control" name="te_offer_duration" value="{{ $product->te_offer_duration }}" autocomplete="off">
+                        <input type="text" class="form-control" name="te_offer_duration"
+                            value="{{ $product->te_offer_duration }}" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -146,7 +357,8 @@
     <div class="form-row">
         <div class="form-group">
             <label for="description">Descripción</label>
-            <textarea name="description" id="" cols="40" rows="5" class="form-control">{{ $product->description }}</textarea>
+            <textarea name="description" id="" cols="40" rows="5"
+                class="form-control">{{ $product->description }}</textarea>
         </div>
     </div>
 
@@ -186,7 +398,8 @@
                     <span id="image1" class="input-group-text"><i class="far fa-image"></i></span>
                 </div>
                 <div class="custom-file">
-                    <input type="file" class="form-control custom-file-input" id="picture_1" aria-describedby="image1" lang="es" name="picture_1">
+                    <input type="file" class="form-control custom-file-input" id="picture_1" aria-describedby="image1"
+                        lang="es" name="picture_1">
                     <label for="picture_1" class="custom-file-label">{{$product->picture_1}}</label>
                 </div>
             </div>
@@ -280,7 +493,8 @@
 
 
 <!-- Confirm delete Modal-->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -289,7 +503,8 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">¿Seguro que desea eleminar el producto <strong>{{$product->name}}</strong>? <br> Esta opción no podrá deshacerse.</div>
+            <div class="modal-body">¿Seguro que desea eleminar el producto <strong>{{$product->name}}</strong>? <br>
+                Esta opción no podrá deshacerse.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
                 <form action="{{route('products.destroy', $product->id)}}" method="post">

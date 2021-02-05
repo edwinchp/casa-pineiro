@@ -13,7 +13,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::paginate(15);
-        return view('product.admin_products')->with('products', $products);
+        return view('product.index')->with('products', $products);
     }
 
     public function edit($id)

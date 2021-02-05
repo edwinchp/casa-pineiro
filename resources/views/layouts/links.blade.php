@@ -8,3 +8,19 @@
 <!-- Custom styles for this page -->
 <link href="{{URL::to('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 <link rel="stylesheet" href="{{asset('css/app.css')}}">
+
+<!-- From Custom template -->
+<!-- Favicon icon -->
+<link rel="icon" href="{{asset('custom-template/assets/images/favicon.ico')}}" type="image/x-icon">
+<!-- Google font-->
+<link href="{{URL::to('https://fonts.googleapis.com/css?family=Open+Sans:400,600,800')}}" rel="stylesheet">
+<!-- Required Fremwork -->
+<link rel="stylesheet" type="text/css" href="{{asset('custom-template/assets/css/bootstrap/css/bootstrap.min.css')}}">
+<!-- themify-icons line icon -->
+<link rel="stylesheet" type="text/css" href="{{asset('custom-template/assets/icon/themify-icons/themify-icons.css')}}">
+<!-- ico font -->
+<link rel="stylesheet" type="text/css" href="{{asset('custom-template/assets/icon/icofont/css/icofont.css')}}">
+<!-- Style.css -->
+<link rel="stylesheet" type="text/css" href="{{asset('custom-template/assets/css/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('custom-template/assets/css/custom.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('custom-template/assets/css/jquery.mCustomScrollbar.css')}}">
