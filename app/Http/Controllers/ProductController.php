@@ -10,10 +10,15 @@ use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::paginate(15);
-        return view('product.index')->with('products', $products);
+        //$products = Product::all();
+        //return view('product.index')->with('products', $products);
+        if($request->ajax()){
+            return Product::all();
+        }else{
+            return view('product.index');
+        }
     }
 
     public function edit($id)
