@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::get('/products', 'ProductController@index')->name('product.index');
+Route::get('/productos', function(){
+    return view('product.index');
+});
 Route::resource('products', 'ProductController');
 Route::get('/search', function(){
     return view('product.search');

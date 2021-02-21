@@ -14,10 +14,13 @@ class ProductController extends Controller
     {
         //$products = Product::all();
         //return view('product.index')->with('products', $products);
-        if($request->ajax()){
+        if ($request->ajax()) {
             return Product::all();
-        }else{
-            return view('product.index');
+        } else {
+            //return Product::all();
+            //dd($request->ajax());
+            //return view('product.index');
+            return Product::all();
         }
     }
 
@@ -29,13 +32,19 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        $product = Product::findOrFail($id);
-        $this->savePicture($request, 'picture_1', $product, "update");
-        $this->savePicture($request, 'picture_2', $product, "update");
-        $this->savePicture($request, 'picture_3', $product, "update");
+        $product = Product::find($id);
 
-        $product->update($request->except(['picture_1', 'picture_2', 'picture_3']));
-        return redirect()->route('product.index');
+        if ($product) {
+            $this->savePicture($request, 'picture_1', $product, "update");
+            $this->savePicture($request, 'picture_2', $product, "update");
+            $this->savePicture($request, 'picture_3', $product, "update");
+
+            $product->update($request->except(['picture_1', 'picture_2', 'picture_3']));
+            //return redirect()->route('product.index');
+            return $product;
+        }
+
+        return "Producto no encontrado.";
     }
 
     public function create()
@@ -52,16 +61,22 @@ class ProductController extends Controller
         $this->savePicture($request, "picture_3", $product, "store");
 
         $product->save();
-        return redirect()->route('product.index');
+        return $request;
+        //return redirect()->route('product.index');
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $product = Product::findOrFail($id);
-        $this->savePicture(null, 'picture_1', $product, "destroy");
-        $this->savePicture(null, 'picture_2', $product, "destroy");
-        $this->savePicture(null, 'picture_3', $product, "destroy");
-        $product->delete();
-        return redirect()->route('products.index');
+        if ($product) {
+            $this->savePicture(null, 'picture_1', $product, "destroy");
+            $this->savePicture(null, 'picture_2', $product, "destroy");
+            $this->savePicture(null, 'picture_3', $product, "destroy");
+            $product->delete();
+            return "Producto eliminado.";
+        }
+        //return redirect()->route('products.index');
+        return "Producto no encontrado.";
     }
 
     /**

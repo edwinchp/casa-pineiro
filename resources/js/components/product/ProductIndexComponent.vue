@@ -381,7 +381,7 @@ export default {
   },
 
   created() {
-    axios.get("products").then((resp) => {
+    axios.get("/products").then((resp) => {
       this.products = resp.data;
     });
   },
