@@ -49,14 +49,15 @@ class ProductController extends Controller
 
     public function store(ProductCreateRequest $request)
     {
-        $product = Product::create($request->all());
+        // $product = Product::create($request->all());
 
-        $this->savePicture($request, "picture_1", $product, "store");
-        $this->savePicture($request, "picture_2", $product, "store");
-        $this->savePicture($request, "picture_3", $product, "store");
+        // $this->savePicture($request, "picture_1", $product, "store");
+        // $this->savePicture($request, "picture_2", $product, "store");
+        // $this->savePicture($request, "picture_3", $product, "store");
 
-        $product->save();
-        return response()->json($product, 201);
+        // $product->save();
+        // return response()->json($product, 201);
+        return "HE";
         //return redirect()->route('product.index');
     }
 

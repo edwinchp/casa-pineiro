@@ -2313,6 +2313,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -38704,6 +38708,30 @@ var render = function() {
                               _vm._s(product.cp_qty) +
                               "\n                    "
                           )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "product-item" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: product.cp_qty,
+                                expression: "product.cp_qty"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "number" },
+                            domProps: { value: product.cp_qty },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(product, "cp_qty", $event.target.value)
+                              }
+                            }
+                          })
                         ])
                       ])
                     ])

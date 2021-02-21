@@ -282,6 +282,10 @@
                       <div class="product-current-qty">
                         {{ product.cp_qty }}
                       </div>
+
+                      <div class="product-item">
+                        <input class="form-control" type="number" v-model="product.cp_qty" />
+                      </div>
                     </div>
                   </div>
                 </td>
