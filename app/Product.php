@@ -28,11 +28,13 @@ class Product extends Model
         }
     }
 
-    public function getPicturePath($picture){
+    public function getPicturePath($picture)
+    {
         return '/images/products/' . $this->getPicture($picture);
     }
 
-    public function setPicture($picture, $newPicture){
+    public function setPicture($picture, $newPicture)
+    {
         switch ($picture) {
             case "picture_1":
                 $this->picture_1 = $newPicture;
@@ -46,10 +48,18 @@ class Product extends Model
         }
     }
 
-    public function getMainPicture(){
-        if($this->picture_1 != null){
+    public function getMainPicture()
+    {
+        if ($this->picture_1 != null) {
             return $this->getPicturePath('picture_1');
         }
         return '/images/default.jpeg';
+    }
+
+    public function scopeFilterByNameBarcodeAndBrand($query, $foundByUser)
+    {
+        return $query->where('name', 'LIKE', '%' . $foundByUser . '%')
+            ->orWhere('bar_code', 'LIKE', '%' . $foundByUser . '%')
+            ->orWhere('brand', 'LIKE', '%' . $foundByUser . '%');
     }
 }

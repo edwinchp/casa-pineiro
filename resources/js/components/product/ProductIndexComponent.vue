@@ -82,7 +82,13 @@
             <span class="input-group-addon" id="name"
               ><i class="icofont icofont-search"></i
             ></span>
-            <input type="text" class="form-control" placeholder="Buscar..." />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Buscar..."
+              v-model="productsFound"
+              @keyup="findProducts"
+            />
           </div>
         </div>
       </div>
@@ -102,6 +108,7 @@
               </tr>
             </thead>
             <tbody>
+              <!--
               <tr>
                 <td class="table-name">
                   <div class="row">
@@ -254,6 +261,8 @@
                 </td>
               </tr>
 
+              -->
+
               <!-- @foreach($products as $product)-->
 
               <tr v-for="(product, index) in products" :key="index">
@@ -366,6 +375,8 @@ export default {
   data() {
     return {
       products: [],
+      productsFound: "",
+      productTimeOut: "",
     };
   },
   computed: {
@@ -380,10 +391,27 @@ export default {
     },
   },
 
+  methods: {
+    findProducts: function () {
+      clearTimeout(this.productTimeOut);
+      this.productTimeOut = setTimeout(this.getProducts, 500);
+    },
+
+    getProducts: function () {
+      axios
+        .get("/products", {
+          params: {
+            productsFound: this.productsFound,
+          },
+        })
+        .then((resp) => {
+          this.products = resp.data;
+        });
+    },
+  },
+
   created() {
-    axios.get("/products").then((resp) => {
-      this.products = resp.data;
-    });
+    this.getProducts();
   },
 };
 </script>

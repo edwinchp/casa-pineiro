@@ -14,15 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::get('/productos', function(){
+Route::get('/productos', function () {
     return view('product.index');
 });
 Route::resource('products', 'ProductController');
-Route::get('/search', function(){
+Route::get('/search', function () {
     return view('product.search');
 })->name('search.products');
+
+
+
 Route::post('/search', 'ProductController@search')->name('search.products');
-Route::get('/users', function(){
+Route::get('/users', function () {
     return view('user.admin.index');
 });
 Route::apiResource('apiUsers', 'UserController');
@@ -30,10 +33,10 @@ Route::apiResource('apiUsers', 'UserController');
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/sell/create', function(){
+Route::get('/sell/create', function () {
     return view('sell.create');
 });
 
-Route::get('/', function(){
+Route::get('/', function () {
     return view('index');
 });

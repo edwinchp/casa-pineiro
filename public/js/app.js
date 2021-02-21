@@ -2304,10 +2304,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      products: []
+      products: [],
+      productsFound: "",
+      productTimeOut: ""
     };
   },
   computed: {
@@ -2323,12 +2334,25 @@ __webpack_require__.r(__webpack_exports__);
       }, 0);
     }
   },
-  created: function created() {
-    var _this = this;
+  methods: {
+    findProducts: function findProducts() {
+      clearTimeout(this.productTimeOut);
+      this.productTimeOut = setTimeout(this.getProducts, 500);
+    },
+    getProducts: function getProducts() {
+      var _this = this;
 
-    axios.get("products").then(function (resp) {
-      _this.products = resp.data;
-    });
+      axios.get("/products", {
+        params: {
+          productsFound: this.productsFound
+        }
+      }).then(function (resp) {
+        _this.products = resp.data;
+      });
+    }
+  },
+  created: function created() {
+    this.getProducts();
   }
 });
 
@@ -38617,7 +38641,36 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card pt-3" }, [
-      _vm._m(3),
+      _c("div", { staticClass: "section-header pl-3" }, [
+        _c("div", { staticClass: "col-xl-6" }, [
+          _c("div", { staticClass: "input-group search-box" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.productsFound,
+                  expression: "productsFound"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Buscar..." },
+              domProps: { value: _vm.productsFound },
+              on: {
+                keyup: _vm.findProducts,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.productsFound = $event.target.value
+                }
+              }
+            })
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-block table-border-style" }, [
         _c("div", { staticClass: "table-responsive pr-4 pl-4" }, [
@@ -38626,90 +38679,78 @@ var render = function() {
             _vm._v(" "),
             _c(
               "tbody",
-              [
-                _vm._m(5),
-                _vm._v(" "),
-                _vm._m(6),
-                _vm._v(" "),
-                _vm._l(_vm.products, function(product, index) {
-                  return _c("tr", { key: index }, [
-                    _c("td", { staticClass: "table-name" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-xl-11" }, [
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "products/" + product.id + "/edit"
-                              }
-                            },
-                            [_vm._v(_vm._s(product.name))]
+              _vm._l(_vm.products, function(product, index) {
+                return _c("tr", { key: index }, [
+                  _c("td", { staticClass: "table-name" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-xl-11" }, [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "products/" + product.id + "/edit" }
+                          },
+                          [_vm._v(_vm._s(product.name))]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "table-existing-product" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-xl-11 existing-product" }, [
+                        _c("div", { staticClass: "product-current-qty" }, [
+                          _vm._v(
+                            "\n                      " +
+                              _vm._s(product.cp_qty) +
+                              "\n                    "
                           )
                         ])
                       ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-existing-product" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c(
-                          "div",
-                          { staticClass: "col-xl-11 existing-product" },
-                          [
-                            _c("div", { staticClass: "product-current-qty" }, [
-                              _vm._v(
-                                "\n                      " +
-                                  _vm._s(product.cp_qty) +
-                                  "\n                    "
-                              )
-                            ])
-                          ]
-                        )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(5, true),
+                  _vm._v(" "),
+                  _vm._m(6, true),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "table-sell-product" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-xl-11" }, [
+                        _c("strong", [_vm._v("$" + _vm._s(product.cp_price))])
                       ])
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(7, true),
-                    _vm._v(" "),
-                    _vm._m(8, true),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-sell-product" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-xl-11" }, [
-                          _c("strong", [_vm._v("$" + _vm._s(product.cp_price))])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "#!",
+                          "data-toggle": "modal",
+                          "data-target": "#myModal"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-40 rounded",
                           attrs: {
-                            href: "#!",
-                            "data-toggle": "modal",
-                            "data-target": "#myModal"
+                            src: "images/products/" + product.picture_1,
+                            alt: ""
                           }
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "img-40 rounded",
-                            attrs: {
-                              src: "images/products/" + product.picture_1,
-                              alt: ""
-                            }
-                          })
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(9, true)
-                  ])
-                })
-              ],
-              2
+                        })
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(7, true)
+                ])
+              }),
+              0
             )
           ]),
           _vm._v(" "),
-          _vm._m(10)
+          _vm._m(8)
         ])
       ])
     ])
@@ -38832,22 +38873,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "section-header pl-3" }, [
-      _c("div", { staticClass: "col-xl-6" }, [
-        _c("div", { staticClass: "input-group search-box" }, [
-          _c(
-            "span",
-            { staticClass: "input-group-addon", attrs: { id: "name" } },
-            [_c("i", { staticClass: "icofont icofont-search" })]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Buscar..." }
-          })
-        ])
-      ])
-    ])
+    return _c(
+      "span",
+      { staticClass: "input-group-addon", attrs: { id: "name" } },
+      [_c("i", { staticClass: "icofont icofont-search" })]
+    )
   },
   function() {
     var _vm = this
@@ -38868,216 +38898,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Imagen")]),
         _vm._v(" "),
         _c("th", [_vm._v("Opciones")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", { staticClass: "table-name" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xl-11" }, [
-            _c("a", { attrs: { href: "product.edit.html" } }, [
-              _vm._v(" Cheetos bolitas 30g ")
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "table-existing-product" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xl-11 existing-product" }, [
-            _c("div", { staticClass: "product-current-qty" }, [_vm._v("105")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "add-existing" }, [
-              _c("div", { staticClass: "arrow" }, [
-                _c("i", { staticClass: "ti-arrow-right" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "new-product-sum" }, [_vm._v("119")])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "table-new-product" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xl-11" }, [
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "number", value: "14" }
-            })
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "table-bought-product" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xl-11" }, [
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "number", value: "6" }
-            })
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "table-sell-product" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xl-11" }, [
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "number", value: "9" }
-            })
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", [
-        _c("a", { attrs: { href: "assets/images/bolitas.jpg" } }, [
-          _c("img", {
-            staticClass: "img-40 rounded",
-            attrs: { src: "assets/images/bolitas.jpg", target: "_blank" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", [
-        _c("div", { staticClass: "table-options" }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#",
-                "data-toggle": "tooltip",
-                "data-placement": "bottom",
-                "data-original-title": "Guardar cambios"
-              }
-            },
-            [_c("i", { staticClass: "ti-check" })]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#",
-                "data-toggle": "tooltip",
-                "data-placement": "bottom",
-                "data-original-title": "Cancelar"
-              }
-            },
-            [_c("i", { staticClass: "ti-close" })]
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", { staticClass: "table-name" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xl-11" }, [
-            _c("a", { attrs: { href: "product.edit.html" } }, [
-              _vm._v("Ruffles queso 40g")
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "table-existing-product" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xl-11 existing-product" }, [
-            _c("div", { staticClass: "product-current-qty" }, [_vm._v("4")])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "table-new-product" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xl-11" }, [
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                value: "",
-                "data-toggle": "tooltip",
-                "data-placement": "bottom",
-                "data-original-title":
-                  "Edite este producto para usar esta opción",
-                disabled: ""
-              }
-            })
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "table-bought-product" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xl-11" }, [_vm._v("$12")])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "table-sell-product" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xl-11" }, [
-            _c("strong", [_vm._v("$14")])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", [
-        _c(
-          "a",
-          {
-            attrs: {
-              href: "#!",
-              "data-toggle": "modal",
-              "data-target": "#myModal"
-            }
-          },
-          [
-            _c("img", {
-              staticClass: "img-40 rounded",
-              attrs: { src: "assets/images/ruffles.jpg", alt: "" }
-            })
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("td", [
-        _c("div", { staticClass: "table-options" }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#",
-                "data-toggle": "tooltip",
-                "data-placement": "bottom",
-                "data-original-title": "Añadir al carrito"
-              }
-            },
-            [_c("i", { staticClass: "ti-shopping-cart" })]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#",
-                "data-toggle": "tooltip",
-                "data-placement": "bottom",
-                "data-original-title": "Editar"
-              }
-            },
-            [_c("i", { staticClass: "ti-pencil-alt" })]
-          )
-        ])
       ])
     ])
   },

@@ -14,14 +14,9 @@ class ProductController extends Controller
     {
         //$products = Product::all();
         //return view('product.index')->with('products', $products);
-        if ($request->ajax()) {
-            return Product::all();
-        } else {
-            //return Product::all();
-            //dd($request->ajax());
-            //return view('product.index');
-            return Product::all();
-        }
+        $foundByUser = $request->productsFound;
+        $products = Product::filterByNameBarcodeAndBrand($foundByUser)->get();
+        return response()->json($products, 200);
     }
 
     public function edit($id)
@@ -61,7 +56,7 @@ class ProductController extends Controller
         $this->savePicture($request, "picture_3", $product, "store");
 
         $product->save();
-        return $request;
+        return response()->json($product, 201);
         //return redirect()->route('product.index');
     }
 
