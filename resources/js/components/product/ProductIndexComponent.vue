@@ -279,12 +279,19 @@
                 <td class="table-existing-product">
                   <div class="row">
                     <div class="col-xl-11 existing-product">
-                      <div class="product-current-qty">
+                      <div v-if="product.editing" class="product-current-qty">
                         {{ product.cp_qty }}
                       </div>
 
-                      <div class="product-item">
-                        <input class="form-control" type="number" v-model="product.cp_qty" />
+                      <div v-if="!product.editing" class="product-item">
+                        <input
+                          class="form-control"
+                          type="number"
+                          v-model="product.cp_qty"
+                          @keyup.enter="doneEdit(product)"
+                          @blur="doneEdit(product)"
+                          @keyup.esc="cancelEdit(product)"
+                        />
                       </div>
                     </div>
                   </div>
@@ -338,13 +345,15 @@
                       data-original-title="Añadir al carrito"
                       ><i class="ti-shopping-cart"></i
                     ></a>
-                    <a
+                    <button
                       href="#"
                       data-toggle="tooltip"
                       data-placement="bottom"
                       data-original-title="Editar"
-                      ><i class="ti-pencil-alt"></i
-                    ></a>
+                      @click="editProduct(product)"
+                    >
+                      <i class="ti-pencil-alt"></i>
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -381,6 +390,7 @@ export default {
       products: [],
       productsFound: "",
       productTimeOut: "",
+      beforeEditProductName: '',
     };
   },
   computed: {
@@ -412,6 +422,23 @@ export default {
           this.products = resp.data;
         });
     },
+
+    /**
+     * Each product
+     */
+    editProduct: function (product) {
+      this.beforeEditProductName = product.name;
+      product.editing = !product.editing;
+    },
+    doneEdit: function(product){
+      product.editing = "false";
+    },
+    cancelEdit: function (product){
+      product.name = this.beforeEditProductName;
+      product.editing = "false";
+
+    }
+
   },
 
   created() {

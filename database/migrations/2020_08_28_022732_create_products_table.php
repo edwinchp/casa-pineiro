@@ -16,7 +16,6 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("editing");
             //$table->integer("content")->nullable();
             //$table->string("unit_of_measure")->nullable();
             $table->string("bar_code")->nullable();
@@ -44,6 +43,7 @@ class CreateProductsTable extends Migration
             $table->integer("new_duration")->nullable();
             $table->boolean("show_product")->nullable()->default(false);
             $table->string("location")->nullable();
+            $table->string("editing")->default('false');
             $table->date("updated_date")->nullable();
             $table->integer("updated_by")->nullable();
             $table->timestamps();

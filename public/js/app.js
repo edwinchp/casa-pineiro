@@ -2317,12 +2317,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       products: [],
       productsFound: "",
-      productTimeOut: ""
+      productTimeOut: "",
+      beforeEditProductName: ''
     };
   },
   computed: {
@@ -2353,6 +2363,21 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (resp) {
         _this.products = resp.data;
       });
+    },
+
+    /**
+     * Each product
+     */
+    editProduct: function editProduct(product) {
+      this.beforeEditProductName = product.name;
+      product.editing = !product.editing;
+    },
+    doneEdit: function doneEdit(product) {
+      product.editing = "false";
+    },
+    cancelEdit: function cancelEdit(product) {
+      product.name = this.beforeEditProductName;
+      product.editing = "false";
     }
   },
   created: function created() {
@@ -38702,37 +38727,80 @@ var render = function() {
                   _c("td", { staticClass: "table-existing-product" }, [
                     _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-xl-11 existing-product" }, [
-                        _c("div", { staticClass: "product-current-qty" }, [
-                          _vm._v(
-                            "\n                      " +
-                              _vm._s(product.cp_qty) +
-                              "\n                    "
-                          )
-                        ]),
+                        product.editing
+                          ? _c("div", { staticClass: "product-current-qty" }, [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(product.cp_qty) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _vm._e(),
                         _vm._v(" "),
-                        _c("div", { staticClass: "product-item" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: product.cp_qty,
-                                expression: "product.cp_qty"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "number" },
-                            domProps: { value: product.cp_qty },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                        !product.editing
+                          ? _c("div", { staticClass: "product-item" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: product.cp_qty,
+                                    expression: "product.cp_qty"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "number" },
+                                domProps: { value: product.cp_qty },
+                                on: {
+                                  keyup: [
+                                    function($event) {
+                                      if (
+                                        !$event.type.indexOf("key") &&
+                                        _vm._k(
+                                          $event.keyCode,
+                                          "enter",
+                                          13,
+                                          $event.key,
+                                          "Enter"
+                                        )
+                                      ) {
+                                        return null
+                                      }
+                                      return _vm.doneEdit(product)
+                                    },
+                                    function($event) {
+                                      if (
+                                        !$event.type.indexOf("key") &&
+                                        _vm._k(
+                                          $event.keyCode,
+                                          "esc",
+                                          27,
+                                          $event.key,
+                                          ["Esc", "Escape"]
+                                        )
+                                      ) {
+                                        return null
+                                      }
+                                      return _vm.cancelEdit(product)
+                                    }
+                                  ],
+                                  blur: function($event) {
+                                    return _vm.doneEdit(product)
+                                  },
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      product,
+                                      "cp_qty",
+                                      $event.target.value
+                                    )
+                                  }
                                 }
-                                _vm.$set(product, "cp_qty", $event.target.value)
-                              }
-                            }
-                          })
-                        ])
+                              })
+                            ])
+                          : _vm._e()
                       ])
                     ])
                   ]),
@@ -38771,7 +38839,29 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(7, true)
+                  _c("td", [
+                    _c("div", { staticClass: "table-options" }, [
+                      _vm._m(7, true),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          attrs: {
+                            href: "#",
+                            "data-toggle": "tooltip",
+                            "data-placement": "bottom",
+                            "data-original-title": "Editar"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.editProduct(product)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "ti-pencil-alt" })]
+                      )
+                    ])
+                  ])
                 ])
               }),
               0
@@ -38966,35 +39056,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("div", { staticClass: "table-options" }, [
-        _c(
-          "a",
-          {
-            attrs: {
-              href: "#",
-              "data-toggle": "tooltip",
-              "data-placement": "bottom",
-              "data-original-title": "Añadir al carrito"
-            }
-          },
-          [_c("i", { staticClass: "ti-shopping-cart" })]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            attrs: {
-              href: "#",
-              "data-toggle": "tooltip",
-              "data-placement": "bottom",
-              "data-original-title": "Editar"
-            }
-          },
-          [_c("i", { staticClass: "ti-pencil-alt" })]
-        )
-      ])
-    ])
+    return _c(
+      "a",
+      {
+        attrs: {
+          href: "#",
+          "data-toggle": "tooltip",
+          "data-placement": "bottom",
+          "data-original-title": "Añadir al carrito"
+        }
+      },
+      [_c("i", { staticClass: "ti-shopping-cart" })]
+    )
   },
   function() {
     var _vm = this
