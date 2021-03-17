@@ -52,7 +52,7 @@
                     <h4>84,568</h4>
                     <div class="pt-2">
                         <span class="f-left m-t-10 text-muted">
-                            <a href="" class="text-c-yellow"><i class="text-c-yellow f-16 icofont icofont-external-link m-r-10"></i>Ver
+                            <a href="{{route('products.index')}}" class="text-c-yellow"><i class="text-c-yellow f-16 icofont icofont-external-link m-r-10"></i>Ver
                                 más</a>
                         </span>
                         <div class="icon-btn plus-icon plus-icon-warning">

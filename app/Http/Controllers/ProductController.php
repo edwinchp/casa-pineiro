@@ -13,10 +13,9 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         //$products = Product::all();
-        //return view('product.index')->with('products', $products);
-        $foundByUser = $request->productsFound;
-        $products = Product::filterByNameBarcodeAndBrand($foundByUser)->get();
-        return response()->json($products, 200);
+        return view('product.index');
+        //->with('products', $products);
+        
     }
 
     public function edit($id)

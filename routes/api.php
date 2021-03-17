@@ -19,10 +19,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/products', 'ProductController@index');
+// Route::get('/products', 'ProductController@index');
 
-Route::prefix('/product')->group(function () {
-    Route::post('/store', 'ProductController@store');
-    Route::put('/{id}', 'ProductController@update');
-    Route::delete('/{id}', 'ProductController@destroy');
-});
+// Route::prefix('/product')->group(function () {
+//     Route::post('/store', 'ProductController@store');
+//     Route::put('/{id}', 'ProductController@update');
+//     Route::delete('/{id}', 'ProductController@destroy');
+// });
+
+
+Route::resource('products', 'ApiProductController');

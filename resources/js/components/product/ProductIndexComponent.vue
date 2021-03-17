@@ -5,6 +5,7 @@
         <i class="icofont icofont-food-basket"></i>
         <div class="d-inline-block">
           <h2>Productos</h2>
+          {{products}}
 
           <div class="section-header-buttons pr-5">
             <a
@@ -391,6 +392,7 @@ export default {
       productsFound: "",
       productTimeOut: "",
       beforeEditProductName: '',
+      beforeEditCpQty: '',
     };
   },
   computed: {
@@ -401,7 +403,8 @@ export default {
       return this.products.length;
     },
     allProductsQty: function () {
-      return this.products.reduce((sum, product) => sum + product.cp_qty, 0);
+      //return this.products.reduce((sum, product) => sum + product.cp_qty, 0);
+      return "meeh"
     },
   },
 
@@ -413,13 +416,13 @@ export default {
 
     getProducts: function () {
       axios
-        .get("/products", {
+        .get("/api/products/", {
           params: {
             productsFound: this.productsFound,
           },
         })
         .then((resp) => {
-          this.products = resp.data;
+          this.products = resp.data.data;
         });
     },
 
@@ -427,22 +430,27 @@ export default {
      * Each product
      */
     editProduct: function (product) {
-      this.beforeEditProductName = product.name;
+      this.beforeEditCpQty = product.cp_qty;
       product.editing = !product.editing;
     },
     doneEdit: function(product){
       product.editing = "false";
     },
     cancelEdit: function (product){
-      product.name = this.beforeEditProductName;
-      product.editing = "false";
+      product.cp_qty = this.beforeEditCpQty;
+      product.editing = !product.editing;
 
-    }
+    },
+
 
   },
 
   created() {
     this.getProducts();
+  
   },
+
+  mounted(){
+  }
 };
 </script>

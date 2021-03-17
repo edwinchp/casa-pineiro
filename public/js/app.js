@@ -2326,13 +2326,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       products: [],
       productsFound: "",
       productTimeOut: "",
-      beforeEditProductName: ''
+      beforeEditProductName: '',
+      beforeEditCpQty: ''
     };
   },
   computed: {
@@ -2343,9 +2345,8 @@ __webpack_require__.r(__webpack_exports__);
       return this.products.length;
     },
     allProductsQty: function allProductsQty() {
-      return this.products.reduce(function (sum, product) {
-        return sum + product.cp_qty;
-      }, 0);
+      //return this.products.reduce((sum, product) => sum + product.cp_qty, 0);
+      return "meeh";
     }
   },
   methods: {
@@ -2356,12 +2357,12 @@ __webpack_require__.r(__webpack_exports__);
     getProducts: function getProducts() {
       var _this = this;
 
-      axios.get("/products", {
+      axios.get("/api/products/", {
         params: {
           productsFound: this.productsFound
         }
       }).then(function (resp) {
-        _this.products = resp.data;
+        _this.products = resp.data.data;
       });
     },
 
@@ -2369,20 +2370,21 @@ __webpack_require__.r(__webpack_exports__);
      * Each product
      */
     editProduct: function editProduct(product) {
-      this.beforeEditProductName = product.name;
+      this.beforeEditCpQty = product.cp_qty;
       product.editing = !product.editing;
     },
     doneEdit: function doneEdit(product) {
       product.editing = "false";
     },
     cancelEdit: function cancelEdit(product) {
-      product.name = this.beforeEditProductName;
-      product.editing = "false";
+      product.cp_qty = this.beforeEditCpQty;
+      product.editing = !product.editing;
     }
   },
   created: function created() {
     this.getProducts();
-  }
+  },
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -38646,7 +38648,15 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-sm-12" }, [
     _c("div", { staticClass: "card fb-card" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "card-header color-card" }, [
+        _c("i", { staticClass: "icofont icofont-food-basket" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-inline-block" }, [
+          _c("h2", [_vm._v("Productos")]),
+          _vm._v("\n        " + _vm._s(_vm.products) + "\n\n        "),
+          _vm._m(0)
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-block text-center" }, [
         _c("div", { staticClass: "row" }, [
@@ -38879,91 +38889,82 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header color-card" }, [
-      _c("i", { staticClass: "icofont icofont-food-basket" }),
+    return _c("div", { staticClass: "section-header-buttons pr-5" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-inverse btn-success-a",
+          attrs: {
+            href: "product.create.html",
+            "data-toggle": "tooltip",
+            "data-placement": "bottom",
+            "data-original-title": "Nuevo producto"
+          }
+        },
+        [_vm._v("Nuevo")]
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "d-inline-block" }, [
-        _c("h2", [_vm._v("Productos")]),
+      _c("div", { staticClass: "dropdown-inverse dropdown open" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-inverse dropdown-toggle waves-effect waves-light",
+            attrs: {
+              type: "button",
+              id: "dropdown-7",
+              "data-toggle": "dropdown",
+              "aria-haspopup": "true",
+              "aria-expanded": "true"
+            }
+          },
+          [_vm._v("\n              Todos los productos\n            ")]
+        ),
         _vm._v(" "),
-        _c("div", { staticClass: "section-header-buttons pr-5" }, [
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-inverse btn-success-a",
-              attrs: {
-                href: "product.create.html",
-                "data-toggle": "tooltip",
-                "data-placement": "bottom",
-                "data-original-title": "Nuevo producto"
-              }
-            },
-            [_vm._v("Nuevo")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "dropdown-inverse dropdown open" }, [
+        _c(
+          "div",
+          {
+            staticClass: "dropdown-menu",
+            attrs: {
+              "aria-labelledby": "dropdown-7",
+              "data-dropdown-in": "fadeIn",
+              "data-dropdown-out": "fadeOut"
+            }
+          },
+          [
             _c(
-              "button",
+              "a",
               {
-                staticClass:
-                  "btn btn-inverse dropdown-toggle waves-effect waves-light",
-                attrs: {
-                  type: "button",
-                  id: "dropdown-7",
-                  "data-toggle": "dropdown",
-                  "aria-haspopup": "true",
-                  "aria-expanded": "true"
-                }
+                staticClass: "dropdown-item waves-light waves-effect active",
+                attrs: { href: "#" }
               },
-              [_vm._v("\n              Todos los productos\n            ")]
+              [_vm._v("Todos los productos")]
             ),
             _vm._v(" "),
             _c(
-              "div",
+              "a",
               {
-                staticClass: "dropdown-menu",
-                attrs: {
-                  "aria-labelledby": "dropdown-7",
-                  "data-dropdown-in": "fadeIn",
-                  "data-dropdown-out": "fadeOut"
-                }
+                staticClass: "dropdown-item waves-light waves-effect",
+                attrs: { href: "#" }
               },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "dropdown-item waves-light waves-effect active",
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Todos los productos")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "dropdown-item waves-light waves-effect",
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Apunto de caducar")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "dropdown-item waves-light waves-effect",
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Apunto de acabarse")]
-                )
-              ]
+              [_vm._v("Apunto de caducar")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "dropdown-item waves-light waves-effect",
+                attrs: { href: "#" }
+              },
+              [_vm._v("Apunto de acabarse")]
             )
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "btn btn-inverse" }, [
-            _c("i", { staticClass: "icofont icofont-download icofont-alt" }),
-            _vm._v("Descargar\n          ")
-          ])
-        ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-inverse" }, [
+        _c("i", { staticClass: "icofont icofont-download icofont-alt" }),
+        _vm._v("Descargar\n          ")
       ])
     ])
   },
@@ -51297,7 +51298,8 @@ module.exports = function(module) {
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); //Vue.use(require('vue-resource'));
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -51309,7 +51311,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
-Vue.component('product-index-component', __webpack_require__(/*! ./components/product/ProductIndexComponent.vue */ "./resources/js/components/product/ProductIndexComponent.vue")["default"]);
+Vue.component('product-index-component', __webpack_require__(/*! ./components/product/ProductIndexComponent.vue */ "./resources/js/components/product/ProductIndexComponent.vue")["default"]); //Vue.component('pagination', require('laravel-vue-pagination'));
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
