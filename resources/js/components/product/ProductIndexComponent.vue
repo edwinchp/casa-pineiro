@@ -5,7 +5,6 @@
         <i class="icofont icofont-food-basket"></i>
         <div class="d-inline-block">
           <h2>Productos</h2>
-          {{products}}
 
           <div class="section-header-buttons pr-5">
             <a
@@ -364,16 +363,37 @@
           <div class="p-4">
             <nav aria-label="Page navigation example">
               <ul class="pagination justify-content-end">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                <li class="page-item" v-if="pagination.current_page > 1">
+                  <a
+                    class="page-link"
+                    href="#"
+                    tabindex="-1"
+                    @click.prevent="changePage(pagination.current_page - 1)"
+                    >Anterior</a
+                  >
                 </li>
-                <li class="page-item active">
-                  <a class="page-link" href="#">1</a>
+                <li
+                  v-for="page in pagesNumber"
+                  :key="page"
+                  v-bind:class="page == isActive ? 'active' : ''"
+                  class="page-item"
+                >
+                  <a
+                    class="page-link"
+                    href="#"
+                    @click.prevent="changePage(page)"
+                    >{{ page }}</a
+                  >
                 </li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Siguiente</a>
+                <li
+                  class="page-item"
+                  v-if="pagination.current_page < pagination.last_page"
+                >
+                  <a
+                    class="page-link"
+                    @click.prevent="changePage(pagination.current_page + 1)"
+                    >Siguiente</a
+                  >
                 </li>
               </ul>
             </nav>
@@ -391,8 +411,16 @@ export default {
       products: [],
       productsFound: "",
       productTimeOut: "",
-      beforeEditProductName: '',
-      beforeEditCpQty: '',
+      beforeEditProductName: "",
+      beforeEditCpQty: "",
+      pagination: {
+        total: 0,
+        current_page: 0,
+        per_page: 0,
+        last_page: 0,
+        from: 0,
+        to: 0,
+      },
     };
   },
   computed: {
@@ -404,7 +432,35 @@ export default {
     },
     allProductsQty: function () {
       //return this.products.reduce((sum, product) => sum + product.cp_qty, 0);
-      return "meeh"
+      return "meeh";
+    },
+
+    isActive: function () {
+      return this.pagination.current_page;
+    },
+
+    pagesNumber: function () {
+      if (!this.pagination.to) {
+        return [];
+      }
+
+      var from = this.pagination.current_page - 2; //TODO OFFSET
+      if (from < 1) {
+        from = 1;
+      }
+
+      var to = from + 2 * 2; //TODO OFFSET
+      if (to >= this.pagination.last_page) {
+        to = this.pagination.last_page;
+      }
+
+      var pagesArray = [];
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+
+      return pagesArray;
     },
   },
 
@@ -414,15 +470,16 @@ export default {
       this.productTimeOut = setTimeout(this.getProducts, 500);
     },
 
-    getProducts: function () {
+    getProducts: function (page) {
       axios
-        .get("/api/products/", {
+        .get("/api/products/?page=" + page, {
           params: {
             productsFound: this.productsFound,
           },
         })
         .then((resp) => {
-          this.products = resp.data.data;
+          this.products = resp.data.products.data;
+          this.pagination = resp.data.pagination;
         });
     },
 
@@ -433,24 +490,28 @@ export default {
       this.beforeEditCpQty = product.cp_qty;
       product.editing = !product.editing;
     },
-    doneEdit: function(product){
+    doneEdit: function (product) {
       product.editing = "false";
     },
-    cancelEdit: function (product){
+    cancelEdit: function (product) {
       product.cp_qty = this.beforeEditCpQty;
       product.editing = !product.editing;
-
     },
 
+    /**
+     * Pagination
+     */
 
+    changePage: function (page) {
+      this.pagination.current_page = page;
+      this.getProducts(page);
+    },
   },
 
   created() {
-    this.getProducts();
-  
+    this.getProducts(1);
   },
 
-  mounted(){
-  }
+  mounted() {},
 };
 </script>

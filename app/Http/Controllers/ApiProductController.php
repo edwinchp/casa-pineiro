@@ -12,12 +12,24 @@ class ApiProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //$foundByUser = $request->productsFound;
         //$products = Product::filterByNameBarcodeAndBrand($foundByUser)->get();
-        $products = Product::paginate(10);
-        return response()->json($products, 200);
+        $products = Product::paginate(4);
+        //return response()->json($products, 200);
+
+        return [
+            'pagination' => [
+                'total' => $products->total(),
+                'current_page' => $products->currentPage(),
+                'per_page' => $products->perPage(),
+                'last_page' => $products->lastPage(),
+                'from' => $products->firstItem(),
+                'to' => $products->lastPage(),
+            ],
+            'products' => $products
+        ];
     }
 
     /**
