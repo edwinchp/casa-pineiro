@@ -409,6 +409,7 @@ export default {
   data() {
     return {
       products: [],
+      allProducts: [],
       productsFound: "",
       productTimeOut: "",
       beforeEditProductName: "",
@@ -428,11 +429,10 @@ export default {
       return "hello";
     },
     totalProducts: function () {
-      return this.products.length;
+      return this.allProducts.length;
     },
     allProductsQty: function () {
-      //return this.products.reduce((sum, product) => sum + product.cp_qty, 0);
-      return "meeh";
+      return this.allProducts.reduce((sum, product) => sum + product.cp_qty, 0);
     },
 
     isActive: function () {
@@ -471,16 +471,16 @@ export default {
     },
 
     getProducts: function (page) {
-      axios
-        .get("/api/products/?page=" + page, {
-          params: {
-            productsFound: this.productsFound,
-          },
-        })
-        .then((resp) => {
-          this.products = resp.data.products.data;
-          this.pagination = resp.data.pagination;
-        });
+      axios.get("/api/products/?page=" + page).then((resp) => {
+        this.products = resp.data.products.data;
+        this.pagination = resp.data.pagination;
+      });
+    },
+
+    getAllProducts: function () {
+      axios.get("api/allProducts/").then((response) => {
+        this.allProducts = response.data;
+      });
     },
 
     /**
@@ -510,6 +510,7 @@ export default {
 
   created() {
     this.getProducts(1);
+    this.getAllProducts();
   },
 
   mounted() {},

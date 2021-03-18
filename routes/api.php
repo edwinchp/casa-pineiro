@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +30,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::resource('products', 'ApiProductController');
+Route::get('allProducts', 'ApiProductController@allProducts');

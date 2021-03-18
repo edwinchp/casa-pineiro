@@ -16,7 +16,7 @@ class ApiProductController extends Controller
     {
         //$foundByUser = $request->productsFound;
         //$products = Product::filterByNameBarcodeAndBrand($foundByUser)->get();
-        $products = Product::paginate(4);
+        $products = Product::paginate(7);
         //return response()->json($products, 200);
 
         return [
@@ -96,5 +96,16 @@ class ApiProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    /**
+     * Additional methods
+     */
+    public function allProducts()
+    {
+        $products = Product::all();
+
+        return response()->json($products, 200);
     }
 }

@@ -2351,6 +2351,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       products: [],
+      allProducts: [],
       productsFound: "",
       productTimeOut: "",
       beforeEditProductName: "",
@@ -2370,11 +2371,12 @@ __webpack_require__.r(__webpack_exports__);
       return "hello";
     },
     totalProducts: function totalProducts() {
-      return this.products.length;
+      return this.allProducts.length;
     },
     allProductsQty: function allProductsQty() {
-      //return this.products.reduce((sum, product) => sum + product.cp_qty, 0);
-      return "meeh";
+      return this.allProducts.reduce(function (sum, product) {
+        return sum + product.cp_qty;
+      }, 0);
     },
     isActive: function isActive() {
       return this.pagination.current_page;
@@ -2414,13 +2416,16 @@ __webpack_require__.r(__webpack_exports__);
     getProducts: function getProducts(page) {
       var _this = this;
 
-      axios.get("/api/products/?page=" + page, {
-        params: {
-          productsFound: this.productsFound
-        }
-      }).then(function (resp) {
+      axios.get("/api/products/?page=" + page).then(function (resp) {
         _this.products = resp.data.products.data;
         _this.pagination = resp.data.pagination;
+      });
+    },
+    getAllProducts: function getAllProducts() {
+      var _this2 = this;
+
+      axios.get("api/allProducts/").then(function (response) {
+        _this2.allProducts = response.data;
       });
     },
 
@@ -2449,6 +2454,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getProducts(1);
+    this.getAllProducts();
   },
   mounted: function mounted() {}
 });
