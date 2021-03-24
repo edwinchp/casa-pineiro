@@ -2347,6 +2347,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2410,8 +2411,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     findProducts: function findProducts() {
-      clearTimeout(this.productTimeOut);
-      this.productTimeOut = setTimeout(this.getProducts, 500);
+      if (this.productsFound.length > 2) {
+        clearTimeout(this.productTimeOut);
+        this.productTimeOut = setTimeout(this.getSearchProducts, 500);
+      } else {
+        this.getProducts(1);
+      }
     },
     getProducts: function getProducts(page) {
       var _this = this;
@@ -2421,11 +2426,22 @@ __webpack_require__.r(__webpack_exports__);
         _this.pagination = resp.data.pagination;
       });
     },
-    getAllProducts: function getAllProducts() {
+    getSearchProducts: function getSearchProducts() {
       var _this2 = this;
 
+      axios.get("api/allProducts", {
+        params: {
+          productsFound: this.productsFound
+        }
+      }).then(function (response) {
+        _this2.products = response.data; //this.pagination = response.data.pagination;
+      });
+    },
+    getAllProducts: function getAllProducts() {
+      var _this3 = this;
+
       axios.get("api/allProducts/").then(function (response) {
-        _this2.allProducts = response.data;
+        _this3.allProducts = response.data;
       });
     },
 
@@ -38720,7 +38736,19 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-sm-12" }, [
     _c("div", { staticClass: "card fb-card" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "card-header color-card" }, [
+        _c("i", { staticClass: "icofont icofont-food-basket" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-inline-block" }, [
+          _c("h2", [_vm._v("Productos")]),
+          _vm._v(
+            "\n        products found: " +
+              _vm._s(_vm.productsFound) +
+              "\n\n        "
+          ),
+          _vm._m(0)
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-block text-center" }, [
         _c("div", { staticClass: "row" }, [
@@ -39030,91 +39058,82 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header color-card" }, [
-      _c("i", { staticClass: "icofont icofont-food-basket" }),
+    return _c("div", { staticClass: "section-header-buttons pr-5" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-inverse btn-success-a",
+          attrs: {
+            href: "product.create.html",
+            "data-toggle": "tooltip",
+            "data-placement": "bottom",
+            "data-original-title": "Nuevo producto"
+          }
+        },
+        [_vm._v("Nuevo")]
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "d-inline-block" }, [
-        _c("h2", [_vm._v("Productos")]),
+      _c("div", { staticClass: "dropdown-inverse dropdown open" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-inverse dropdown-toggle waves-effect waves-light",
+            attrs: {
+              type: "button",
+              id: "dropdown-7",
+              "data-toggle": "dropdown",
+              "aria-haspopup": "true",
+              "aria-expanded": "true"
+            }
+          },
+          [_vm._v("\n              Todos los productos\n            ")]
+        ),
         _vm._v(" "),
-        _c("div", { staticClass: "section-header-buttons pr-5" }, [
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-inverse btn-success-a",
-              attrs: {
-                href: "product.create.html",
-                "data-toggle": "tooltip",
-                "data-placement": "bottom",
-                "data-original-title": "Nuevo producto"
-              }
-            },
-            [_vm._v("Nuevo")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "dropdown-inverse dropdown open" }, [
+        _c(
+          "div",
+          {
+            staticClass: "dropdown-menu",
+            attrs: {
+              "aria-labelledby": "dropdown-7",
+              "data-dropdown-in": "fadeIn",
+              "data-dropdown-out": "fadeOut"
+            }
+          },
+          [
             _c(
-              "button",
+              "a",
               {
-                staticClass:
-                  "btn btn-inverse dropdown-toggle waves-effect waves-light",
-                attrs: {
-                  type: "button",
-                  id: "dropdown-7",
-                  "data-toggle": "dropdown",
-                  "aria-haspopup": "true",
-                  "aria-expanded": "true"
-                }
+                staticClass: "dropdown-item waves-light waves-effect active",
+                attrs: { href: "#" }
               },
-              [_vm._v("\n              Todos los productos\n            ")]
+              [_vm._v("Todos los productos")]
             ),
             _vm._v(" "),
             _c(
-              "div",
+              "a",
               {
-                staticClass: "dropdown-menu",
-                attrs: {
-                  "aria-labelledby": "dropdown-7",
-                  "data-dropdown-in": "fadeIn",
-                  "data-dropdown-out": "fadeOut"
-                }
+                staticClass: "dropdown-item waves-light waves-effect",
+                attrs: { href: "#" }
               },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "dropdown-item waves-light waves-effect active",
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Todos los productos")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "dropdown-item waves-light waves-effect",
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Apunto de caducar")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "dropdown-item waves-light waves-effect",
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Apunto de acabarse")]
-                )
-              ]
+              [_vm._v("Apunto de caducar")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "dropdown-item waves-light waves-effect",
+                attrs: { href: "#" }
+              },
+              [_vm._v("Apunto de acabarse")]
             )
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "btn btn-inverse" }, [
-            _c("i", { staticClass: "icofont icofont-download icofont-alt" }),
-            _vm._v("Descargar\n          ")
-          ])
-        ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-inverse" }, [
+        _c("i", { staticClass: "icofont icofont-download icofont-alt" }),
+        _vm._v("Descargar\n          ")
       ])
     ])
   },

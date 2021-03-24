@@ -102,8 +102,14 @@ class ApiProductController extends Controller
     /**
      * Additional methods
      */
-    public function allProducts()
+    public function allProducts(Request $request)
     {
+
+        if ($request->productsFound) {
+            $products = Product::filterByNameBarcodeAndBrand($request->productsFound)->get();
+            return response()->json($products, 200);
+        }
+
         $products = Product::all();
 
         return response()->json($products, 200);

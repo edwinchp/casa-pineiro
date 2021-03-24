@@ -5,6 +5,7 @@
         <i class="icofont icofont-food-basket"></i>
         <div class="d-inline-block">
           <h2>Productos</h2>
+          products found: {{ productsFound }}
 
           <div class="section-header-buttons pr-5">
             <a
@@ -466,8 +467,12 @@ export default {
 
   methods: {
     findProducts: function () {
-      clearTimeout(this.productTimeOut);
-      this.productTimeOut = setTimeout(this.getProducts, 500);
+      if (this.productsFound.length > 2) {
+        clearTimeout(this.productTimeOut);
+        this.productTimeOut = setTimeout(this.getSearchProducts, 500);
+      } else {
+        this.getProducts(1);
+      }
     },
 
     getProducts: function (page) {
@@ -475,6 +480,19 @@ export default {
         this.products = resp.data.products.data;
         this.pagination = resp.data.pagination;
       });
+    },
+
+    getSearchProducts: function () {
+      axios
+        .get("api/allProducts", {
+          params: {
+            productsFound: this.productsFound,
+          },
+        })
+        .then((response) => {
+          this.products = response.data;
+          //this.pagination = response.data.pagination;
+        });
     },
 
     getAllProducts: function () {
