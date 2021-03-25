@@ -361,7 +361,7 @@
             </tbody>
           </table>
 
-          <div class="p-4">
+          <div class="p-4" v-show="!searchIsActive">
             <nav aria-label="Page navigation example">
               <ul class="pagination justify-content-end">
                 <li class="page-item" v-if="pagination.current_page > 1">
@@ -463,11 +463,15 @@ export default {
 
       return pagesArray;
     },
+
+    searchIsActive: function(){
+      return this.productsFound.length > 2
+    }
   },
 
   methods: {
     findProducts: function () {
-      if (this.productsFound.length > 2) {
+      if (this.searchIsActive) {
         clearTimeout(this.productTimeOut);
         this.productTimeOut = setTimeout(this.getSearchProducts, 500);
       } else {
