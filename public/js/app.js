@@ -7549,7 +7549,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-products-scope[data-v-7734829f]{\n  margin-bottom: 200px;\n}\n", ""]);
+exports.push([module.i, "\n.table-products-scope[data-v-7734829f] {\n  margin-bottom: 200px;\n}\n", ""]);
 
 // exports
 

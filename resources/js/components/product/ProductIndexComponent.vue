@@ -468,9 +468,9 @@ export default {
       return pagesArray;
     },
 
-    searchIsActive: function(){
-      return this.productsFound.length > 2
-    }
+    searchIsActive: function () {
+      return this.productsFound.length > 2;
+    },
   },
 
   methods: {
@@ -533,11 +533,10 @@ export default {
       this.getProducts(page);
     },
 
-
-    getProductName(product){
+    getProductName(product) {
       let shortName = product.name.substring(0, 40);
-      return shortName.length >= 40 ? shortName + "..." : shortName
-    }
+      return shortName.length >= 40 ? shortName + "..." : shortName;
+    },
   },
 
   created() {
@@ -550,7 +549,7 @@ export default {
 </script>
 
 <style scoped>
-.table-products-scope{
+.table-products-scope {
   margin-bottom: 200px;
 }
 </style>
