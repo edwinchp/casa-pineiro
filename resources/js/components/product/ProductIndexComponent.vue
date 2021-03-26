@@ -76,7 +76,7 @@
       </div>
     </div>
 
-    <div class="card pt-3">
+    <div class="card pt-3 table-products-scope">
       <div class="section-header pl-3">
         <div class="col-xl-6">
           <div class="input-group search-box">
@@ -266,12 +266,16 @@
 
               <!-- @foreach($products as $product)-->
 
+              <tr v-if="products.length < 1">
+                <td colspan="7">Sin productos</td>
+              </tr>
+
               <tr v-for="(product, index) in products" :key="index">
                 <td class="table-name">
                   <div class="row">
                     <div class="col-xl-11">
                       <a :href="'products/' + product.id + '/edit'">{{
-                        product.name
+                        getProductName(product)
                       }}</a>
                     </div>
                   </div>
@@ -471,9 +475,9 @@ export default {
 
   methods: {
     findProducts: function () {
+      clearTimeout(this.productTimeOut);
       if (this.searchIsActive) {
-        clearTimeout(this.productTimeOut);
-        this.productTimeOut = setTimeout(this.getSearchProducts, 500);
+        this.productTimeOut = setTimeout(this.getSearchProducts, 800);
       } else {
         this.getProducts(1);
       }
@@ -528,6 +532,12 @@ export default {
       this.pagination.current_page = page;
       this.getProducts(page);
     },
+
+
+    getProductName(product){
+      let shortName = product.name.substring(0, 40);
+      return shortName.length >= 40 ? shortName + "..." : shortName
+    }
   },
 
   created() {
@@ -538,3 +548,9 @@ export default {
   mounted() {},
 };
 </script>
+
+<style scoped>
+.table-products-scope{
+  margin-bottom: 200px;
+}
+</style>
