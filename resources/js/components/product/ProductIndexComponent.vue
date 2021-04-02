@@ -5,7 +5,6 @@
         <i class="icofont icofont-food-basket"></i>
         <div class="d-inline-block">
           <h2>Productos</h2>
-          products found: {{ productsFound }}
 
           <div class="section-header-buttons pr-5">
             <a
@@ -434,10 +433,21 @@ export default {
       return "hello";
     },
     totalProducts: function () {
-      return this.allProducts.length;
+      if (this.searchIsActive) {
+        return this.products.length;
+      } else {
+        return this.allProducts.length;
+      }
     },
     allProductsQty: function () {
-      return this.allProducts.reduce((sum, product) => sum + product.cp_qty, 0);
+      if (this.searchIsActive) {
+        return this.products.reduce((sum, product) => sum + product.cp_qty, 0);
+      } else {
+        return this.allProducts.reduce(
+          (sum, product) => sum + product.cp_qty,
+          0
+        );
+      }
     },
 
     isActive: function () {

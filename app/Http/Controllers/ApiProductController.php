@@ -16,7 +16,7 @@ class ApiProductController extends Controller
     {
         //$foundByUser = $request->productsFound;
         //$products = Product::filterByNameBarcodeAndBrand($foundByUser)->get();
-        $products = Product::paginate(7);
+        $products = Product::paginate(5);
         //return response()->json($products, 200);
 
         return [
