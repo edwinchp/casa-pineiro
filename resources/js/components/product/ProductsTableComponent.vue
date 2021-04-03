@@ -5,7 +5,7 @@
         <tr>
           <th>Nombre</th>
           <th>Existentes</th>
-          <th>Nuevos</th>
+          <th v-show="this.editingProduct">Nuevos</th>
           <th>Precio de compra</th>
           <th>Precio de venta</th>
           <th>Imagen</th>
@@ -178,7 +178,7 @@
             <div class="row">
               <div class="col-xl-11">
                 <a :href="'products/' + product.id + '/edit'">
-                  {{ product.name }}
+                  {{ shortProductName(product.name) }}
                 </a>
               </div>
             </div>
@@ -187,11 +187,21 @@
           <td class="table-existing-product">
             <div class="row">
               <div class="col-xl-11 existing-product">
-                <div v-if="product.editing" class="product-current-qty">
+                <!--QTY READ MODE-->
+                <div v-if="!product.editing" class="product-current-qty">
                   {{ product.cp_qty }}
                 </div>
 
-                <div v-if="!product.editing" class="product-item">
+                <!--QTY EDIT MODE-->
+                <div v-if="product.editing" class="wrapper">
+                  <input
+                    type="number"
+                    :value="product.cp_qty"
+                    @keyup.enter="doneEdit(product)"
+                  />
+                </div>
+
+                <!--<div v-if="!product.editing" class="product-item">
                   <input
                     class="form-control"
                     type="number"
@@ -200,23 +210,16 @@
                     @blur="doneEdit(product)"
                     @keyup.esc="cancelEdit(product)"
                   />
-                </div>
+                </div>-->
               </div>
             </div>
           </td>
 
-          <td class="table-new-product">
+          <!--NEW EDIT MODE-->
+          <td v-if="product.editing" class="table-new-product">
             <div class="row">
-              <div class="col-xl-11">
-                <input
-                  class="form-control"
-                  type="text"
-                  value=""
-                  data-toggle="tooltip"
-                  data-placement="bottom"
-                  data-original-title="Edite este producto para usar esta opción"
-                  disabled
-                />
+              <div class="col-xl-11 wrapper">
+                <input type="number" :value="this.newQty" />
               </div>
             </div>
           </td>
@@ -245,22 +248,36 @@
             </a>
           </td>
           <td>
-            <div class="table-options">
-              <a
-                href="#"
+            <!--READ MODE-->
+            <div v-if="!product.editing" class="table-options">
+              <button
+                class="btn"
                 data-toggle="tooltip"
                 data-placement="bottom"
                 data-original-title="Añadir al carrito"
-                ><i class="ti-shopping-cart"></i
-              ></a>
+              >
+                <i class="ti-shopping-cart"></i>
+              </button>
+
               <button
-                href="#"
+                class="btn"
                 data-toggle="tooltip"
                 data-placement="bottom"
                 data-original-title="Editar"
                 @click="editProduct(product)"
               >
                 <i class="ti-pencil-alt"></i>
+              </button>
+            </div>
+
+            <!--EDIT MODE-->
+            <div v-if="product.editing" class="table-options">
+              <button class="btn" @click="cancelEdit(product)">
+                <i class="ti-close"></i>
+              </button>
+
+              <button class="btn" @click="submitEdit(product)">
+                <i class="ti-check"></i>
               </button>
             </div>
           </td>
@@ -273,8 +290,37 @@
 <script>
 export default {
   props: ["products"],
+
+  data() {
+    return {
+      editingProduct: false,
+      newQty: 0,
+    };
+  },
+
+  methods: {
+    shortProductName(product) {
+      let shortName = product.substring(0, 35);
+      return product.length >= 35 ? shortName + "..." : shortName;
+    },
+
+    editProduct(product) {
+      this.editingProduct = !product.editing;
+      product.editing = !product.editing;
+    },
+
+    cancelEdit(product) {
+      this.editingProduct = false;
+      product.editing = false;
+    },
+  },
 };
 </script>
 
-<style>
+<style scoped>
+.wrapper input {
+  width: 80px;
+  text-align: center;
+  font-size: 20px;
+}
 </style>

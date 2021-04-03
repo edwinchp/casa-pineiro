@@ -43,7 +43,7 @@ class CreateProductsTable extends Migration
             $table->integer("new_duration")->nullable();
             $table->boolean("show_product")->nullable()->default(false);
             $table->string("location")->nullable();
-            $table->string("editing")->default('false');
+            $table->boolean("editing")->default(false);
             $table->date("updated_date")->nullable();
             $table->integer("updated_by")->nullable();
             $table->timestamps();
