@@ -196,7 +196,7 @@
                 <div v-if="product.editing" class="wrapper">
                   <input
                     type="number"
-                    :value="product.cp_qty"
+                    :value="sumQty"
                     @keyup.enter="doneEdit(product)"
                   />
                 </div>
@@ -219,7 +219,7 @@
           <td v-if="product.editing" class="table-new-product">
             <div class="row">
               <div class="col-xl-11 wrapper">
-                <input type="number" :value="this.newQty" />
+                <input type="number" :value="new_qty" />
               </div>
             </div>
           </td>
@@ -250,22 +250,11 @@
           <td>
             <!--READ MODE-->
             <div v-if="!product.editing" class="table-options">
-              <button
-                class="btn"
-                data-toggle="tooltip"
-                data-placement="bottom"
-                data-original-title="Añadir al carrito"
-              >
+              <button class="btn">
                 <i class="ti-shopping-cart"></i>
               </button>
 
-              <button
-                class="btn"
-                data-toggle="tooltip"
-                data-placement="bottom"
-                data-original-title="Editar"
-                @click="editProduct(product)"
-              >
+              <button class="btn" @click="editProduct(product)">
                 <i class="ti-pencil-alt"></i>
               </button>
             </div>
@@ -289,12 +278,14 @@
 
 <script>
 export default {
-  props: ["products"],
+  props: ["products", "p"],
 
   data() {
     return {
       editingProduct: false,
-      newQty: 0,
+      current_qty: 0,
+      new_qty: 0,
+      sum_qty: 0,
     };
   },
 
@@ -307,11 +298,21 @@ export default {
     editProduct(product) {
       this.editingProduct = !product.editing;
       product.editing = !product.editing;
+      this.new_qty = 0;
+      this.current_qty = product.cp_qty;
     },
 
     cancelEdit(product) {
       this.editingProduct = false;
       product.editing = false;
+      this.new_qty = 0;
+      this.current_qty = 0;
+    },
+  },
+
+  computed: {
+    sumQty() {
+      return (this.sum_qty = this.current_qty + this.new_qty);
     },
   },
 };

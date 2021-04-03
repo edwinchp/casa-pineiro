@@ -26,6 +26,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@popperjs/core": "^2.9.2",
         "laravel-vue-pagination": "^2.3.1",
         "vue": "^2.6.12",
         "vue-axios": "^3.0.1",
