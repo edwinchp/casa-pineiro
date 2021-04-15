@@ -23,6 +23,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('product-index-component', require('./components/product/ProductIndexComponent.vue').default);
 Vue.component('products-table-component', require('./components/product/ProductsTableComponent.vue').default);
+Vue.component('product-component', require('./components/product/ProductComponent.vue').default);
 //Vue.component('pagination', require('laravel-vue-pagination'));
 
 /**

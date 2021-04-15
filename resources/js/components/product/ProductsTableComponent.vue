@@ -188,18 +188,10 @@
             <div class="row">
               <div class="col-xl-11 existing-product">
                 <!--QTY READ MODE-->
-                <div v-if="!product.editing" class="product-current-qty">
+                <div class="product-current-qty">
                   {{ product.cp_qty }}
                 </div>
 
-                <!--QTY EDIT MODE-->
-                <div v-if="product.editing" class="wrapper">
-                  <input
-                    type="number"
-                    :value="sumQty"
-                    @keyup.enter="doneEdit(product)"
-                  />
-                </div>
 
                 <!--<div v-if="!product.editing" class="product-item">
                   <input
@@ -219,10 +211,13 @@
           <td v-if="product.editing" class="table-new-product">
             <div class="row">
               <div class="col-xl-11 wrapper">
-                <input type="number" :value="new_qty" />
+                <!--input type="number" :value="this.new" /-->
+                <product-component :current_qty="product.cp_qty" @qtyChanged="sum_qty = $event"/>
+                {{}}
               </div>
             </div>
           </td>
+
 
           <td class="table-bought-product">
             <div class="row">
@@ -277,14 +272,17 @@
 </template>
 
 <script>
+import productComponent from './ProductComponent';
+
 export default {
-  props: ["products", "p"],
+
+
+  props: ["products"],
 
   data() {
     return {
       editingProduct: false,
       current_qty: 0,
-      new_qty: 0,
       sum_qty: 0,
     };
   },
@@ -314,6 +312,7 @@ export default {
     sumQty() {
       return (this.sum_qty = this.current_qty + this.new_qty);
     },
+
   },
 };
 </script>
