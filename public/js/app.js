@@ -2125,14 +2125,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -39588,25 +39580,98 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-sm-12" }, [
     _c("div", { staticClass: "card fb-card" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "card-header color-card" }, [
+        _c("i", { staticClass: "icofont icofont-food-basket" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-inline-block" }, [
+          _c("h2", [_vm._v("Productos")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "section-header-buttons pr-5" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-inverse btn-success-a",
+                attrs: {
+                  href: "product.create.html",
+                  "data-toggle": "tooltip",
+                  "data-placement": "bottom",
+                  "data-original-title": "Nuevo producto"
+                }
+              },
+              [_vm._v("Nuevo")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: false,
+                    expression: "false"
+                  }
+                ],
+                staticClass: "dropdown-inverse dropdown open"
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-inverse dropdown-toggle waves-effect waves-light",
+                    attrs: {
+                      type: "button",
+                      id: "dropdown-7",
+                      "data-toggle": "dropdown",
+                      "aria-haspopup": "true",
+                      "aria-expanded": "true"
+                    }
+                  },
+                  [_vm._v("\n              Todos los productos\n            ")]
+                ),
+                _vm._v(" "),
+                _vm._m(0)
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: false,
+                    expression: "false"
+                  }
+                ],
+                staticClass: "btn btn-inverse"
+              },
+              [
+                _c("i", {
+                  staticClass: "icofont icofont-download icofont-alt"
+                }),
+                _vm._v("Descargar\n          ")
+              ]
+            )
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-block text-center" }, [
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-3 b-r-default" }, [
+          _c("div", { staticClass: "col-6 b-r-default" }, [
             _c("h2", [_vm._v(_vm._s(_vm.totalProducts))]),
             _vm._v(" "),
             _c("p", { staticClass: "text-muted" }, [_vm._v("Productos")])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-3 b-r-default" }, [
+          _c("div", { staticClass: "col-6 b-r-default" }, [
             _c("h2", [_vm._v(_vm._s(_vm.allProductsQty))]),
             _vm._v(" "),
             _c("p", { staticClass: "text-muted" }, [_vm._v("Existentes")])
-          ]),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _vm._m(2)
+          ])
         ])
       ])
     ]),
@@ -39615,7 +39680,7 @@ var render = function() {
       _c("div", { staticClass: "section-header pl-3" }, [
         _c("div", { staticClass: "col-xl-6" }, [
           _c("div", { staticClass: "input-group search-box" }, [
-            _vm._m(3),
+            _vm._m(1),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -39760,113 +39825,45 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header color-card" }, [
-      _c("i", { staticClass: "icofont icofont-food-basket" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "d-inline-block" }, [
-        _c("h2", [_vm._v("Productos")]),
+    return _c(
+      "div",
+      {
+        staticClass: "dropdown-menu",
+        attrs: {
+          "aria-labelledby": "dropdown-7",
+          "data-dropdown-in": "fadeIn",
+          "data-dropdown-out": "fadeOut"
+        }
+      },
+      [
+        _c(
+          "a",
+          {
+            staticClass: "dropdown-item waves-light waves-effect active",
+            attrs: { href: "#" }
+          },
+          [_vm._v("Todos los productos")]
+        ),
         _vm._v(" "),
-        _c("div", { staticClass: "section-header-buttons pr-5" }, [
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-inverse btn-success-a",
-              attrs: {
-                href: "product.create.html",
-                "data-toggle": "tooltip",
-                "data-placement": "bottom",
-                "data-original-title": "Nuevo producto"
-              }
-            },
-            [_vm._v("Nuevo")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "dropdown-inverse dropdown open" }, [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "btn btn-inverse dropdown-toggle waves-effect waves-light",
-                attrs: {
-                  type: "button",
-                  id: "dropdown-7",
-                  "data-toggle": "dropdown",
-                  "aria-haspopup": "true",
-                  "aria-expanded": "true"
-                }
-              },
-              [_vm._v("\n              Todos los productos\n            ")]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "dropdown-menu",
-                attrs: {
-                  "aria-labelledby": "dropdown-7",
-                  "data-dropdown-in": "fadeIn",
-                  "data-dropdown-out": "fadeOut"
-                }
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "dropdown-item waves-light waves-effect active",
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Todos los productos")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "dropdown-item waves-light waves-effect",
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Apunto de caducar")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "dropdown-item waves-light waves-effect",
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Apunto de acabarse")]
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "btn btn-inverse" }, [
-            _c("i", { staticClass: "icofont icofont-download icofont-alt" }),
-            _vm._v("Descargar\n          ")
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3 b-r-default" }, [
-      _c("h2", [_vm._v("55")]),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-muted" }, [_vm._v("Apunto de caducar")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [
-      _c("h2", [_vm._v("15")]),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-muted" }, [_vm._v("Apunto de acabarse")])
-    ])
+        _c(
+          "a",
+          {
+            staticClass: "dropdown-item waves-light waves-effect",
+            attrs: { href: "#" }
+          },
+          [_vm._v("Apunto de caducar")]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "dropdown-item waves-light waves-effect",
+            attrs: { href: "#" }
+          },
+          [_vm._v("Apunto de acabarse")]
+        )
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -40039,6 +40036,14 @@ var render = function() {
                       _c(
                         "button",
                         {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: false,
+                              expression: "false"
+                            }
+                          ],
                           staticClass: "btn",
                           on: {
                             click: function($event) {

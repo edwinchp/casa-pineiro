@@ -16,7 +16,7 @@
               >Nuevo</a
             >
 
-            <div class="dropdown-inverse dropdown open">
+            <div v-show="false" class="dropdown-inverse dropdown open">
               <button
                 class="btn btn-inverse dropdown-toggle waves-effect waves-light"
                 type="button"
@@ -47,7 +47,7 @@
               </div>
             </div>
 
-            <button class="btn btn-inverse">
+            <button v-show="false" class="btn btn-inverse">
               <i class="icofont icofont-download icofont-alt"></i>Descargar
             </button>
           </div>
@@ -55,21 +55,13 @@
       </div>
       <div class="card-block text-center">
         <div class="row">
-          <div class="col-3 b-r-default">
+          <div class="col-6 b-r-default">
             <h2>{{ totalProducts }}</h2>
             <p class="text-muted">Productos</p>
           </div>
-          <div class="col-3 b-r-default">
+          <div class="col-6 b-r-default">
             <h2>{{ allProductsQty }}</h2>
             <p class="text-muted">Existentes</p>
-          </div>
-          <div class="col-3 b-r-default">
-            <h2>55</h2>
-            <p class="text-muted">Apunto de caducar</p>
-          </div>
-          <div class="col-3">
-            <h2>15</h2>
-            <p class="text-muted">Apunto de acabarse</p>
           </div>
         </div>
       </div>

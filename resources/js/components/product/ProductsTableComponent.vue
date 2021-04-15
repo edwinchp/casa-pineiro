@@ -249,7 +249,7 @@
                 <i class="ti-shopping-cart"></i>
               </button>
 
-              <button class="btn" @click="editProduct(product)">
+              <button v-show="false" class="btn" @click="editProduct(product)">
                 <i class="ti-pencil-alt"></i>
               </button>
             </div>
