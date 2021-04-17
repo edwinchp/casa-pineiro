@@ -2130,7 +2130,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    ProductItemComponent: _ProductsTableComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    ProductsTableComponent: _ProductsTableComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
@@ -2140,7 +2140,7 @@ __webpack_require__.r(__webpack_exports__);
       productTimeOut: "",
       beforeEditProductName: "",
       beforeEditCpQty: "",
-      cart: {},
+      miniCart: [],
       pagination: {
         total: 0,
         current_page: 0,
@@ -2563,7 +2563,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["products"],
@@ -2620,6 +2619,8 @@ __webpack_require__.r(__webpack_exports__);
           qty: 1
         });
       }
+
+      this.$emit('miniCartChanged', this.miniCart);
     }
   },
   computed: {
@@ -39620,7 +39621,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "d-inline-block" }, [
           _c("h2", [_vm._v("Productos")]),
-          _vm._v("\n\n        " + _vm._s(_vm.cart) + "\n\n        "),
+          _vm._v("\n\n        " + _vm._s(this.miniCart) + "\n\n        "),
           _c("div", { staticClass: "section-header-buttons pr-5" }, [
             _c(
               "a",
@@ -39749,7 +39750,12 @@ var render = function() {
           { staticClass: "table-responsive pr-4 pl-4" },
           [
             _c("products-table-component", {
-              attrs: { products: _vm.products }
+              attrs: { products: _vm.products },
+              on: {
+                miniCartChanged: function($event) {
+                  _vm.miniCart = $event
+                }
+              }
             }),
             _vm._v(" "),
             _c(
@@ -40137,8 +40143,7 @@ var render = function() {
         ],
         2
       )
-    ]),
-    _vm._v("\n  " + _vm._s(_vm.miniCart) + "\n")
+    ])
   ])
 }
 var staticRenderFns = [

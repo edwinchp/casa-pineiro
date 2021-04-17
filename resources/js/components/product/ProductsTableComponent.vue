@@ -269,7 +269,6 @@
         </tr>
       </tbody>
     </table>
-    {{ miniCart }}
   </div>
 </template>
 
@@ -329,6 +328,8 @@ export default {
       } else {
         this.miniCart.push({ ID: product.id, qty: 1 });
       }
+
+      this.$emit('miniCartChanged', this.miniCart);
     },
   },
 

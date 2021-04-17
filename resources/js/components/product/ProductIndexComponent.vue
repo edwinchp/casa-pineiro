@@ -6,7 +6,7 @@
         <div class="d-inline-block">
           <h2>Productos</h2>
 
-          {{ cart }}
+          {{ this.miniCart }}
 
           <div class="section-header-buttons pr-5">
             <a
@@ -90,7 +90,7 @@
       <div class="card-block table-border-style">
         <div class="table-responsive pr-4 pl-4">
           <!--Product table-->
-          <products-table-component :products="products" />
+          <products-table-component :products="products" @miniCartChanged="miniCart = $event"/>
 
           <div class="p-4" v-show="!searchIsActive">
             <nav aria-label="Page navigation example">
@@ -137,9 +137,9 @@
 </template>
 
 <script>
-import ProductItemComponent from "./ProductsTableComponent.vue";
+import ProductsTableComponent from "./ProductsTableComponent.vue";
 export default {
-  components: { ProductItemComponent },
+  components: { ProductsTableComponent,  },
   data() {
     return {
       products: [],
@@ -148,7 +148,7 @@ export default {
       productTimeOut: "",
       beforeEditProductName: "",
       beforeEditCpQty: "",
-      cart: {},
+      miniCart: [],
       pagination: {
         total: 0,
         current_page: 0,
