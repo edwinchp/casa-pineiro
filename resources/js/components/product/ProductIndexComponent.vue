@@ -6,6 +6,8 @@
         <div class="d-inline-block">
           <h2>Productos</h2>
 
+          {{ cart }}
+
           <div class="section-header-buttons pr-5">
             <a
               href="product.create.html"
@@ -59,7 +61,7 @@
             <h2>{{ totalProducts }}</h2>
             <p class="text-muted">Productos</p>
           </div>
-          <div class="col-6 b-r-default">
+          <div class="col-6">
             <h2>{{ allProductsQty }}</h2>
             <p class="text-muted">Existentes</p>
           </div>
@@ -146,6 +148,7 @@ export default {
       productTimeOut: "",
       beforeEditProductName: "",
       beforeEditCpQty: "",
+      cart: {},
       pagination: {
         total: 0,
         current_page: 0,

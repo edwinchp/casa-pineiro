@@ -192,7 +192,6 @@
                   {{ product.cp_qty }}
                 </div>
 
-
                 <!--<div v-if="!product.editing" class="product-item">
                   <input
                     class="form-control"
@@ -212,12 +211,14 @@
             <div class="row">
               <div class="col-xl-11 wrapper">
                 <!--input type="number" :value="this.new" /-->
-                <product-component :current_qty="product.cp_qty" @qtyChanged="sum_qty = $event"/>
+                <product-component
+                  :current_qty="product.cp_qty"
+                  @qtyChanged="sum_qty = $event"
+                />
                 {{}}
               </div>
             </div>
           </td>
-
 
           <td class="table-bought-product">
             <div class="row">
@@ -245,7 +246,7 @@
           <td>
             <!--READ MODE-->
             <div v-if="!product.editing" class="table-options">
-              <button class="btn">
+              <button class="btn" @click="addToCart(product)">
                 <i class="ti-shopping-cart"></i>
               </button>
 
@@ -268,15 +269,14 @@
         </tr>
       </tbody>
     </table>
+    {{ miniCart }}
   </div>
 </template>
 
 <script>
-import productComponent from './ProductComponent';
+import productComponent from "./ProductComponent";
 
 export default {
-
-
   props: ["products"],
 
   data() {
@@ -284,6 +284,7 @@ export default {
       editingProduct: false,
       current_qty: 0,
       sum_qty: 0,
+      miniCart: [],
     };
   },
 
@@ -306,13 +307,35 @@ export default {
       this.new_qty = 0;
       this.current_qty = 0;
     },
+
+    addToCart(product) {
+      if (this.miniCart.length < 1) {
+        this.miniCart.push({ ID: product.id, qty: 0 });
+      }
+
+      let duplicate = false;
+      for (var i = 0; i < this.miniCart.length; i++) {
+        if (this.miniCart[i].ID === product.id) {
+          duplicate = true;
+        }
+      }
+
+      if (duplicate) {
+        for (var i = 0; i < this.miniCart.length; i++) {
+          if (this.miniCart[i].ID === product.id) {
+            this.miniCart[i].qty = this.miniCart[i].qty + 1;
+          }
+        }
+      } else {
+        this.miniCart.push({ ID: product.id, qty: 1 });
+      }
+    },
   },
 
   computed: {
     sumQty() {
       return (this.sum_qty = this.current_qty + this.new_qty);
     },
-
   },
 };
 </script>

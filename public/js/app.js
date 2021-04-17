@@ -2125,6 +2125,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2138,6 +2140,7 @@ __webpack_require__.r(__webpack_exports__);
       productTimeOut: "",
       beforeEditProductName: "",
       beforeEditCpQty: "",
+      cart: {},
       pagination: {
         total: 0,
         current_page: 0,
@@ -2559,6 +2562,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["products"],
@@ -2566,7 +2571,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       editingProduct: false,
       current_qty: 0,
-      sum_qty: 0
+      sum_qty: 0,
+      miniCart: []
     };
   },
   methods: {
@@ -2585,6 +2591,35 @@ __webpack_require__.r(__webpack_exports__);
       product.editing = false;
       this.new_qty = 0;
       this.current_qty = 0;
+    },
+    addToCart: function addToCart(product) {
+      if (this.miniCart.length < 1) {
+        this.miniCart.push({
+          ID: product.id,
+          qty: 0
+        });
+      }
+
+      var duplicate = false;
+
+      for (var i = 0; i < this.miniCart.length; i++) {
+        if (this.miniCart[i].ID === product.id) {
+          duplicate = true;
+        }
+      }
+
+      if (duplicate) {
+        for (var i = 0; i < this.miniCart.length; i++) {
+          if (this.miniCart[i].ID === product.id) {
+            this.miniCart[i].qty = this.miniCart[i].qty + 1;
+          }
+        }
+      } else {
+        this.miniCart.push({
+          ID: product.id,
+          qty: 1
+        });
+      }
     }
   },
   computed: {
@@ -39585,7 +39620,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "d-inline-block" }, [
           _c("h2", [_vm._v("Productos")]),
-          _vm._v(" "),
+          _vm._v("\n\n        " + _vm._s(_vm.cart) + "\n\n        "),
           _c("div", { staticClass: "section-header-buttons pr-5" }, [
             _c(
               "a",
@@ -39667,7 +39702,7 @@ var render = function() {
             _c("p", { staticClass: "text-muted" }, [_vm._v("Productos")])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-6 b-r-default" }, [
+          _c("div", { staticClass: "col-6" }, [
             _c("h2", [_vm._v(_vm._s(_vm.allProductsQty))]),
             _vm._v(" "),
             _c("p", { staticClass: "text-muted" }, [_vm._v("Existentes")])
@@ -40031,7 +40066,18 @@ var render = function() {
               _c("td", [
                 !product.editing
                   ? _c("div", { staticClass: "table-options" }, [
-                      _vm._m(1, true),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn",
+                          on: {
+                            click: function($event) {
+                              return _vm.addToCart(product)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "ti-shopping-cart" })]
+                      ),
                       _vm._v(" "),
                       _c(
                         "button",
@@ -40091,7 +40137,8 @@ var render = function() {
         ],
         2
       )
-    ])
+    ]),
+    _vm._v("\n  " + _vm._s(_vm.miniCart) + "\n")
   ])
 }
 var staticRenderFns = [
@@ -40103,14 +40150,6 @@ var staticRenderFns = [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-xl-11" }, [_vm._v("$12")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn" }, [
-      _c("i", { staticClass: "ti-shopping-cart" })
     ])
   }
 ]
