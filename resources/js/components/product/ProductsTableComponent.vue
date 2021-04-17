@@ -309,7 +309,12 @@ export default {
 
     addToCart(product) {
       if (this.miniCart.length < 1) {
-        this.miniCart.push({ ID: product.id, qty: 0 });
+        this.miniCart.push({
+          ID: product.id,
+          name: product.name,
+          qty: 0,
+          price: product.cp_price,
+        });
       }
 
       let duplicate = false;
@@ -326,10 +331,15 @@ export default {
           }
         }
       } else {
-        this.miniCart.push({ ID: product.id, qty: 1 });
+        this.miniCart.push({
+          ID: product.id,
+          name: product.name,
+          qty: 0,
+          price: product.cp_price,
+        });
       }
 
-      this.$emit('miniCartChanged', this.miniCart);
+      this.$emit("miniCartChanged", this.miniCart);
     },
   },
 

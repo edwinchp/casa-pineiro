@@ -52,6 +52,15 @@
             <button v-show="false" class="btn btn-inverse">
               <i class="icofont icofont-download icofont-alt"></i>Descargar
             </button>
+
+            <button
+              class="btn btn-inverse"
+              data-target="#miniCartModal"
+              data-toggle="modal"
+            >
+              <i class="icofont icofont-cart icofont-alt"></i>Carrito
+              <label class="badge badge-danger">{{ getTotalMiniCart }}</label>
+            </button>
           </div>
         </div>
       </div>
@@ -90,7 +99,10 @@
       <div class="card-block table-border-style">
         <div class="table-responsive pr-4 pl-4">
           <!--Product table-->
-          <products-table-component :products="products" @miniCartChanged="miniCart = $event"/>
+          <products-table-component
+            :products="products"
+            @miniCartChanged="miniCart = $event"
+          />
 
           <div class="p-4" v-show="!searchIsActive">
             <nav aria-label="Page navigation example">
@@ -133,13 +145,79 @@
         </div>
       </div>
     </div>
+
+    <div
+      class="modal fade"
+      id="miniCartModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Carrito</h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Precio</th>
+                  <th>Cantidad</th>
+                  <th>Sub Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="product in miniCart" :key="product">
+                  <th scope="row">{{ product.name }}</th>
+                  <td>${{ product.price }}</td>
+                  <td>{{ product.qty }}</td>
+                  <td>${{ product.price * product.qty }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <form action="" method="post">
+              <button
+                type="submit"
+                href="#"
+                class="btn btn-danger btn-icon-split"
+              >
+                <span class="icon text-white-50">
+                  <i class="fas fa-trash"></i>
+                </span>
+                <span class="text">Eliminar</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import ProductsTableComponent from "./ProductsTableComponent.vue";
 export default {
-  components: { ProductsTableComponent,  },
+  components: { ProductsTableComponent },
   data() {
     return {
       products: [],
@@ -211,6 +289,17 @@ export default {
 
     searchIsActive: function () {
       return this.productsFound.length > 2;
+    },
+
+    /**
+     * MINI CART
+     */
+    getTotalMiniCart() {
+      let total = 0;
+      for (var i = 0; i < this.miniCart.length; i++) {
+        total = total + this.miniCart[i].qty;
+      }
+      return total;
     },
   },
 
