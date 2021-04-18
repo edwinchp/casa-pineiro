@@ -334,7 +334,7 @@ export default {
         this.miniCart.push({
           ID: product.id,
           name: product.name,
-          qty: 0,
+          qty: 1,
           price: product.cp_price,
         });
       }

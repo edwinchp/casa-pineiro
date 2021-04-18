@@ -6,8 +6,6 @@
         <div class="d-inline-block">
           <h2>Productos</h2>
 
-          {{ this.miniCart }}
-
           <div class="section-header-buttons pr-5">
             <a
               href="product.create.html"
@@ -59,7 +57,9 @@
               data-toggle="modal"
             >
               <i class="icofont icofont-cart icofont-alt"></i>Carrito
-              <label class="badge badge-danger">{{ getTotalMiniCart }}</label>
+              <label class="badge badge-danger">{{
+                getTotalQtyMiniCart
+              }}</label>
             </button>
           </div>
         </div>
@@ -175,14 +175,22 @@
                   <th>Precio</th>
                   <th>Cantidad</th>
                   <th>Sub Total</th>
+                  <th>Opciones</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="product in miniCart" :key="product">
-                  <th scope="row">{{ product.name }}</th>
+                  <th scope="row">{{ shortProductName(product.name) }}</th>
                   <td>${{ product.price }}</td>
-                  <td>{{ product.qty }}</td>
+                  <td>
+                    <button @click="reduceCartQty(product)">-</button>
+                    {{ product.qty }}
+                    <button @click="addCartQty(product)">+</button>
+                  </td>
                   <td>${{ product.price * product.qty }}</td>
+                  <td>
+                    <button @click="removeFromCart(product)">X</button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -204,7 +212,7 @@
                 <span class="icon text-white-50">
                   <i class="fas fa-trash"></i>
                 </span>
-                <span class="text">Eliminar</span>
+                <span class="text">Pagar ${{ getTotalPriceMiniCart }}</span>
               </button>
             </form>
           </div>
@@ -294,10 +302,18 @@ export default {
     /**
      * MINI CART
      */
-    getTotalMiniCart() {
+    getTotalQtyMiniCart() {
       let total = 0;
       for (var i = 0; i < this.miniCart.length; i++) {
         total = total + this.miniCart[i].qty;
+      }
+      return total;
+    },
+
+    getTotalPriceMiniCart() {
+      let total = 0;
+      for (var i = 0; i < this.miniCart.length; i++) {
+        total = total + this.miniCart[i].qty * this.miniCart[i].price;
       }
       return total;
     },
@@ -366,6 +382,34 @@ export default {
     getProductName(product) {
       let shortName = product.name.substring(0, 40);
       return shortName.length >= 40 ? shortName + "..." : shortName;
+    },
+
+    /**
+     * Mini Cart
+     */
+
+    shortProductName(product) {
+      let short = product.substring(0, 20);
+      short = short.length >= 20 ? short + "... " : short;
+      return short;
+    },
+
+    addCartQty(product) {
+      product.qty = product.qty + 1;
+    },
+
+    reduceCartQty(product) {
+      product.qty = product.qty - 1;
+      if (product.qty == 0) {
+        this.removeFromCart(product);
+      }
+    },
+
+    removeFromCart(product) {
+      this.miniCart.splice(
+        this.miniCart.findIndex((a) => a.ID === product.ID),
+        1
+      );
     },
   },
 
