@@ -33,10 +33,10 @@ Route::apiResource('apiUsers', 'UserController');
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/sell/create', function () {
-    return view('sell.create');
-});
+
 
 Route::get('/', function () {
     return view('index');
 });
+
+Route::resource('sales', 'SalesController');

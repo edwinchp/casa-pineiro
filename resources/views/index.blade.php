@@ -12,11 +12,11 @@
                     <h4>$3500</h4>
                     <div class="pt-2">
                         <span class="f-left m-t-10 text-muted">
-                            <a href="sell.index.html" class="text-c-blue"><i class="text-c-blue f-16 icofont icofont-calendar m-r-10"></i>Esta
+                            <a href="{{route('sales.index')}}" class="text-c-blue"><i class="text-c-blue f-16 icofont icofont-calendar m-r-10"></i>Esta
                                 semana</a>
                         </span>
                         <div class="icon-btn plus-icon plus-icon-primary">
-                            <a href="sell.create.html" class="btn btn-primary btn-outline-primary btn-icon"><i class="icofont icofont-plus "></i></a>
+                            <a href="#" class="btn btn-primary btn-outline-primary btn-icon"><i class="icofont icofont-plus "></i></a>
                         </div>
                     </div>
 
