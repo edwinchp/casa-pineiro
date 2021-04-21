@@ -179,7 +179,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="product in miniCart" :key="product">
+                <tr v-for="(product, p) in miniCart" :key="p">
                   <th scope="row">{{ shortProductName(product.name) }}</th>
                   <td>${{ product.price }}</td>
                   <td>
@@ -203,10 +203,11 @@
             >
               Cancelar
             </button>
-            <form action="" method="post">
+            <form action="" @submit="checkoutCart(miniCart)">
               <button
+                @click.prevent="checkoutCart(miniCart)"
                 type="submit"
-                href="#"
+                data-dismiss="modal"
                 class="btn btn-danger btn-icon-split"
               >
                 <span class="icon text-white-50">
@@ -407,8 +408,26 @@ export default {
 
     removeFromCart(product) {
       this.miniCart.splice(
-        this.miniCart.findIndex((a) => a.ID === product.ID),
+        this.miniCart.findIndex((a) => a.product_id === product.product_id),
         1
+      );
+    },
+
+    checkoutCart(miniCart) {
+      // axios({
+      //   method: 'POST',
+      //   url: 'api/sales',
+      //   data: this.miniCart
+      // });
+
+      axios.post("api/sales", miniCart).then(
+        (response) => {
+          //this.miniCart = []
+          this.miniCart.splice(0, this.miniCart.length);
+        },
+        (error) => {
+          console.log(error);
+        }
       );
     },
   },

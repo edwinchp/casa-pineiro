@@ -2213,6 +2213,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2399,8 +2400,23 @@ __webpack_require__.r(__webpack_exports__);
     },
     removeFromCart: function removeFromCart(product) {
       this.miniCart.splice(this.miniCart.findIndex(function (a) {
-        return a.ID === product.ID;
+        return a.product_id === product.product_id;
       }), 1);
+    },
+    checkoutCart: function checkoutCart(miniCart) {
+      var _this4 = this;
+
+      // axios({
+      //   method: 'POST',
+      //   url: 'api/sales',
+      //   data: this.miniCart
+      // });
+      axios.post("api/sales", miniCart).then(function (response) {
+        //this.miniCart = []
+        _this4.miniCart.splice(0, _this4.miniCart.length);
+      }, function (error) {
+        console.log(error);
+      });
     }
   },
   created: function created() {
@@ -2727,7 +2743,7 @@ __webpack_require__.r(__webpack_exports__);
     addToCart: function addToCart(product) {
       if (this.miniCart.length < 1) {
         this.miniCart.push({
-          ID: product.id,
+          product_id: product.id,
           name: product.name,
           qty: 0,
           price: product.cp_price
@@ -2737,20 +2753,20 @@ __webpack_require__.r(__webpack_exports__);
       var duplicate = false;
 
       for (var i = 0; i < this.miniCart.length; i++) {
-        if (this.miniCart[i].ID === product.id) {
+        if (this.miniCart[i].product_id === product.id) {
           duplicate = true;
         }
       }
 
       if (duplicate) {
         for (var i = 0; i < this.miniCart.length; i++) {
-          if (this.miniCart[i].ID === product.id) {
+          if (this.miniCart[i].product_id === product.id) {
             this.miniCart[i].qty = this.miniCart[i].qty + 1;
           }
         }
       } else {
         this.miniCart.push({
-          ID: product.id,
+          product_id: product.id,
           name: product.name,
           qty: 1,
           price: product.cp_price
@@ -40041,8 +40057,8 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "tbody",
-                    _vm._l(_vm.miniCart, function(product) {
-                      return _c("tr", { key: product }, [
+                    _vm._l(_vm.miniCart, function(product, p) {
+                      return _c("tr", { key: p }, [
                         _c("th", { attrs: { scope: "row" } }, [
                           _vm._v(_vm._s(_vm.shortProductName(product.name)))
                         ]),
@@ -40113,22 +40129,39 @@ var render = function() {
                   [_vm._v("\n            Cancelar\n          ")]
                 ),
                 _vm._v(" "),
-                _c("form", { attrs: { action: "", method: "post" } }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger btn-icon-split",
-                      attrs: { type: "submit", href: "#" }
-                    },
-                    [
-                      _vm._m(4),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "text" }, [
-                        _vm._v("Pagar $" + _vm._s(_vm.getTotalPriceMiniCart))
-                      ])
-                    ]
-                  )
-                ])
+                _c(
+                  "form",
+                  {
+                    attrs: { action: "" },
+                    on: {
+                      submit: function($event) {
+                        return _vm.checkoutCart(_vm.miniCart)
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger btn-icon-split",
+                        attrs: { type: "submit", "data-dismiss": "modal" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.checkoutCart(_vm.miniCart)
+                          }
+                        }
+                      },
+                      [
+                        _vm._m(4),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text" }, [
+                          _vm._v("Pagar $" + _vm._s(_vm.getTotalPriceMiniCart))
+                        ])
+                      ]
+                    )
+                  ]
+                )
               ])
             ])
           ]

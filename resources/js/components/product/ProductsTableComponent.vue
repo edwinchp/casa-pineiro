@@ -310,7 +310,7 @@ export default {
     addToCart(product) {
       if (this.miniCart.length < 1) {
         this.miniCart.push({
-          ID: product.id,
+          product_id: product.id,
           name: product.name,
           qty: 0,
           price: product.cp_price,
@@ -319,20 +319,20 @@ export default {
 
       let duplicate = false;
       for (var i = 0; i < this.miniCart.length; i++) {
-        if (this.miniCart[i].ID === product.id) {
+        if (this.miniCart[i].product_id === product.id) {
           duplicate = true;
         }
       }
 
       if (duplicate) {
         for (var i = 0; i < this.miniCart.length; i++) {
-          if (this.miniCart[i].ID === product.id) {
+          if (this.miniCart[i].product_id === product.id) {
             this.miniCart[i].qty = this.miniCart[i].qty + 1;
           }
         }
       } else {
         this.miniCart.push({
-          ID: product.id,
+          product_id: product.id,
           name: product.name,
           qty: 1,
           price: product.cp_price,
