@@ -227,6 +227,7 @@
 import ProductsTableComponent from "./ProductsTableComponent.vue";
 export default {
   components: { ProductsTableComponent },
+  
   data() {
     return {
       products: [],
@@ -397,6 +398,7 @@ export default {
 
     addCartQty(product) {
       product.qty = product.qty + 1;
+      this.$root.$emit('shareCart', this.miniCart)
     },
 
     reduceCartQty(product) {

@@ -32,6 +32,7 @@ Vue.component('product-component', require('./components/product/ProductComponen
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
 const productIndex = new Vue({
-    el: '#product-index',
+    el: '#app',
 });
