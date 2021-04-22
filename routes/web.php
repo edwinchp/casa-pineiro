@@ -17,7 +17,6 @@ Auth::routes();
 Route::get('/productos', function () {
     return view('product.index');
 });
-Route::resource('products', 'ProductController');
 Route::get('/search', function () {
     return view('product.search');
 })->name('search.products');
@@ -35,8 +34,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-Route::get('/', function () {
-    return view('index');
+
+
+
+Route::group(['middleware' => 'auth'], function(){
+    Route::view('/', 'index');
+    Route::resource('products', 'ProductController');
+    Route::resource('sales', 'SalesController');
+
 });
 
-Route::resource('sales', 'SalesController');
+
