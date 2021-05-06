@@ -33,7 +33,7 @@
           <div class="container-fluid">
 
             <!-- Page Heading -->
-            <div class="container">
+            <div class="container" style="margin-top: 100px;">
               @yield('content')
             </div>
           </div>

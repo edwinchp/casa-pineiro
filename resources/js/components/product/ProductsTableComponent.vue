@@ -340,7 +340,7 @@ export default {
       }
 
       this.$emit("miniCartChanged", this.miniCart);
-      this.$root.$emit('shareCart', this.miniCart)
+      this.$root.$emit('sharingCart', this.miniCart)
     },
   },
 
