@@ -14,8 +14,18 @@ class ApiSalesController extends Controller
      */
     public function index()
     {
-        $sales = Sale::all();
-        return $sales;
+        $sales = Sale::orderBy('created_at', 'DESC')->paginate(10);
+        return [
+            'pagination' => [
+                'total' => $sales->total(),
+                'current_page' => $sales->currentPage(),
+                'per_page' => $sales->perPage(),
+                'last_page' => $sales->lastPage(),
+                'from' => $sales->firstItem(),
+                'to' => $sales->lastPage(),
+            ],
+            'sales' => $sales
+        ];
     }
 
     /**
