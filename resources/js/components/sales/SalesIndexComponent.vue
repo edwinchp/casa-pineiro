@@ -102,6 +102,8 @@
                                 type="text"
                                 class="form-control"
                                 placeholder="Buscar..."
+                                v-model="salesToFind"
+                                @keyup="findSales"
                               />
                             </div>
                           </div>
@@ -255,10 +257,15 @@ export default {
   data() {
     return {
       sales: [],
+      salesToFind: "",
+      searchTimeout: "",
     };
   },
 
   methods: {
+    /**
+     * SALES
+     */
     getSales(page) {
       axios.get("/api/sales/?page=" + page).then((resp) => {
         this.sales = resp.data.sales.data;
@@ -296,11 +303,49 @@ export default {
       );
     },
 
+    /**
+     * SEARCH
+     */
+
+    findSales() {
+      clearTimeout(this.searchTimeout);
+      if (this.searchContainsChars) {
+        this.searchTimeout = setTimeout(this.getFoundSales, 800);
+      } else {
+        this.getSales(1);
+      }
+    },
+
+    getFoundSales() {
+      axios
+        .get("api/allSales", {
+          params: {
+            userInput: this.salesToFind,
+          },
+        })
+        .then((resp) => {
+          this.sales = resp.data;
+        });
+    },
+
+    /**
+     * PAGINATION
+     */
+
+    /**
+     * GENERIC
+     */
     shortAttribute(att, limit) {
       if (att.length <= limit) {
         return att.substring(0, limit);
       }
       return att.substring(0, limit) + "...";
+    },
+  },
+
+  computed: {
+    searchContainsChars() {
+      return this.salesToFind.length > 2;
     },
   },
 

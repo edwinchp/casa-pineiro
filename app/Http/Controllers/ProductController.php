@@ -15,7 +15,7 @@ class ProductController extends Controller
         //$products = Product::all();
         return view('product.index');
         //->with('products', $products);
-        
+
     }
 
     public function edit($id)

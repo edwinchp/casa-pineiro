@@ -132,4 +132,15 @@ class ApiSalesController extends Controller
     {
         //
     }
+
+    public function allSales(Request $request)
+    {
+        if ($request->userInput) {
+            $filteredSales = Sale::filterByNameBarcodeAndBrand($request->userInput)->get();
+            return response()->json($filteredSales, 200);
+        }
+
+        $allSales = Sale::all();
+        return response()->json($allSales, 200);
+    }
 }
