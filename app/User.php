@@ -55,4 +55,9 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function stores()
+    {
+        return $this->hasMany('App\Store');
+    }
 }

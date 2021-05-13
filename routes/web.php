@@ -45,3 +45,28 @@ Route::group(['middleware' => 'auth'], function(){
 });
 
 
+
+
+Route::get('productss', function(){
+    $user = App\User::find(1);
+    //$stores = $user->stores;
+    
+
+
+    echo $user->name . '<br>';
+    //echo $user->stores[0]->name . '<br>';
+    //echo $store->name . '<br>';
+
+     foreach($user->stores as $store){
+         echo "Tienda: " . $store->name . '<br>';
+
+        foreach($store->products as $product){
+            echo ' -' .$product->name . '<br>';
+        }
+     }
+
+
+    //return dd($store->products);
+});
+
+

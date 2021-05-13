@@ -62,4 +62,8 @@ class Product extends Model
             ->orWhere('bar_code', 'LIKE', '%' . $foundByUser . '%')
             ->orWhere('brand', 'LIKE', '%' . $foundByUser . '%');
     }
+
+    // public function store(){
+    //     return $this->belongsTo('App\Product');
+    // }
 }
