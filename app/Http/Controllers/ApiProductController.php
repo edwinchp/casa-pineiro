@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\User;
 
 class ApiProductController extends Controller
 {
@@ -113,5 +115,25 @@ class ApiProductController extends Controller
         $products = Product::all();
 
         return response()->json($products, 200);
+    }
+
+    public function testingProducts(Request $request)
+    {
+
+        $products = Product::paginate(5);
+        $user = User::getUserProducts(1);
+        //return response()->json($products, 200);
+
+        return [
+            'pagination' => [
+                'total' => $products->total(),
+                'current_page' => $products->currentPage(),
+                'per_page' => $products->perPage(),
+                'last_page' => $products->lastPage(),
+                'from' => $products->firstItem(),
+                'to' => $products->lastPage(),
+            ],
+            'products' => $user
+        ];
     }
 }

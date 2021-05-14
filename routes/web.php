@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,36 +38,40 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => 'auth'], function () {
     Route::view('/', 'index');
     Route::resource('products', 'ProductController');
     Route::resource('sales', 'SalesController');
-
 });
 
 
 
 
-Route::get('productss', function(){
-    $user = App\User::find(1);
+Route::get('productss', function () {
+    //$user = App\User::find(Auth::id());
     //$stores = $user->stores;
-    
 
 
-    echo $user->name . '<br>';
+
+
+    //echo $user->name . '<br>';
+    echo App\Product::paginate(3) . '<br>';
+    //echo $auth . '<br>';
     //echo $user->stores[0]->name . '<br>';
     //echo $store->name . '<br>';
 
-     foreach($user->stores as $store){
-         echo "Tienda: " . $store->name . '<br>';
+    //  foreach($user->stores as $store){
+    //      echo "Tienda: " . $store->id . '<br>';
 
-        foreach($store->products as $product){
-            echo ' -' .$product->name . '<br>';
-        }
-     }
+    //     foreach($store->products as $product){
+    //         echo ' -' .$product->name . '<br>';
+    //     }
+    //  }
+
+    // foreach ($user->getUserProducts(3) as $product) {
+    //     echo $product->name . '<br>';
+    // }
 
 
     //return dd($store->products);
 });
-
-

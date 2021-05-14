@@ -33,3 +33,4 @@ Route::resource('products', 'ApiProductController');
 Route::resource('sales', 'ApiSalesController');
 Route::get('allProducts', 'ApiProductController@allProducts');
 Route::get('allSales', 'ApiSalesController@allSales');
+Route::get('testing-products', 'ApiProductController@testingProducts');

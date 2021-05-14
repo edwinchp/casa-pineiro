@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
+use App\Store;
+
 
 class User extends Authenticatable
 {
@@ -59,5 +62,24 @@ class User extends Authenticatable
     public function stores()
     {
         return $this->hasMany('App\Store');
+    }
+
+    public static function getUserProducts($store_id)
+    {
+        //$userStores = Store::where('user_id', '=', Auth::id());
+        if(Auth::id() == null){
+            return response()->json("Are you logged in?", 405);
+        }
+
+        $userStores = User::find(Auth::id())->stores;
+
+        // Check if user has that store
+        foreach($userStores as $store){
+            if($store->id == $store_id)            {
+                $products = Product::where('store_id', '=', $store_id)->get();
+                return $products;
+            }
+        }
+        //return $userStores;
     }
 }
