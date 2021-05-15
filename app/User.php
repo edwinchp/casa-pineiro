@@ -84,11 +84,4 @@ class User extends Authenticatable
         //return $userStores;
     }
 
-    // public function generateToken()
-    // {
-    //     $this->api_token = rand(1000000, 2000000);
-    //     $this->save();
-
-    //     return $this->api_token;
-    // }
 }

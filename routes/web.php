@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,16 +48,16 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 Route::get('productss', function () {
-    //$user = App\User::find(Auth::id());
+    $userStore = User::find(Auth::id());
     //$stores = $user->stores;
 
 
 
 
     //echo $user->name . '<br>';
-    echo App\Product::paginate(3) . '<br>';
+    //echo App\Product::paginate(3) . '<br>';
     //echo $auth . '<br>';
-    //echo $user->stores[0]->name . '<br>';
+    echo $userStore . '<br>';
     //echo $store->name . '<br>';
 
     //  foreach($user->stores as $store){
