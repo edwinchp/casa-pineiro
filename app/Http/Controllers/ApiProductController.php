@@ -19,8 +19,7 @@ class ApiProductController extends Controller
     {
         //$foundByUser = $request->productsFound;
         //$products = Product::filterByNameBarcodeAndBrand($foundByUser)->get();
-        $products = Product::paginate(5);
-        //return response()->json($products, 200);
+        $products = Product::where('store_id', '=', $request->store_id)->paginate(5);
 
         return [
             'pagination' => [
@@ -113,9 +112,11 @@ class ApiProductController extends Controller
             return response()->json($products, 200);
         }
 
-        $products = Product::all();
+        //$userProducts = User::find(Auth::id())->getUserProducts($request->store_id);
+        //$userProducts = Product::all();
+        $userProducts = Product::where('store_id', '=', $request->store_id)->get();
 
-        return response()->json($products, 200);
+        return response()->json($userProducts, 200);
     }
 
     public function testingProducts(Request $request)

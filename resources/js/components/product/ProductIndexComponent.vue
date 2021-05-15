@@ -227,10 +227,16 @@ export default {
     },
 
     getProducts: function (page) {
-      axios.get("/api/products/?page=" + page).then((resp) => {
-        this.products = resp.data.products.data;
-        this.pagination = resp.data.pagination;
-      });
+      axios
+        .get("/api/products/?page=" + page, {
+          params: {
+            store_id: 1,
+          },
+        })
+        .then((resp) => {
+          this.products = resp.data.products.data;
+          this.pagination = resp.data.pagination;
+        });
     },
 
     getSearchProducts: function () {
@@ -238,6 +244,7 @@ export default {
         .get("api/allProducts", {
           params: {
             productsFound: this.productsFound,
+            store_id: 1,
           },
         })
         .then((response) => {
@@ -247,9 +254,15 @@ export default {
     },
 
     getAllProducts: function () {
-      axios.get("api/allProducts/").then((response) => {
-        this.allProducts = response.data;
-      });
+      axios
+        .get("api/allProducts/", {
+          params: {
+            store_id: 1,
+          },
+        })
+        .then((response) => {
+          this.allProducts = response.data;
+        });
     },
 
     /**
