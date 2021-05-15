@@ -6,12 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\HasApiTokens;
 use App\Store;
 
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -67,19 +68,27 @@ class User extends Authenticatable
     public static function getUserProducts($store_id)
     {
         //$userStores = Store::where('user_id', '=', Auth::id());
-        if(Auth::id() == null){
+        if (Auth::id() == null) {
             return response()->json("Are you logged in?", 405);
         }
 
         $userStores = User::find(Auth::id())->stores;
 
         // Check if user has that store
-        foreach($userStores as $store){
-            if($store->id == $store_id)            {
+        foreach ($userStores as $store) {
+            if ($store->id == $store_id) {
                 $products = Product::where('store_id', '=', $store_id)->get();
                 return $products;
             }
         }
         //return $userStores;
     }
+
+    // public function generateToken()
+    // {
+    //     $this->api_token = rand(1000000, 2000000);
+    //     $this->save();
+
+    //     return $this->api_token;
+    // }
 }

@@ -28,9 +28,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     Route::delete('/{id}', 'ProductController@destroy');
 // });
 
+Route::post('/login', 'ApiUserController@login');
 
 Route::resource('products', 'ApiProductController');
 Route::resource('sales', 'ApiSalesController');
 Route::get('allProducts', 'ApiProductController@allProducts');
 Route::get('allSales', 'ApiSalesController@allSales');
-Route::get('testing-products', 'ApiProductController@testingProducts');
+Route::middleware('auth:api')->get('testing-products', 'ApiProductController@testingProducts');
