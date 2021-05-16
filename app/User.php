@@ -62,7 +62,7 @@ class User extends Authenticatable
 
     public function stores()
     {
-        return $this->hasMany('App\Store');
+        return $this->belongsToMany('App\Store');
     }
 
     public static function getUserProducts($store_id)
@@ -83,5 +83,4 @@ class User extends Authenticatable
         }
         //return $userStores;
     }
-
 }

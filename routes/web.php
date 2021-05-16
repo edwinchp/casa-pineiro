@@ -48,16 +48,16 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 Route::get('productss', function () {
-    $userStore = User::find(Auth::id());
+    $userStores = User::find(Auth::id())->stores;
     //$stores = $user->stores;
-
+    echo $userStores;
 
 
 
     //echo $user->name . '<br>';
     //echo App\Product::paginate(3) . '<br>';
     //echo $auth . '<br>';
-    echo $userStore . '<br>';
+
     //echo $store->name . '<br>';
 
     //  foreach($user->stores as $store){
