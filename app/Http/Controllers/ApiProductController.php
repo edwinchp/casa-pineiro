@@ -20,9 +20,11 @@ class ApiProductController extends Controller
         //$foundByUser = $request->productsFound;
         //$products = Product::filterByNameBarcodeAndBrand($foundByUser)->get();
         //$userStore = User::find(1); // Pending to define
+        $stores = User::find(1)->stores;
         $products = Product::where('store_id', '=', $request->store_id)->paginate(5);
 
         return [
+            'stores' => $stores,
             'pagination' => [
                 'total' => $products->total(),
                 'current_page' => $products->currentPage(),

@@ -16,6 +16,42 @@
               >Nuevo</a
             >
 
+            <div class="dropdown-inverse dropdown open">
+              <button
+                class="btn btn-inverse dropdown-toggle waves-effect waves-light"
+                type="button"
+                id="dropdown-7"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {{ selectedStoreName }}
+              </button>
+              <div
+                class="dropdown-menu"
+                aria-labelledby="dropdown-7"
+                data-dropdown-in="fadeIn"
+                data-dropdown-out="fadeOut"
+                x-placement="bottom-start"
+                style="
+                  position: absolute;
+                  transform: translate3d(0px, 40px, 0px);
+                  top: 0px;
+                  left: 0px;
+                  will-change: transform;
+                "
+              >
+                <a
+                  v-for="(store, index) in stores"
+                  :key="index"
+                  @click="selectStore(store)"
+                  class="dropdown-item waves-light waves-effect"
+                >
+                  {{ store.name }}</a
+                >
+              </div>
+            </div>
+
             <div v-show="false" class="dropdown-inverse dropdown open">
               <button
                 class="btn btn-inverse dropdown-toggle waves-effect waves-light"
@@ -159,6 +195,9 @@ export default {
         from: 0,
         to: 0,
       },
+      stores: [],
+      selectedStoreId: "",
+      selectedStoreName: "",
     };
   },
   computed: {
@@ -236,6 +275,9 @@ export default {
         .then((resp) => {
           this.products = resp.data.products.data;
           this.pagination = resp.data.pagination;
+          this.stores = resp.data.stores;
+          this.selectedStoreId = this.stores[0].id;
+          this.selectedStoreName = this.stores[0].name;
         });
     },
 
@@ -292,6 +334,14 @@ export default {
     getProductName(product) {
       let shortName = product.name.substring(0, 40);
       return shortName.length >= 40 ? shortName + "..." : shortName;
+    },
+
+    /**
+     * Stores
+     */
+    selectStore(store) {
+      this.selectedStoreId = store.id;
+      this.selectedStoreName = store.name;
     },
   },
 
