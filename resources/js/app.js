@@ -7,6 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import store from "./store"
 //Vue.use(require('vue-resource'));
 
 /**
@@ -26,6 +27,7 @@ Vue.component('products-table-component', require('./components/product/Products
 Vue.component('product-component', require('./components/product/ProductComponent.vue').default);
 Vue.component('user-navbar', require('./components/layouts/user-navbar.vue').default);
 Vue.component('sales-index-component', require('./components/sales/SalesIndexComponent.vue').default);
+Vue.component('login-form', require('./components/login/loginForm.vue').default);
 //Vue.component('pagination', require('laravel-vue-pagination'));
 
 /**
@@ -37,4 +39,5 @@ Vue.component('sales-index-component', require('./components/sales/SalesIndexCom
 
 const productIndex = new Vue({
     el: '#app',
+    store
 });
