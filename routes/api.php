@@ -35,3 +35,11 @@ Route::resource('sales', 'ApiSalesController');
 Route::get('allProducts', 'ApiProductController@allProducts');
 Route::get('allSales', 'ApiSalesController@allSales');
 Route::middleware('auth:api')->get('testing-products', 'ApiProductController@testingProducts');
+
+
+
+
+/**
+ * STORES
+ */
+Route::get('user/stores', 'ApiStoreController@getUserStores');

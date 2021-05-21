@@ -265,19 +265,25 @@ export default {
       }
     },
 
+    getStores() {
+      axios.get("api/user/stores").then((resp) => {
+        this.stores = resp.data.stores;
+        this.selectedStoreId = this.stores[0].id;
+        this.selectedStoreName = this.stores[0].name;
+      });
+    },
+
     getProducts: function (page) {
+      console.log("store_id" + this.selectedStoreId);
       axios
         .get("/api/products/?page=" + page, {
           params: {
-            store_id: 1,
+            store_id: this.selectedStoreId,
           },
         })
         .then((resp) => {
           this.products = resp.data.products.data;
           this.pagination = resp.data.pagination;
-          this.stores = resp.data.stores;
-          this.selectedStoreId = this.stores[0].id;
-          this.selectedStoreName = this.stores[0].name;
         });
     },
 
@@ -342,11 +348,14 @@ export default {
     selectStore(store) {
       this.selectedStoreId = store.id;
       this.selectedStoreName = store.name;
+      this.getProducts(1);
     },
   },
 
   created() {
-    this.getProducts(1);
+    this.getStores();
+    //this.getProducts(1);
+    setTimeout(this.getProducts(1), 4000);
     this.getAllProducts();
   },
 
