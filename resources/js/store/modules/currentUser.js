@@ -5,7 +5,16 @@ const state = {
 };
 
 const getters = {};
-const actions = {};
+const actions = {
+    loginUser({ }, user) {
+        axios.post('api/login', {
+            email: user.email,
+            password: user.password
+        }).then(response => {
+            console.log(response.data)
+        })
+    }
+};
 const mutations = {};
 
 export default {

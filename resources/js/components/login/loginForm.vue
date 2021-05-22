@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <div>
     <div class="form-group">
       <label for="exampleInputEmail1">Email address</label>
       <input
@@ -21,19 +21,33 @@
         class="form-control"
         id="exampleInputPassword1"
         placeholder="Password"
+        v-model="user.password"
       />
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+    <button type="submit" class="btn btn-primary" @click="login">Submit</button>
+  </div>
 </template>
 
 <script>
 export default {
-  computed: {
+  //computed: {
+  // user: {
+  //   get() {
+  //     return this.$store.state.currentUser.user;
+  //   },
+  // },
+  //  },
+
+  data: () => ({
     user: {
-      get() {
-        return this.$store.state.currentUser.user;
-      },
+      email: "chipineiro@gmail.com",
+      password: "huevos123",
+    },
+  }),
+
+  methods: {
+    login() {
+      this.$store.dispatch("currentUser/loginUser", this.user);
     },
   },
 };
