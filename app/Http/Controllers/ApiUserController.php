@@ -23,4 +23,10 @@ class ApiUserController extends Controller
 
         return response(['user' => Auth::user(), 'access_token' => $accessToken]);
     }
+
+    public function currentUser()
+    {
+        return Auth::user();
+        //return "huevos";
+    }
 }

@@ -40,9 +40,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::view('/', 'index');
-    Route::resource('products', 'ProductController');
     Route::resource('sales', 'SalesController');
 });
+Route::resource('products', 'ProductController');
 
 
 

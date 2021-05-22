@@ -5,6 +5,7 @@
         <i class="icofont icofont-food-basket"></i>
         <div class="d-inline-block">
           <h2>Productos</h2>
+          {{ currentUser }}
 
           <div class="section-header-buttons pr-5">
             <a
@@ -253,6 +254,11 @@ export default {
     searchIsActive: function () {
       return this.productsFound.length > 2;
     },
+    currentUser: {
+      get() {
+        return this.$store.state.currentUser.user;
+      },
+    },
   },
 
   methods: {
@@ -353,6 +359,9 @@ export default {
   },
 
   created() {
+    axios.defaults.headers.common["Authorization"] =
+      "Bearer " + localStorage.getItem("user_token");
+    this.$store.dispatch("currentUser/getUser");
     this.getStores();
     //this.getProducts(1);
     setTimeout(this.getProducts(1), 4000);

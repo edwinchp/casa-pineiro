@@ -29,6 +29,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // });
 
 Route::post('/login', 'ApiUserController@login');
+Route::middleware('auth:api')->get('/current', 'ApiUserController@currentUser');
 
 Route::resource('products', 'ApiProductController');
 Route::resource('sales', 'ApiSalesController');
