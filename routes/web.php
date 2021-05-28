@@ -38,40 +38,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth:api']], function () {
     Route::view('/', 'index');
     Route::resource('sales', 'SalesController');
+    Route::resource('products', 'ProductController');
 });
-Route::resource('products', 'ProductController');
-
-
 
 
 Route::get('productss', function () {
-    $userStores = User::find(Auth::id())->stores;
-    //$stores = $user->stores;
-    echo $userStores;
-
-
-
-    //echo $user->name . '<br>';
-    //echo App\Product::paginate(3) . '<br>';
-    //echo $auth . '<br>';
-
-    //echo $store->name . '<br>';
-
-    //  foreach($user->stores as $store){
-    //      echo "Tienda: " . $store->id . '<br>';
-
-    //     foreach($store->products as $product){
-    //         echo ' -' .$product->name . '<br>';
-    //     }
-    //  }
-
-    // foreach ($user->getUserProducts(3) as $product) {
-    //     echo $product->name . '<br>';
-    // }
-
-
-    //return dd($store->products);
+    $user = Auth::user();
+    return ['AuthUser' => $user];
 });

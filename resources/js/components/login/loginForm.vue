@@ -2,6 +2,7 @@
   <div>
     <div class="form-group">
       <label for="exampleInputEmail1">Email address</label>
+      <input type="hidden" name="_token" :value="csrf">
       <input
         type="email"
         class="form-control"
@@ -43,11 +44,13 @@ export default {
       email: "chipineiro@gmail.com",
       password: "huevos123",
     },
+    csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
   }),
 
   methods: {
     login() {
       this.$store.dispatch("currentUser/loginUser", this.user);
+      //axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("user_token");
     },
   },
 };

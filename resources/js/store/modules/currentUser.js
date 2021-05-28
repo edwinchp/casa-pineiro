@@ -16,9 +16,14 @@ const actions = {
         }).then(response => {
             if (response.data.access_token) {
                 localStorage.setItem('user_token', response.data.access_token)
+                //window.location.replace('/')
             }
-            window.location.replace('/products')
+
+            //axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("user_token");
+            axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem('user_token');
+
         })
+
     }
 };
 const mutations = {

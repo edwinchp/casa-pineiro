@@ -5,7 +5,7 @@
         <i class="icofont icofont-food-basket"></i>
         <div class="d-inline-block">
           <h2>Productos</h2>
-          {{ currentUser }}
+          {{ currentUser.name }}
 
           <div class="section-header-buttons pr-5">
             <a

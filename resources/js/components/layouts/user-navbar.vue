@@ -153,13 +153,9 @@
             >
               Cancel
             </button>
-            <a
-              class="btn btn-primary"
-              href=""
-              onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"
-            >
-            </a>
+            <button class="btn btn-primary" href="" @click="logout">
+              Cerrar sesión
+            </button>
 
             <form
               id="logout-form"
@@ -320,6 +316,14 @@ export default {
           console.log(error);
         }
       );
+    },
+
+    logout() {
+      axios.post("/logout").then((resp) => {
+        console.log("resp: " + resp);
+        localStorage.setItem("user_token", "");
+        window.location.href = "login";
+      });
     },
   },
 

@@ -86,8 +86,7 @@ class ApiStoreController extends Controller
 
     public function getUserStores()
     {
-        $user = User::find(1);
-        //$user = Auth::user();
+        $user = Auth::user();
         return ['stores' => $user->stores];
     }
 }

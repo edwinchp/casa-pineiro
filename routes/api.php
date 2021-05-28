@@ -29,18 +29,31 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // });
 
 Route::post('/login', 'ApiUserController@login');
-Route::middleware('auth:api')->get('/current', 'ApiUserController@currentUser');
-
-Route::resource('products', 'ApiProductController');
-Route::resource('sales', 'ApiSalesController');
-Route::get('allProducts', 'ApiProductController@allProducts');
-Route::get('allSales', 'ApiSalesController@allSales');
-Route::middleware('auth:api')->get('testing-products', 'ApiProductController@testingProducts');
 
 
 
+
+
+
+
+Route::middleware('auth:api')->group(function () {
+    // Users
+    Route::get('user/stores', 'ApiStoreController@getUserStores');
+    // Products
+    Route::resource('products', 'ApiProductController');
+    Route::get('allProducts', 'ApiProductController@allProducts');
+    // Store
+    // Sales
+    Route::resource('sales', 'ApiSalesController');
+    Route::get('allSales', 'ApiSalesController@allSales');
+    // Testing
+    Route::get('testing-products', 'ApiProductController@testingProducts');
+    Route::post('/logout', 'ApiUserController@logout');
+    Route::get('/current-user', 'ApiUserController@currentUser');
+    
+});
 
 /**
  * STORES
  */
-Route::get('user/stores', 'ApiStoreController@getUserStores');
+//Route::get('user/stores', 'ApiStoreController@getUserStores');

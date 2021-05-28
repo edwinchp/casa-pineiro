@@ -24,6 +24,16 @@ class ApiUserController extends Controller
         return response(['user' => Auth::user(), 'access_token' => $accessToken]);
     }
 
+    public function logout(Request $request){
+        Auth::logout();
+
+        $request->session()->invalidate();
+    
+        $request->session()->regenerateToken();
+    
+        return redirect('/');
+    }
+
     public function currentUser()
     {
         return Auth::user();
