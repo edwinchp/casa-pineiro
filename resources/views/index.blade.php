@@ -2,6 +2,12 @@
 
 @section('content')
 
+@if ($accessToken)
+<div style="display: none;">
+    <?php echo "<script>document.write(localStorage.setItem('user_token', '" . $accessToken . "'))</script>"; ?>
+</div>
+@endif
+
 <div class="page-body">
     <div class="row">
         <div class="col-md-4 col-xl-4 col-xl-offset-6">
