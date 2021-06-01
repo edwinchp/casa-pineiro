@@ -214,10 +214,10 @@ export default {
     },
     allProductsQty: function () {
       if (this.searchIsActive) {
-        return this.products.reduce((sum, product) => sum + product.cp_qty, 0);
+        return this.products.reduce((sum, product) => sum + product.qty, 0);
       } else {
         return this.allProducts.reduce(
-          (sum, product) => sum + product.cp_qty,
+          (sum, product) => sum + product.qty,
           0
         );
       }
@@ -323,14 +323,14 @@ export default {
      * Each product
      */
     editProduct: function (product) {
-      this.beforeEditCpQty = product.cp_qty;
+      this.beforeEditCpQty = product.qty;
       product.editing = !product.editing;
     },
     doneEdit: function (product) {
       product.editing = "false";
     },
     cancelEdit: function (product) {
-      product.cp_qty = this.beforeEditCpQty;
+      product.qty = this.beforeEditCpQty;
       product.editing = !product.editing;
     },
 

@@ -45,8 +45,8 @@
                             @foreach ($products as $product)
                             <tr>
                                 <td>{{ $product->name }}</td>
-                                <td><strong>${{ $product->cp_price }}</strong> ({{$product->cp_qty}} disponibles)</td>
-                                <td><strong>${{ $product->te_price }}</strong> ({{$product->te_qty}} disponibles)</td>
+                                <td><strong>${{ $product->cp_price }}</strong> ({{$product->qty}} disponibles)</td>
+                                <td><strong>${{ $product->te_price }}</strong> ({{$product->qty}} disponibles)</td>
                                 <td><img src="{{ URL::to($product->getMainPicture()) }}" alt="" width="50px"></td>
                                 <td>
                                     <a class="btn btn-success btn-circle" href="/products/{{$product->id}}/edit"><i class="far fa-edit"></i></a>

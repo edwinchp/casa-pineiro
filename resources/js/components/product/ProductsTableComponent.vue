@@ -189,14 +189,14 @@
               <div class="col-xl-11 existing-product">
                 <!--QTY READ MODE-->
                 <div class="product-current-qty">
-                  {{ product.cp_qty }}
+                  {{ product.qty }}
                 </div>
 
                 <!--<div v-if="!product.editing" class="product-item">
                   <input
                     class="form-control"
                     type="number"
-                    v-model="product.cp_qty"
+                    v-model="product.qty"
                     @keyup.enter="doneEdit(product)"
                     @blur="doneEdit(product)"
                     @keyup.esc="cancelEdit(product)"
@@ -212,7 +212,7 @@
               <div class="col-xl-11 wrapper">
                 <!--input type="number" :value="this.new" /-->
                 <product-component
-                  :current_qty="product.cp_qty"
+                  :current_qty="product.qty"
                   @qtyChanged="sum_qty = $event"
                 />
                 {{}}
@@ -229,7 +229,7 @@
           <td class="table-sell-product">
             <div class="row">
               <div class="col-xl-11">
-                <strong>${{ product.cp_price }}</strong>
+                <strong>${{ product.price }}</strong>
               </div>
             </div>
           </td>
@@ -297,7 +297,7 @@ export default {
       this.editingProduct = !product.editing;
       product.editing = !product.editing;
       this.new_qty = 0;
-      this.current_qty = product.cp_qty;
+      this.current_qty = product.qty;
     },
 
     cancelEdit(product) {
@@ -313,7 +313,7 @@ export default {
           product_id: product.id,
           name: product.name,
           qty: 0,
-          price: product.cp_price,
+          price: product.price,
         });
       }
 
@@ -335,7 +335,7 @@ export default {
           product_id: product.id,
           name: product.name,
           qty: 1,
-          price: product.cp_price,
+          price: product.price,
         });
       }
 

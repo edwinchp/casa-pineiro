@@ -22,16 +22,11 @@ class CreateProductsTable extends Migration
             $table->string("bar_code")->nullable();
             $table->string("brand")->nullable();
             //Casa Pineiro
-            $table->double("cp_price")->nullable();
-            $table->integer("cp_qty")->nullable();
-            $table->double("cp_offer_price")->nullable();
-            $table->integer("cp_offer_duration")->nullable();
-            // Tendejón Evelyn
-            $table->double("te_price")->nullable();
-            $table->integer("te_qty")->nullable();
-            $table->double("te_offer_price")->nullable();
-            $table->integer("te_offer_duration")->nullable();
-            
+            $table->double("price")->nullable();
+            $table->integer("qty")->nullable();
+            $table->double("offer_price")->nullable();
+            $table->integer("offer_duration")->nullable();
+
             $table->text("description")->nullable();
             $table->string("delivery_option")->nullable();
             $table->double("delivery_cost")->nullable();

@@ -102,14 +102,14 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="cp_qty">Cantidad</label>
+                                <label for="qty">Cantidad</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-boxes"></i></span>
 
                                     </div>
-                                    <input type="text" class="form-control" name="cp_qty"
-                                        value="{{ $product->cp_price }}" autocomplete="off">
+                                    <input type="text" class="form-control" name="qty"
+                                        value="{{ $product->price }}" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
 
                                     </div>
                                     <input type="text" class="form-control" name="cp_offer_price"
-                                        value="{{ $product->cp_price }}" autocomplete="off">
+                                        value="{{ $product->price }}" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -272,7 +272,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="qty">Cantidad</label>
-                        <input type="text" class="form-control" name="cp_qty" value="{{ $product->cp_qty }}"
+                        <input type="text" class="form-control" name="qty" value="{{ $product->qty }}"
                             autocomplete="off">
                     </div>
                 </div>
