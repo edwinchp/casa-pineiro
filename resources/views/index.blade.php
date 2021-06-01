@@ -62,7 +62,7 @@
                                 más</a>
                         </span>
                         <div class="icon-btn plus-icon plus-icon-warning">
-                            <a href="product.create.html" class="btn btn-warning btn-outline-warning btn-icon"><i class="icofont icofont-plus"></i></a>
+                            <a href="{{route('products.create')}}" class="btn btn-warning btn-outline-warning btn-icon"><i class="icofont icofont-plus"></i></a>
                         </div>
                     </div>
                 </div>
