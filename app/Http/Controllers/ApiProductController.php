@@ -53,7 +53,9 @@ class ApiProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = new Product($request->all());
+        $product->save();
+        return $product;
     }
 
     /**

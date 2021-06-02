@@ -5,11 +5,10 @@
         <i class="icofont icofont-food-basket"></i>
         <div class="d-inline-block">
           <h2>Productos</h2>
-          {{ currentUser.name }}
 
           <div class="section-header-buttons pr-5">
             <a
-              href="product.create.html"
+              href="products/create"
               class="btn btn-inverse btn-success-a"
               data-toggle="tooltip"
               data-placement="bottom"
