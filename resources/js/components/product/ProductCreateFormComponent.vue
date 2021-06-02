@@ -42,6 +42,7 @@
                       class="form-control"
                       name="bar_code"
                       autocomplete="off"
+                      v-model="product.bar_code"
                     />
                   </div>
                 </div>
@@ -57,7 +58,7 @@
                       type="text"
                       class="form-control"
                       name="brand"
-                      autocomplete="off"
+                      v-model="product.brand"
                     />
                   </div>
                 </div>
@@ -78,6 +79,8 @@
                       class="form-control"
                       name="cp_price"
                       autocomplete="off"
+                      v-model="product.price"
+                      required
                     />
                   </div>
                 </div>
@@ -112,6 +115,7 @@
                       class="form-control"
                       name="qty"
                       autocomplete="off"
+                      v-model="product.qty"
                     />
                   </div>
                 </div>
@@ -157,6 +161,7 @@
                       name="cp_offer_price"
                       value="sssss"
                       autocomplete="off"
+                      v-model="product.offer_price"
                     />
                   </div>
                 </div>
@@ -174,6 +179,7 @@
                       name="cp_offer_duration"
                       value="sssssss"
                       autocomplete="off"
+                      v-model="product.offer_duration"
                     />
                   </div>
                 </div>
@@ -187,13 +193,12 @@
                   <textarea
                     name="description"
                     id=""
-                    cols="40"
+                    cols="60"
                     rows="5"
                     class="form-control"
+                    v-model="product.description"
                   >
-Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut quam unde culpa! Quas, sint mollitia ipsa rerum libero quos consequatur animi reprehenderit hic voluptatibus quasi quo ex repellat porro exercitationem!
-                </textarea
-                  >
+                  </textarea>
                 </div>
               </div>
             </div>
@@ -205,11 +210,11 @@ Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut quam unde culpa! Q
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text"
-                        ><i class="fas fa-map-marker-alt"></i
+                        ><i class="fas fa-image"></i
                       ></span>
                     </div>
                     <input
-                      type="text"
+                      type="file"
                       class="form-control"
                       name="location"
                       autocomplete="off"
@@ -282,7 +287,12 @@ export default {
   data() {
     return {
       product: {
-        name: "Coca cola",
+        name: "Coca cola from Vue",
+        bar_code: "666-Vue",
+        brand: "Vue Brand",
+        price: "54",
+        qty: "67",
+        description: "Description from Vue",
       },
       stores: [],
       selectedStoreId: "",
@@ -291,7 +301,12 @@ export default {
 
   computed: {
     isFormValidated() {
-      return this.selectedStoreId != "";
+      return (
+        (this.selectedStoreId &&
+          this.product.name.trim() &&
+          this.product.qty.trim() &&
+          this.product.price.trim()) !== ""
+      );
     },
   },
 
@@ -299,6 +314,11 @@ export default {
     saveProduct() {
       const params = {
         name: this.product.name,
+        bar_code: this.product.bar_code,
+        brand: this.product.brand,
+        price: this.product.price,
+        qty: this.product.qty,
+        description: this.product.description,
         store_id: this.selectedStoreId,
       };
 
