@@ -118,6 +118,31 @@
               </div>
 
               <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="delivery_option">Tienda</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        ><i class="fas fa-store"></i
+                      ></span>
+                    </div>
+                    <select
+                      name="delivery_option"
+                      id=""
+                      class="form-control custom-select"
+                    >
+                      <option @click="clearStore">Seleccionar...</option>
+                      <option
+                        v-for="(store, index) in stores"
+                        :key="index"
+                        @click="selectStore(store)"
+                      >
+                        {{ store.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
                 <div class="col-md-4">
                   <label for="cp_offer_price">Precio de oferta</label>
                   <div class="input-group">
@@ -259,24 +284,49 @@ export default {
       product: {
         name: "Coca cola",
       },
+      stores: [],
+      selectedStoreId: "",
     };
+  },
+
+  computed: {
+    isFormValidated() {
+      return this.selectedStoreId != "";
+    },
   },
 
   methods: {
     saveProduct() {
       const params = {
         name: this.product.name,
+        store_id: this.selectedStoreId,
       };
 
-      axios.post("/api/products", params).then((resp) => {
-        window.location.href = "/products";
+      if (this.isFormValidated)
+        axios.post("/api/products", params).then((resp) => {
+          window.location.href = "/products";
+        });
+    },
+
+    getStores() {
+      axios.get("/api/user/stores").then((resp) => {
+        this.stores = resp.data.stores;
       });
+    },
+
+    selectStore(store) {
+      this.selectedStoreId = store.id;
+    },
+
+    clearStore() {
+      this.selectedStoreId = "";
     },
   },
 
   created() {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("user_token");
+    this.getStores();
   },
 };
 </script>
