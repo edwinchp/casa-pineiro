@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Product;
 use App\User;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class ApiProductController extends Controller
 {
@@ -54,6 +56,22 @@ class ApiProductController extends Controller
     public function store(Request $request)
     {
         $product = new Product($request->all());
+        $picture = "picture_1";
+        if ($file = $request->file($picture)) {
+
+            $fileName = $picture . date('_His-d-m-Y.') . $file->extension();
+            // Save image in products directory
+            Storage::putFileAs('images/products/', $file, $fileName);
+            // Modify previous image to have 400x400
+            Image::make('images/products/' . $fileName)->fit(400, 400)->save();
+
+            // if ($function == "update") {
+            //     Storage::delete($product->getPicturePath($picture));
+            // }
+
+            // Save file name in the database
+            $product->setPicture($picture, $fileName);
+        }
         $product->save();
         return $product;
     }

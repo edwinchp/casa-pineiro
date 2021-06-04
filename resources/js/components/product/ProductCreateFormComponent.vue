@@ -7,64 +7,82 @@
           <div class="card-header-left"></div>
         </div>
         <div class="card-block">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <label for="name">Nombre</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  value=""
+                  v-model="product.name"
+                />
+              </div>
+              <div class="col-md-4">
+                <img
+                  v-show="imageUrl"
+                  :src="imageUrl"
+                  class="img-thumbnail"
+                  alt="..."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="row pt-3">
+                  <div class="col-md-6">
+                    <label for="bar_code">Código de barras</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"
+                          ><i class="fas fa-barcode"></i
+                        ></span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="bar_code"
+                        autocomplete="off"
+                        v-model="product.bar_code"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="brand">Marca</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"
+                          ><i class="fas fa-circle"></i
+                        ></span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="brand"
+                        v-model="product.brand"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <input
+                  type="file"
+                  style="display: none"
+                  ref="fileInput"
+                  @change="onFileSelected"
+                />
+                <button @click="$refs.fileInput.click()">Subir imagen</button>
+              </div>
+            </div>
+          </div>
+
           <div class="row">
             <div class="col-md-12">
-              <div class="form-row">
-                <div class="col-md-8">
-                  <label for="name">Nombre</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="name"
-                    value=""
-                    v-model="product.name"
-                  />
-                </div>
-
-                <div class="col-md-3 offset-1 product-picture">
-                  <div class="form-group">
-                    <img src="" class="img-thumbnail" alt="..." />
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-row pt-3">
-                <div class="col-md-4">
-                  <label for="bar_code">Código de barras</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-barcode"></i
-                      ></span>
-                    </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="bar_code"
-                      autocomplete="off"
-                      v-model="product.bar_code"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <label for="brand">Marca</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-circle"></i
-                      ></span>
-                    </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="brand"
-                      v-model="product.brand"
-                    />
-                  </div>
-                </div>
-                <br />
-              </div>
-
               <div class="form-row pt-4">
                 <div class="col-md-4">
                   <label for="cp_price">Precio al público</label>
@@ -202,66 +220,6 @@
                 </div>
               </div>
             </div>
-
-            <div class="col-md-12">
-              <div class="form-row">
-                <div class="form-group col-md-4">
-                  <label for="location">Ubicación</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-image"></i
-                      ></span>
-                    </div>
-                    <input
-                      type="file"
-                      class="form-control"
-                      name="location"
-                      autocomplete="off"
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group col-md-4">
-                  <label for="delivery_option">Opción de envío</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-truck"></i
-                      ></span>
-                    </div>
-                    <select
-                      name="delivery_option"
-                      id=""
-                      class="form-control custom-select"
-                    >
-                      <option value="0">Seleccionar...</option>
-                      <option value="1">Recoger en tienda</option>
-                      <option value="2">Entrega a domicilio</option>
-                      <option value="3">Sistema de apartado</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="form-group col-md-4">
-                  <label for="delivey_cost">Costo de envío</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-dolly"></i
-                      ></span>
-                    </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="delivey_cost"
-                      autocomplete="off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <div class="options">
               <div class="form-row pt-3">
                 <div class="p-1">
@@ -296,6 +254,8 @@ export default {
       },
       stores: [],
       selectedStoreId: "",
+      imageUrl: null,
+      imageFile: null,
     };
   },
 
@@ -312,20 +272,22 @@ export default {
 
   methods: {
     saveProduct() {
-      const params = {
-        name: this.product.name,
-        bar_code: this.product.bar_code,
-        brand: this.product.brand,
-        price: this.product.price,
-        qty: this.product.qty,
-        description: this.product.description,
-        store_id: this.selectedStoreId,
-      };
+      if (this.isFormValidated) {
+        const formData = new FormData();
+        formData.append("name", this.product.name);
+        formData.append("bar_code", this.product.bar_code);
+        formData.append("brand", this.product.brand);
+        formData.append("price", this.product.price);
+        formData.append("qty", this.product.qty);
+        formData.append("description", this.product.description);
+        formData.append("store_id", this.selectedStoreId);
+        formData.append("picture_1", this.imageFile, this.imageFile.name);
 
-      if (this.isFormValidated)
-        axios.post("/api/products", params).then((resp) => {
-          window.location.href = "/products";
+        axios.post("/api/products", formData).then((resp) => {
+          //window.location.href = "/products";
+          console.log(resp);
         });
+      }
     },
 
     getStores() {
@@ -340,6 +302,14 @@ export default {
 
     clearStore() {
       this.selectedStoreId = "";
+    },
+
+    onFileSelected(event) {
+      console.log(event);
+      //let theFile = event.target.files[0];
+
+      this.imageFile = event.target.files[0];
+      this.imageUrl = URL.createObjectURL(this.imageFile);
     },
   },
 
