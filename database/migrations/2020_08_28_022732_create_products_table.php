@@ -15,17 +15,18 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->integer('store_id')->nullable();
+            $table->integer('store_id');
             $table->string("name");
             //$table->integer("content")->nullable();
             //$table->string("unit_of_measure")->nullable();
             $table->string("bar_code")->nullable();
             $table->string("brand")->nullable();
             //Casa Pineiro
-            $table->double("price")->nullable();
-            $table->integer("qty")->nullable();
+            $table->double("price");
+            $table->double("cost_price")->nullable();
+            $table->integer("qty")->default(0);
             $table->double("offer_price")->nullable();
-            $table->integer("offer_duration")->nullable();
+            $table->timestamp("offer_ends")->nullable();
 
             $table->text("description")->nullable();
             $table->string("delivery_option")->nullable();
@@ -41,8 +42,8 @@ class CreateProductsTable extends Migration
             $table->string("location")->nullable();
             $table->string("new_qty")->nullable();
             $table->boolean("editing")->default(false);
-            $table->date("updated_date")->nullable();
             $table->integer("updated_by")->nullable();
+            $table->integer("created_by")->nullable();
             $table->timestamps();
         });
     }

@@ -90,6 +90,10 @@ class ProductTableSeeder extends Seeder
 
         ];
 
+        $start_date = '2013-03-06';
+        $date = DateTime::createFromFormat('Y-m-d',$start_date);
+        $date->modify('+1 month');
+
         foreach ($products as $product) {
             DB::table('products')->insert([
                 'bar_code' => rand(1000000000, 9000000000),
@@ -98,12 +102,16 @@ class ProductTableSeeder extends Seeder
                 'brand' => 'The brand ' . Str::random(10),
                 'qty' => rand(0, 99),
                 'price' => rand(10, 50),
+                'cost_price' => rand(10, 50),
                 'offer_price' => rand(300, 499),
-                'offer_duration' => rand(4, 15),
+                //'offer_ends' => date("Y-m-d H:i:s"),
+                'offer_ends' => date("Y-m-d H:i:s"),
                 'delivery_cost' => rand(10, 100),
                 'editing' => false,
                 'picture_1' => $product['picture_1'],
-                'store_id' => $product['store_id']
+                'store_id' => $product['store_id'],
+                'created_by' => 0,
+                'created_at' => date("Y-m-d H:i:s")
             ]);
         }
     }

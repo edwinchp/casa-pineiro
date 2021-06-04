@@ -116,6 +116,7 @@
                       class="form-control"
                       name="cp_price"
                       autocomplete="off"
+                      v-model="product.cost_price"
                     />
                   </div>
                 </div>
@@ -184,7 +185,7 @@
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <label for="cp_offer_duration">Días en oferta</label>
+                  <label for="cp_offer_duration">Oferta termina</label>
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text"
@@ -192,12 +193,12 @@
                       ></span>
                     </div>
                     <input
-                      type="text"
+                      type="date"
                       class="form-control"
                       name="cp_offer_duration"
                       value="sssssss"
                       autocomplete="off"
-                      v-model="product.offer_duration"
+                      v-model="product.offer_ends"
                     />
                   </div>
                 </div>
@@ -251,6 +252,9 @@ export default {
         price: "54",
         qty: "67",
         description: "Description from Vue",
+        cost_price: 2,
+        offer_price: 2,
+        offer_ends: null,
       },
       stores: [],
       selectedStoreId: "",
@@ -278,6 +282,7 @@ export default {
         formData.append("bar_code", this.product.bar_code);
         formData.append("brand", this.product.brand);
         formData.append("price", this.product.price);
+        formData.append("cost_price", this.product.cost_price); // CHANGE THIS IN THE FUTURE!!!!!!!!!1
         formData.append("qty", this.product.qty);
         formData.append("description", this.product.description);
         formData.append("store_id", this.selectedStoreId);
