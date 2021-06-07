@@ -10,14 +10,12 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-8">
-                <label for="name">Nombre</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="name"
-                  value=""
-                  v-model="product.name"
-                />
+                <input-text
+                  :inputText="product.name"
+                  @inputChanged="nameChanged($event)"
+                  :inputField="inputFields.name"
+                  iconClass="fas fa-square"
+                ></input-text>
               </div>
               <div class="col-md-4">
                 <img
@@ -96,20 +94,12 @@
 
                 <div class="col-md-4">
                   <label for="cp_price">Precio de compra</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-search-dollar"></i
-                      ></span>
-                    </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="cp_price"
-                      autocomplete="off"
-                      v-model="product.cost_price"
-                    />
-                  </div>
+                  <input-text
+                    :inputText="product.cost_price"
+                    @inputChanged="costPriceChanged($event)"
+                    :inputField="inputFields.cost_price"
+                    iconClass="fas fa-dollar-sign"
+                  ></input-text>
                 </div>
 
                 <div class="col-md-4">
@@ -155,21 +145,12 @@
 
                 <div class="col-md-4">
                   <label for="cp_offer_price">Precio de oferta</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-certificate"></i
-                      ></span>
-                    </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="cp_offer_price"
-                      value="sssss"
-                      autocomplete="off"
-                      v-model="product.offer_price"
-                    />
-                  </div>
+                  <input-text
+                    :inputText="product.offer_price"
+                    @inputChanged="offerPriceChanged($event)"
+                    :inputField="inputFields.offer_price"
+                    iconClass="fas fa-certificate"
+                  ></input-text>
                 </div>
                 <div class="col-md-4">
                   <label for="cp_offer_duration">Oferta termina</label>
@@ -236,14 +217,14 @@ export default {
   data() {
     return {
       product: {
-        name: "Coca cola from Vue",
-        bar_code: "666-Vue",
-        brand: "Vue Brand",
+        name: "",
+        bar_code: "",
+        brand: "",
         price: "",
-        qty: " ",
-        description: "Description from Vue",
-        cost_price: 2,
-        offer_price: 2,
+        qty: "",
+        description: "",
+        cost_price: "",
+        offer_price: "",
         offer_ends: null,
       },
       stores: [],
@@ -255,7 +236,7 @@ export default {
           class: "",
           feedback: "",
         },
-        qty: {
+        bar_code: {
           class: "",
           feedback: "",
         },
@@ -263,7 +244,23 @@ export default {
           class: "",
           feedback: "",
         },
+        cost_price: {
+          class: "",
+          feedback: "",
+        },
+        qty: {
+          class: "",
+          feedback: "",
+        },
         store: {
+          class: "",
+          feedback: "",
+        },
+        offer_price: {
+          class: "",
+          feedback: "",
+        },
+        offer_ends: {
           class: "",
           feedback: "",
         },
@@ -337,14 +334,20 @@ export default {
         this.inputFields.name.feedback = "Ingrese un nombre válido";
       }
 
-      if (this.product.qty.trim() == "" || isNaN(this.product.qty.trim())) {
-        this.inputFields.qty.class = "is-invalid";
-        this.inputFields.qty.feedback = "Ingrese una cantidad válida";
-      }
-
-      if (this.product.price.trim() == "") {
+      if (this.product.price == "" || isNaN(this.product.price)) {
         this.inputFields.price.class = "is-invalid";
         this.inputFields.price.feedback = "Ingrese un precio válido";
+      }
+
+      if (isNaN(this.product.cost_price)) {
+        this.inputFields.cost_price.class = "is-invalid";
+        this.inputFields.cost_price.feedback =
+          "Ingrese un precio de compra válido";
+      }
+
+      if (this.product.qty == "" || isNaN(this.product.qty)) {
+        this.inputFields.qty.class = "is-invalid";
+        this.inputFields.qty.feedback = "Ingrese una cantidad válida";
       }
 
       if (this.selectedStoreId == "") {
@@ -352,6 +355,36 @@ export default {
         this.inputFields.store.feedback =
           "Seleccione una tienda para continuar";
       }
+
+      if (isNaN(this.product.offer_price)) {
+        this.inputFields.offer_price.class = "is-invalid";
+        this.inputFields.offer_price.feedback =
+          "Ingrese un precio de oferta válido";
+      }
+    },
+
+    nameChanged(event) {
+      this.product.name = event;
+      this.inputFields.name.class = "";
+      this.inputFields.name.feedback = "";
+    },
+
+    barCodeChanged(event) {
+      // this.product.name = event;
+      // this.inputFields.name.class = "";
+      // this.inputFields.name.feedback = "";
+    },
+
+    priceChanged(event) {
+      this.product.price = event;
+      this.inputFields.price.class = "";
+      this.inputFields.price.feedback = "";
+    },
+
+    costPriceChanged(event) {
+      this.product.cost_price = event;
+      this.inputFields.cost_price.class = "";
+      this.inputFields.cost_price.feedback = "";
     },
 
     qtyChanged(event) {
@@ -359,11 +392,16 @@ export default {
       this.inputFields.qty.class = "";
       this.inputFields.qty.feedback = "";
     },
+    offerPriceChanged(event) {
+      this.product.offer_price = event;
+      this.inputFields.offer_price.class = "";
+      this.inputFields.offer_price.feedback = "";
+    },
 
-    priceChanged(event) {
-      this.product.price = event;
-      this.inputFields.price.class = "";
-      this.inputFields.price.feedback = "";
+    offerEndsChanged(event) {
+      // this.product.name = event;
+      // this.inputFields.name.class = "";
+      // this.inputFields.name.feedback = "";
     },
   },
 

@@ -19,7 +19,7 @@
 <script>
 export default {
   props: {
-    inputText: String,
+    inputText: null,
     inputField: Object,
     iconClass: String,
   },
