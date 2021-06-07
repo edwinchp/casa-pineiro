@@ -29,6 +29,7 @@ Vue.component('product-component', require('./components/product/ProductComponen
 Vue.component('user-navbar', require('./components/layouts/user-navbar.vue').default);
 Vue.component('sales-index-component', require('./components/sales/SalesIndexComponent.vue').default);
 Vue.component('login-form', require('./components/login/loginForm.vue').default);
+Vue.component('input-text', require('./components/layouts/InputText.vue').default);
 //Vue.component('pagination', require('laravel-vue-pagination'));
 
 /**

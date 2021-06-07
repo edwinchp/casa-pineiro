@@ -16,7 +16,10 @@
               >Nuevo</a
             >
 
-            <div class="dropdown-inverse dropdown open">
+            <div
+              v-if="stores.length > 0"
+              class="dropdown-inverse dropdown open"
+            >
               <button
                 class="btn btn-inverse dropdown-toggle waves-effect waves-light"
                 type="button"
@@ -215,10 +218,7 @@ export default {
       if (this.searchIsActive) {
         return this.products.reduce((sum, product) => sum + product.qty, 0);
       } else {
-        return this.allProducts.reduce(
-          (sum, product) => sum + product.qty,
-          0
-        );
+        return this.allProducts.reduce((sum, product) => sum + product.qty, 0);
       }
     },
 

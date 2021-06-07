@@ -85,22 +85,13 @@
             <div class="col-md-12">
               <div class="form-row pt-4">
                 <div class="col-md-4">
-                  <label for="cp_price">Precio al público</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-dollar-sign"></i
-                      ></span>
-                    </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="cp_price"
-                      autocomplete="off"
-                      v-model="product.price"
-                      required
-                    />
-                  </div>
+                  <label for="qty">Precio</label>
+                  <input-text
+                    :inputText="product.price"
+                    @inputChanged="priceChanged($event)"
+                    :inputField="inputFields.price"
+                    iconClass="fas fa-dollar-sign"
+                  ></input-text>
                 </div>
 
                 <div class="col-md-4">
@@ -123,20 +114,12 @@
 
                 <div class="col-md-4">
                   <label for="qty">Cantidad</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-boxes"></i
-                      ></span>
-                    </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="qty"
-                      autocomplete="off"
-                      v-model="product.qty"
-                    />
-                  </div>
+                  <input-text
+                    :inputText="product.qty"
+                    @inputChanged="qtyChanged($event)"
+                    :inputField="inputFields.qty"
+                    iconClass="fas fa-boxes"
+                  ></input-text>
                 </div>
               </div>
 
@@ -153,6 +136,7 @@
                       name="delivery_option"
                       id=""
                       class="form-control custom-select"
+                      :class="inputFields.store.class"
                     >
                       <option @click="clearStore">Seleccionar...</option>
                       <option
@@ -163,6 +147,9 @@
                         {{ store.name }}
                       </option>
                     </select>
+                    <div class="invalid-feedback">
+                      {{ inputFields.store.feedback }}
+                    </div>
                   </div>
                 </div>
 
@@ -242,15 +229,18 @@
 </template>
 
 <script>
+import InputText from "../layouts/InputText.vue";
 export default {
+  components: { InputText },
+  inputOk: {},
   data() {
     return {
       product: {
         name: "Coca cola from Vue",
         bar_code: "666-Vue",
         brand: "Vue Brand",
-        price: "54",
-        qty: "67",
+        price: "",
+        qty: " ",
         description: "Description from Vue",
         cost_price: 2,
         offer_price: 2,
@@ -260,23 +250,34 @@ export default {
       selectedStoreId: "",
       imageUrl: null,
       imageFile: null,
+      inputFields: {
+        name: {
+          class: "",
+          feedback: "",
+        },
+        qty: {
+          class: "",
+          feedback: "",
+        },
+        price: {
+          class: "",
+          feedback: "",
+        },
+        store: {
+          class: "",
+          feedback: "",
+        },
+      },
     };
   },
 
-  computed: {
-    isFormValidated() {
-      return (
-        (this.selectedStoreId &&
-          this.product.name.trim() &&
-          this.product.qty.trim() &&
-          this.product.price.trim()) !== ""
-      );
-    },
-  },
+  computed: {},
 
   methods: {
     saveProduct() {
-      if (this.isFormValidated) {
+      //      this.$emit('wrong-data', wrongInput)
+      this.isDataValided();
+      if (this.formErrors() <= 0) {
         const formData = new FormData();
         formData.append("name", this.product.name);
         formData.append("bar_code", this.product.bar_code);
@@ -286,13 +287,24 @@ export default {
         formData.append("qty", this.product.qty);
         formData.append("description", this.product.description);
         formData.append("store_id", this.selectedStoreId);
-        formData.append("picture_1", this.imageFile, this.imageFile.name);
+        if (this.imageFile)
+          formData.append("picture_1", this.imageFile, this.imageFile.name);
 
         axios.post("/api/products", formData).then((resp) => {
-          //window.location.href = "/products";
-          console.log(resp);
+          window.location.href = "/products";
         });
       }
+    },
+
+    formErrors() {
+      let errors = 0;
+      let keys = Object.keys(this.inputFields);
+      keys.forEach((key) => {
+        if (this.inputFields[key].class.length > 0) {
+          errors++;
+        }
+      });
+      return errors;
     },
 
     getStores() {
@@ -303,6 +315,8 @@ export default {
 
     selectStore(store) {
       this.selectedStoreId = store.id;
+      this.inputFields.store.class = "";
+      this.inputFields.store.feedback = "";
     },
 
     clearStore() {
@@ -316,12 +330,48 @@ export default {
       this.imageFile = event.target.files[0];
       this.imageUrl = URL.createObjectURL(this.imageFile);
     },
+
+    isDataValided() {
+      if (this.product.name.trim() == "") {
+        this.inputFields.name.class = "is-invalid";
+        this.inputFields.name.feedback = "Ingrese un nombre válido";
+      }
+
+      if (this.product.qty.trim() == "" || isNaN(this.product.qty.trim())) {
+        this.inputFields.qty.class = "is-invalid";
+        this.inputFields.qty.feedback = "Ingrese una cantidad válida";
+      }
+
+      if (this.product.price.trim() == "") {
+        this.inputFields.price.class = "is-invalid";
+        this.inputFields.price.feedback = "Ingrese un precio válido";
+      }
+
+      if (this.selectedStoreId == "") {
+        this.inputFields.store.class = "is-invalid";
+        this.inputFields.store.feedback =
+          "Seleccione una tienda para continuar";
+      }
+    },
+
+    qtyChanged(event) {
+      this.product.qty = event;
+      this.inputFields.qty.class = "";
+      this.inputFields.qty.feedback = "";
+    },
+
+    priceChanged(event) {
+      this.product.price = event;
+      this.inputFields.price.class = "";
+      this.inputFields.price.feedback = "";
+    },
   },
 
   created() {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("user_token");
     this.getStores();
+    this.inputOk = this.inputFields;
   },
 };
 </script>
