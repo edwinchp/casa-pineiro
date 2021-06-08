@@ -22,6 +22,12 @@ class ApiProductController extends Controller
         //$foundByUser = $request->productsFound;
         //$products = Product::filterByNameBarcodeAndBrand($foundByUser)->get();
         //$userStore = User::find(1); // Pending to define
+
+        if ($request->productsFound) {
+            $products = Product::filterByNameBarcodeAndBrand($request->productsFound, $request->store_id)->get();
+            return response()->json($products, 200);
+        }
+
         $products = Product::where('store_id', '=', $request->store_id)->orderBy('created_at', 'DESC')->paginate(5);
 
         return [

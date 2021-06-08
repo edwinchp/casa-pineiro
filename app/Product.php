@@ -56,11 +56,17 @@ class Product extends Model
         return '/images/default.jpeg';
     }
 
-    public function scopeFilterByNameBarcodeAndBrand($query, $foundByUser)
+    public function scopeFilterByNameBarcodeAndBrand($query, $foundByUser, $store_id)
     {
-        return $query->where('name', 'LIKE', '%' . $foundByUser . '%')
-            ->orWhere('bar_code', 'LIKE', '%' . $foundByUser . '%')
-            ->orWhere('brand', 'LIKE', '%' . $foundByUser . '%');
+        // return $query
+        //     ->where('store_id', '=', $store_id )
+        //     ->orwhere('name', 'LIKE', '%' . $foundByUser . '%')
+        //     ->orWhere('bar_code', 'LIKE', '%' . $foundByUser . '%')
+        //     ->orWhere('brand', 'LIKE', '%' . $foundByUser . '%');
+        return $query->where([
+            ['store_id', '=', $store_id],
+            ['name', 'LIKE', '%' . $foundByUser . '%']
+        ]);
     }
 
     // public function store(){

@@ -270,16 +270,16 @@ export default {
       }
     },
 
-    getStores() {
-      axios.get("api/user/stores").then((resp) => {
+    getStores(callback) {
+      axios.get("/api/user/stores").then((resp) => {
         this.stores = resp.data.stores;
         this.selectedStoreId = this.stores[0].id;
         this.selectedStoreName = this.stores[0].name;
+        callback();
       });
     },
 
     getProducts: function (page) {
-      console.log("store_id" + this.selectedStoreId);
       axios
         .get("/api/products/?page=" + page, {
           params: {
@@ -294,10 +294,10 @@ export default {
 
     getSearchProducts: function () {
       axios
-        .get("api/allProducts", {
+        .get("/api/products", {
           params: {
             productsFound: this.productsFound,
-            store_id: 1,
+            store_id: this.selectedStoreId,
           },
         })
         .then((response) => {
@@ -308,9 +308,9 @@ export default {
 
     getAllProducts: function () {
       axios
-        .get("api/allProducts/", {
+        .get("/api/allProducts/", {
           params: {
-            store_id: 1,
+            store_id: this.selectedStoreId,
           },
         })
         .then((response) => {
@@ -354,6 +354,7 @@ export default {
       this.selectedStoreId = store.id;
       this.selectedStoreName = store.name;
       this.getProducts(1);
+      this.getAllProducts();
     },
   },
 
@@ -361,10 +362,10 @@ export default {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("user_token");
     this.$store.dispatch("currentUser/getUser");
-    this.getStores();
-    //this.getProducts(1);
-    setTimeout(this.getProducts(1), 4000);
-    this.getAllProducts();
+    this.getStores(() => {
+      this.getProducts(1);
+      this.getAllProducts();
+    });
   },
 
   mounted() {},
