@@ -187,6 +187,16 @@
                   >
                   </textarea>
                 </div>
+
+                <div class="col-md-4">
+                  <label for="cp_offer_price">Imagen por link</label>
+                  <input-text
+                    :inputText="product.picture_link"
+                    @inputChanged="pictureLinkChanged($event)"
+                    :inputField="inputFields.picture_link"
+                    iconClass="fas fa-link"
+                  ></input-text>
+                </div>
               </div>
             </div>
             <div class="options">
@@ -226,6 +236,7 @@ export default {
         cost_price: "",
         offer_price: "",
         offer_ends: null,
+        picture_link: "",
       },
       stores: [],
       selectedStoreId: "",
@@ -264,6 +275,10 @@ export default {
           class: "",
           feedback: "",
         },
+        picture_link: {
+          class: "",
+          feedback: "",
+        },
       },
     };
   },
@@ -284,6 +299,7 @@ export default {
         formData.append("qty", this.product.qty);
         formData.append("description", this.product.description);
         formData.append("store_id", this.selectedStoreId);
+        formData.append("picture_link", this.product.picture_link);
         if (this.imageFile)
           formData.append("picture", this.imageFile, this.imageFile.name);
 
@@ -402,6 +418,12 @@ export default {
       // this.product.name = event;
       // this.inputFields.name.class = "";
       // this.inputFields.name.feedback = "";
+    },
+
+    pictureLinkChanged(event) {
+      this.product.picture_link = event;
+      this.inputFields.picture_link.class = "";
+      this.inputFields.picture_link.feedback = "";
     },
   },
 
