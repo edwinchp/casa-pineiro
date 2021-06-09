@@ -10,20 +10,14 @@ class Product extends Model
 
     public function getPicture1()
     {
-        return '/images/products/' . $this->picture_1;
+        return '/images/products/' . $this->picture;
     }
 
     public function getPicture($picture)
     {
         switch ($picture) {
-            case "picture_1":
-                return $this->picture_1;
-                break;
-            case "picture_2":
-                return $this->picture_2;
-                break;
-            case "picture_3":
-                return $this->picture_3;
+            case "picture":
+                return $this->picture;
                 break;
         }
     }
@@ -36,22 +30,16 @@ class Product extends Model
     public function setPicture($picture, $newPicture)
     {
         switch ($picture) {
-            case "picture_1":
-                $this->picture_1 = $newPicture;
-                break;
-            case "picture_2":
-                $this->picture_2 = $newPicture;
-                break;
-            case "picture_3":
-                $this->picture_3 = $newPicture;
+            case "picture":
+                $this->picture = $newPicture;
                 break;
         }
     }
 
     public function getMainPicture()
     {
-        if ($this->picture_1 != null) {
-            return $this->getPicturePath('picture_1');
+        if ($this->picture != null) {
+            return $this->getPicturePath('picture');
         }
         return '/images/default.jpeg';
     }

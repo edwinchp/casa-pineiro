@@ -62,7 +62,7 @@ class ApiProductController extends Controller
     public function store(Request $request)
     {
         $product = new Product($request->all());
-        $picture = "picture_1";
+        $picture = "picture";
         if ($file = $request->file($picture)) {
 
             $fileName = $picture . date('_His-d-m-Y.') . $file->extension();

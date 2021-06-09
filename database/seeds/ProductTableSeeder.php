@@ -108,7 +108,7 @@ class ProductTableSeeder extends Seeder
                 'offer_ends' => date("Y-m-d H:i:s"),
                 'delivery_cost' => rand(10, 100),
                 'editing' => false,
-                'picture_1' => $product['picture_1'],
+                'picture_link' => $product['picture_1'],
                 'store_id' => $product['store_id'],
                 'created_by' => 0,
                 'created_at' => date("Y-m-d H:i:s")

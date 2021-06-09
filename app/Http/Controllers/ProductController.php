@@ -29,11 +29,11 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if ($product) {
-            $this->savePicture($request, 'picture_1', $product, "update");
+            $this->savePicture($request, 'picture', $product, "update");
             $this->savePicture($request, 'picture_2', $product, "update");
             $this->savePicture($request, 'picture_3', $product, "update");
 
-            $product->update($request->except(['picture_1', 'picture_2', 'picture_3']));
+            $product->update($request->except(['picture', 'picture_2', 'picture_3']));
             //return redirect()->route('product.index');
             return $product;
         }
@@ -64,7 +64,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         if ($product) {
-            $this->savePicture(null, 'picture_1', $product, "destroy");
+            $this->savePicture(null, 'picture', $product, "destroy");
             $this->savePicture(null, 'picture_2', $product, "destroy");
             $this->savePicture(null, 'picture_3', $product, "destroy");
             $product->delete();

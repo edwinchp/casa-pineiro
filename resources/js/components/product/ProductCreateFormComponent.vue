@@ -285,7 +285,7 @@ export default {
         formData.append("description", this.product.description);
         formData.append("store_id", this.selectedStoreId);
         if (this.imageFile)
-          formData.append("picture_1", this.imageFile, this.imageFile.name);
+          formData.append("picture", this.imageFile, this.imageFile.name);
 
         axios.post("/api/products", formData).then((resp) => {
           window.location.href = "/products";
