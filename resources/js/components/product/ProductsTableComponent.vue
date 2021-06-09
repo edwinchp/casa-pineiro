@@ -222,7 +222,9 @@
 
           <td class="table-bought-product">
             <div class="row">
-              <div class="col-xl-11" v-show="product.cost_price">${{product.cost_price}}</div>
+              <div class="col-xl-11" v-show="product.cost_price">
+                ${{ product.cost_price }}
+              </div>
             </div>
           </td>
 
@@ -236,12 +238,14 @@
 
           <td>
             <a href="#!" data-toggle="modal" data-target="#myModal"
-              ><img v-if="product.picture_link"
+              ><img
+                v-if="product.picture_link"
                 :src="product.picture_link"
                 alt=""
                 class="img-40 rounded"
               />
-              <img v-else
+              <img
+                v-else
                 :src="'images/products/' + product.picture"
                 alt=""
                 class="img-40 rounded"
@@ -345,7 +349,7 @@ export default {
       }
 
       this.$emit("miniCartChanged", this.miniCart);
-      this.$root.$emit('sharingCart', this.miniCart)
+      this.$root.$emit("sharingCart", this.miniCart);
     },
   },
 
