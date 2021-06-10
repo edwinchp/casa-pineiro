@@ -24,6 +24,7 @@ import store from "./store"
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('product-index-component', require('./components/product/ProductIndexComponent.vue').default);
 Vue.component('product-create-form', require('./components/product/ProductCreateFormComponent.vue').default);
+Vue.component('product-edit-form', require('./components/product/ProductEditFormComponent.vue').default);
 Vue.component('products-table-component', require('./components/product/ProductsTableComponent.vue').default);
 Vue.component('product-component', require('./components/product/ProductComponent.vue').default);
 Vue.component('user-navbar', require('./components/layouts/user-navbar.vue').default);

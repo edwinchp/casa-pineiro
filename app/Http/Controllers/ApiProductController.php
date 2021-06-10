@@ -101,7 +101,7 @@ class ApiProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        return "smtg";
     }
 
     /**
@@ -113,7 +113,22 @@ class ApiProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'qty' => 'required',
+            'store_id' => 'required',
+        ]);
+
+        $product = Product::findOrFail($id);
+
+        foreach ($request->all() as $key => $value) {
+            if ($value != null) $product->{$key} = $value;
+        }
+
+        $product->update();
+        
+        return response()->json($request, 200);
     }
 
     /**
