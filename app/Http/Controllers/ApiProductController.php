@@ -124,7 +124,7 @@ class ApiProductController extends Controller
         $product = Product::findOrFail($id);
 
         foreach ($request->all() as $key => $value) {
-            if ($value != null) $product->{$key} = $value;
+            $product->{$key} = $value;
         }
 
         $product->update();

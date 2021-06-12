@@ -21,14 +21,14 @@
 
    
 
-<style>
+<!-- <style>
     @media screen and (max-width: 700px) {
         .checkbox-product {
             padding: 2em;
         }
 
     }
-</style>
+</style> -->
 
 
 

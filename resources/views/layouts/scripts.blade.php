@@ -46,12 +46,12 @@
 
 
 <!-- From Custom Template-->
-<script type="text/javascript" src="{{asset('custom-template/assets/pages/dashboard/custom-dashboard.js')}}"></script>
-<script type="text/javascript" src="{{asset('custom-template/assets/js/script.js')}}"></script>
-<script type="text/javascript " src="{{asset('custom-template/assets/js/SmoothScroll.js')}}"></script>
-<script src="{{asset('custom-template/assets/js/pcoded.min.js')}}"></script>
-<script src="{{asset('custom-template/assets/js/demo-12.js')}}"></script>
-<script src="{{asset('custom-template/assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
-<script src="{{asset('custom-template/assets/pages/chart/morris/morris-custom-chart.js')}}"></script>
-<script src="{{asset('custom-template/assets/js/raphael/raphael.min.js')}}"></script>
-<script src="{{asset('custom-template/assets/js/morris.js/morris.js')}}"></script>
+<!-- <script type="text/javascript" src="{{asset('custom-template/assets/pages/dashboard/custom-dashboard.js')}}"></script> -->
+<!-- <script type="text/javascript" src="{{asset('custom-template/assets/js/script.js')}}"></script> -->
+<!-- <script type="text/javascript " src="{{asset('custom-template/assets/js/SmoothScroll.js')}}"></script>
+ --><!-- <script src="{{asset('custom-template/assets/js/pcoded.min.js')}}"></script> -->
+<!-- <script src="{{asset('custom-template/assets/js/demo-12.js')}}"></script>
+ --><!-- <script src="{{asset('custom-template/assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script> -->
+<!-- <script src="{{asset('custom-template/assets/pages/chart/morris/morris-custom-chart.js')}}"></script> -->
+<!-- <script src="{{asset('custom-template/assets/js/raphael/raphael.min.js')}}"></script>
+<script src="{{asset('custom-template/assets/js/morris.js/morris.js')}}"></script> -->
