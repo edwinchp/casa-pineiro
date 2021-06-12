@@ -11,14 +11,15 @@
             <div class="col-md-12">
               <div class="form-row">
                 <div class="col-md-8">
-                  <label for="name">Nombre</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="name"
-                    value=""
-                  />
+                  <input-text
+                    :inputText="product.name"
+                    @inputChanged="nameChanged($event)"
+                    :inputField="inputFields.name"
+                    iconClass="fas fa-square"
+                    v-model="product.name"
+                  ></input-text>
                 </div>
+
 
                 <div class="col-md-3 offset-1 product-picture">
                   <div class="form-group">
@@ -294,21 +295,10 @@
 import InputText from "../layouts/InputText.vue";
 export default {
   components: { InputText },
-  props: ['product_id'],
+  props: ["product_id"],
   data() {
     return {
-      product: {
-        name: "",
-        bar_code: "",
-        brand: "",
-        price: "",
-        qty: "",
-        description: "",
-        cost_price: "",
-        offer_price: "",
-        offer_ends: null,
-        picture_link: "",
-      },
+      product: {},
       stores: [],
       selectedStoreId: "",
       imageUrl: null,
@@ -496,13 +486,19 @@ export default {
       this.inputFields.picture_link.class = "";
       this.inputFields.picture_link.feedback = "";
     },
+
+    findProduct() {
+      axios.get("/api/products/" + this.product_id).then((response) => {
+        this.product = response.data;
+      });
+    },
   },
 
   created() {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("user_token");
+    this.findProduct();
     this.getStores();
-    this.inputOk = this.inputFields;
   },
 };
 </script>

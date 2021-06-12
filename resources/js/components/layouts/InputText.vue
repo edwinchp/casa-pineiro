@@ -7,10 +7,9 @@
       type="text"
       class="form-control"
       :class="inputField.class"
-      name="qty"
       autocomplete="off"
-      v-model="input"
       @input="inputChange"
+      v-model="input"
     />
     <div class="invalid-feedback">{{ inputField.feedback }}</div>
   </div>
@@ -19,14 +18,14 @@
 <script>
 export default {
   props: {
-    inputText: null,
+    inputText: "",
     inputField: Object,
     iconClass: String,
   },
 
   data() {
     return {
-      input: this.inputText,
+      input: "",
     };
   },
 
@@ -35,6 +34,21 @@ export default {
       this.input = event.target.value;
       this.$emit("inputChanged", this.input);
     },
+
+    waitUntilInputTextIsReady() {
+      if (typeof this.inputText !== "undefined") {
+        this.input = this.inputText;
+      } else {
+        console.log("waiting inputText: " + typeof this.inputText);
+        setTimeout(() => {
+          this.waitUntilInputTextIsReady();
+        }, 800);
+      }
+    },
+  },
+
+  mounted() {
+    this.waitUntilInputTextIsReady();
   },
 };
 </script>
