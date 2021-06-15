@@ -79,7 +79,7 @@
                   <input-text
                     :inputText="product.cost_price"
                     @inputChanged="costPriceChanged($event)"
-                    :inputField="{}"
+                    :inputField="inputFields.cost_price"
                     iconClass="fas fa-dollar-sign"
                     v-model="product.cost_price"
                   ></input-text>
@@ -132,7 +132,7 @@
                   <input-text
                     :inputText="product.offer_price"
                     @inputChanged="offerPriceChanged($event)"
-                    :inputField="{}"
+                    :inputField="inputFields.offer_price"
                     iconClass="fas fa-certificate"
                     v-model="product.offer_price"
                   ></input-text>
