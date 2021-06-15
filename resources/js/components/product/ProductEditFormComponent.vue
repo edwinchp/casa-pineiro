@@ -68,7 +68,7 @@
                   <input-text
                     :inputText="product.price"
                     @inputChanged="priceChanged($event)"
-                    :inputField="{}"
+                    :inputField="inputFields.price"
                     iconClass="fas fa-dollar-sign"
                     v-model="product.price"
                   ></input-text>
@@ -90,7 +90,7 @@
                   <input-text
                     :inputText="product.qty"
                     @inputChanged="qtyChanged($event)"
-                    :inputField="{}"
+                    :inputField="inputFields.qty"
                     iconClass="fas fa-boxes"
                     v-model="product.qty"
                   ></input-text>
@@ -112,13 +112,11 @@
                       class="form-control custom-select"
                       :class="inputFields.store.class"
                     >
-                      <option @click="selectOriginalStoreId()">
-                        {{ selectedStoreName }}
-                      </option>
                       <option
                         v-for="(store, index) in stores"
                         :key="index"
                         @click="selectStore(store)"
+                        :selected="store.id == selectedStoreId"
                       >
                         {{ store.name }}
                       </option>
@@ -150,7 +148,7 @@
                     <input
                       type="date"
                       class="form-control"
-                      name="cp_offer_duration"
+                      name=""
                       value=""
                       autocomplete="off"
                     />
@@ -283,6 +281,10 @@ export default {
     return {
       product: {},
       stores: [],
+      storeBarCodes: [],
+      storeBarCodesTimeout: null,
+      storeBarCodesStatus: "",
+      initialBarCode: null,
       statusClass: null,
       statusDescription: null,
       displayStatus: false,
@@ -335,6 +337,22 @@ export default {
   computed: {},
 
   methods: {
+    getBarCodes() {
+      axios
+        .get("/api/allProducts", {
+          params: {
+            store_id: this.selectedStoreId,
+          },
+        })
+        .then((response) => {
+          this.storeBarCodes = [];
+          response.data.forEach((product) => {
+            if (product.id != this.product.id)
+              this.storeBarCodes.push(product.bar_code);
+          });
+        });
+    },
+
     saveProduct() {
       this.isDataValided();
       if (this.formErrors() <= 0) {
@@ -348,6 +366,7 @@ export default {
             //this.updateUpdateStatus(resp.status)
             //window.location.href = "/products/" + this.product_id + "/edit";
             this.updateUpdateStatus(resp.status);
+            this.cleanFormErrors();
             //window.location.href = "/products";
           })
           .catch((error) => {
@@ -385,11 +404,19 @@ export default {
       let errors = 0;
       let keys = Object.keys(this.inputFields);
       keys.forEach((key) => {
-        if (this.inputFields[key].class.length > 0) {
+        if (this.inputFields[key].class == "is-invalid") {
           errors++;
         }
       });
       return errors;
+    },
+
+    cleanFormErrors() {
+      let keys = Object.keys(this.inputFields);
+      keys.forEach((key) => {
+        this.inputFields[key].class = "";
+        this.inputFields[key].feedback = "";
+      });
     },
 
     getStores(callback) {
@@ -404,6 +431,13 @@ export default {
       //this.product.store_id = storeId;
       this.inputFields.store.class = "";
       this.inputFields.store.feedback = "";
+      this.inputFields.bar_code.class = "";
+      this.inputFields.bar_code.feedback = "";
+      this.getBarCodes();
+      console.log(this.product.bar_code);
+      if (this.initialBarCode != this.product.bar_code) {
+        this.barCodeValidateIfValid();
+      }
     },
 
     selectOriginalStoreId() {
@@ -415,7 +449,9 @@ export default {
       for (var key in this.stores) {
         let id = this.stores[key].id;
         let name = this.stores[key].name;
-        if (this.selectedStoreId === id) this.selectedStoreName = name;
+        if (this.selectedStoreId === id) {
+          this.initialStoreName = name;
+        }
 
         //console.log("obj: " + id + " obj: " + name);
       }
@@ -430,12 +466,12 @@ export default {
     },
 
     isDataValided() {
-      if (this.product.name.trim() == "") {
+      if (this.product.name === "") {
         this.inputFields.name.class = "is-invalid";
         this.inputFields.name.feedback = "Ingrese un nombre válido";
       }
 
-      if (this.product.price == "" || isNaN(this.product.price)) {
+      if (this.product.price === "" || isNaN(this.product.price)) {
         this.inputFields.price.class = "is-invalid";
         this.inputFields.price.feedback = "Ingrese un precio válido";
       }
@@ -446,7 +482,7 @@ export default {
           "Ingrese un precio de compra válido";
       }
 
-      if (this.product.qty == "" || isNaN(this.product.qty)) {
+      if (this.product.qty === "" || isNaN(this.product.qty)) {
         this.inputFields.qty.class = "is-invalid";
         this.inputFields.qty.feedback = "Ingrese una cantidad válida";
       }
@@ -471,9 +507,27 @@ export default {
     },
 
     barCodeChanged(event) {
-      // this.product.name = event;
-      // this.inputFields.name.class = "";
-      // this.inputFields.name.feedback = "";
+      this.product.bar_code = event;
+      this.barCodeValidateIfValid();
+    },
+
+    barCodeValidateIfValid() {
+      clearTimeout(this.storeBarCodesTimeout);
+      this.storeBarCodesTimeout = setTimeout(() => {
+        //console.log(this.product.bar_code);
+        this.storeBarCodesStatus = this.storeBarCodes.includes(
+          this.product.bar_code
+        );
+
+        if (this.storeBarCodesStatus) {
+          this.inputFields.bar_code.class = "is-invalid";
+          this.inputFields.bar_code.feedback =
+            "Este código de barras ya existe.";
+        } else {
+          this.inputFields.bar_code.class = "is-valid";
+          this.inputFields.bar_code.feedback = "";
+        }
+      }, 200);
     },
 
     brandChanged(event) {
@@ -532,6 +586,8 @@ export default {
     this.findProduct(() => {
       this.getStores(() => {
         this.selectOriginalStoreName();
+        this.getBarCodes();
+        this.initialBarCode = this.product.bar_code;
       });
     });
   },
