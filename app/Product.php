@@ -57,7 +57,7 @@ class Product extends Model
         ]);
     }
 
-    // public function store(){
-    //     return $this->belongsTo('App\Product');
-    // }
+    public function pictures(){
+        return $this->hasMany('App\Picture');
+    }
 }

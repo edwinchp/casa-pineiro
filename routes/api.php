@@ -51,6 +51,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/logout', 'ApiUserController@logout');
     Route::get('/current-user', 'ApiUserController@currentUser');
     
+    // Picture
+    Route::resource('/picture', 'PictureController');
+    
 });
 
 /**
