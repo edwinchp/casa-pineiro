@@ -10,151 +10,152 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-row">
-                <div class="col-md-8">
-                  <input-text
-                    :inputText="product.name"
-                    @inputChanged="nameChanged($event)"
-                    :inputField="inputFields.name"
-                    iconClass="fas fa-square"
-                    v-model="product.name"
-                  ></input-text>
-                </div>
-
-                <div class="col-md-3 offset-1 product-picture">
-                  <div class="form-group">
-                    <img
-                      v-if="product.picture"
-                      src=""
-                      class="img-thumbnail"
-                      alt="picture"
-                    />
-                    <img
-                      v-else
-                      :src="product.picture_link"
-                      class="img-thumbnail"
-                      style="max-width: 150px"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-row pt-3">
-                <div class="col-md-4">
-                  <label for="bar_code">Código de barras</label>
-                  <input-text
-                    :inputText="product.bar_code"
-                    @inputChanged="barCodeChanged($event)"
-                    :inputField="inputFields.bar_code"
-                    iconClass="fas fa-barcode"
-                    v-model="product.bar_code"
-                  ></input-text>
-                </div>
-                <div class="col-md-4">
-                  <label for="brand">Marca</label>
-                  <input-text
-                    :inputText="product.brand"
-                    @inputChanged="brandChanged($event)"
-                    :inputField="{}"
-                    iconClass="fas fa-circle"
-                    v-model="product.brand"
-                  ></input-text>
-                </div>
-                <br />
-              </div>
-
-              <div class="form-row pt-4">
-                <div class="col-md-4">
-                  <label for="cp_price">Precio al público</label>
-                  <input-text
-                    :inputText="product.price"
-                    @inputChanged="priceChanged($event)"
-                    :inputField="inputFields.price"
-                    iconClass="fas fa-dollar-sign"
-                    v-model="product.price"
-                  ></input-text>
-                </div>
-
-                <div class="col-md-4">
-                  <label for="cp_price">Precio de compra</label>
-                  <input-text
-                    :inputText="product.cost_price"
-                    @inputChanged="costPriceChanged($event)"
-                    :inputField="inputFields.cost_price"
-                    iconClass="fas fa-dollar-sign"
-                    v-model="product.cost_price"
-                  ></input-text>
-                </div>
-
-                <div class="col-md-4">
-                  <label for="qty">Cantidad</label>
-                  <input-text
-                    :inputText="product.qty"
-                    @inputChanged="qtyChanged($event)"
-                    :inputField="inputFields.qty"
-                    iconClass="fas fa-boxes"
-                    v-model="product.qty"
-                  ></input-text>
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-4">
-                  <label for="delivery_option">Tienda</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-store"></i
-                      ></span>
-                    </div>
-                    <select
-                      name="delivery_option"
-                      id=""
-                      class="form-control custom-select"
-                      :class="inputFields.store.class"
-                    >
-                      <option
-                        v-for="(store, index) in stores"
-                        :key="index"
-                        @click="selectStore(store)"
-                        :selected="store.id == selectedStoreId"
-                      >
-                        {{ store.name }}
-                      </option>
-                    </select>
-                    <div class="invalid-feedback">
-                      {{ inputFields.store.feedback }}
+                <div class="col-md-9">
+                  <!-- ROW 1 -->
+                  <div class="form-row">
+                    <div class="col-md-12">
+                      <input-text
+                        :inputText="product.name"
+                        @inputChanged="nameChanged($event)"
+                        :inputField="inputFields.name"
+                        iconClass="fas fa-square"
+                        v-model="product.name"
+                      ></input-text>
                     </div>
                   </div>
+                  <!-- END ROW 1 -->
+
+                  <!-- ROW 2 -->
+                  <div class="form-row">
+                    <div class="col-md-6">
+                      <label for="bar_code">Código de barras</label>
+                      <input-text
+                        :inputText="product.bar_code"
+                        @inputChanged="barCodeChanged($event)"
+                        :inputField="inputFields.bar_code"
+                        iconClass="fas fa-barcode"
+                        v-model="product.bar_code"
+                      ></input-text>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="brand">Marca</label>
+                      <input-text
+                        :inputText="product.brand"
+                        @inputChanged="brandChanged($event)"
+                        :inputField="{}"
+                        iconClass="fas fa-circle"
+                        v-model="product.brand"
+                      ></input-text>
+                    </div>
+                  </div>
+                  <!-- END ROW 2 -->
+
+                  <!-- ROW 3 -->
+                  <div class="form-row">
+                    <div class="col-md-4">
+                      <label for="price">Precio al público</label>
+                      <input-text
+                        :inputText="product.price"
+                        @inputChanged="priceChanged($event)"
+                        :inputField="inputFields.price"
+                        iconClass="fas fa-dollar-sign"
+                        v-model="product.price"
+                      ></input-text>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="cost_price">Precio de compra</label>
+                      <input-text
+                        :inputText="product.cost_price"
+                        @inputChanged="costPriceChanged($event)"
+                        :inputField="inputFields.cost_price"
+                        iconClass="fas fa-dollar-sign"
+                        v-model="product.cost_price"
+                      ></input-text>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="qty">Cantidad</label>
+                      <input-text
+                        :inputText="product.qty"
+                        @inputChanged="qtyChanged($event)"
+                        :inputField="inputFields.qty"
+                        iconClass="fas fa-boxes"
+                        v-model="product.qty"
+                      ></input-text>
+                    </div>
+                  </div>
+                  <!-- END ROW 3 -->
+
+                  <!-- ROW 4 -->
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="delivery_option">Tienda</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"
+                            ><i class="fas fa-store"></i
+                          ></span>
+                        </div>
+                        <select
+                          name="delivery_option"
+                          id=""
+                          class="form-control custom-select"
+                          :class="inputFields.store.class"
+                        >
+                          <option
+                            v-for="(store, index) in stores"
+                            :key="index"
+                            @click="selectStore(store)"
+                            :selected="store.id == selectedStoreId"
+                          >
+                            {{ store.name }}
+                          </option>
+                        </select>
+                        <div class="invalid-feedback">
+                          {{ inputFields.store.feedback }}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div v-show="false" class="col-md-4">
+                      <label for="cp_offer_price">Precio de oferta</label>
+                      <input-text
+                        :inputText="product.offer_price"
+                        @inputChanged="offerPriceChanged($event)"
+                        :inputField="inputFields.offer_price"
+                        iconClass="fas fa-certificate"
+                        v-model="product.offer_price"
+                      ></input-text>
+                    </div>
+                    <div v-show="false" class="col-md-4">
+                      <label for="cp_offer_duration">Oferta termina</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"
+                            ><i class="fas fa-calendar-alt"></i
+                          ></span>
+                        </div>
+                        <input
+                          type="date"
+                          class="form-control"
+                          name=""
+                          value=""
+                          autocomplete="off"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END ROW 4 -->
                 </div>
 
-                <div class="col-md-4">
-                  <label for="cp_offer_price">Precio de oferta</label>
-                  <input-text
-                    :inputText="product.offer_price"
-                    @inputChanged="offerPriceChanged($event)"
-                    :inputField="inputFields.offer_price"
-                    iconClass="fas fa-certificate"
-                    v-model="product.offer_price"
-                  ></input-text>
+                <!-- PICTURES -->
+                <div class="col-md-3 pl-4">
+                  <carousel :pictures="productPictures"> </carousel>
                 </div>
-                <div class="col-md-4">
-                  <label for="cp_offer_duration">Oferta termina</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-calendar-alt"></i
-                      ></span>
-                    </div>
-                    <input
-                      type="date"
-                      class="form-control"
-                      name=""
-                      value=""
-                      autocomplete="off"
-                    />
-                  </div>
-                </div>
+                <!-- END PICTURES -->
               </div>
+
+
+
             </div>
 
             <div class="col-md-12">
@@ -171,7 +172,18 @@
                   ></textarea>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
+                  <label for="cp_offer_duration">Imagen por link</label>
+                  <input-text
+                    :inputText="product.picture_link"
+                    @inputChanged="pictureLinkChanged($event)"
+                    :inputField="{}"
+                    iconClass="fas fa-link"
+                    v-model="product.picture_link"
+                  ></input-text>
+                </div>
+
+                <div class="col-md-3">
                   <label for="cp_offer_duration">Imagen por link</label>
                   <input-text
                     :inputText="product.picture_link"
@@ -205,12 +217,91 @@
                 >
               </div>
 
+              <div class="p-1">
+                <a
+                  href="#"
+                  class="btn btn-primary"
+                  data-target="#uploadPictureModal"
+                  data-toggle="modal"
+                  >Imágenes</a
+                >
+              </div>
+
               <div v-if="displayStatus" class="p-1">
                 <div class="alert" :class="statusClass" role="alert">
                   {{ statusDescription }}
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upload picture -->
+    <div
+      class="modal fade"
+      id="uploadPictureModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Modificar Imágenes
+            </h5>
+
+            <button @click="addNewPictureInput">Nueva imagen</button>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <hr />
+
+            <!-- New Images -->
+            <div>
+              <div v-for="pictureInput in pictureInputs" :key="pictureInput.no">
+                <label for="1">{{ pictureInput.no }}</label>
+                <input
+                  type="file"
+                  :value="pictureInput.path"
+                  @input="pictureChange($event, pictureInput)"
+                />
+                <input
+                  type="text"
+                  :value="pictureInput.link"
+                  @input="pictureLinkChange($event, pictureInput)"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              class="btn btn-success btn-icon-split"
+              @click="savePictures"
+            >
+              <span class="icon text-white-50">
+                <i class="fas fa-trash"></i>
+              </span>
+              <span class="text">Guardar</span>
+            </button>
           </div>
         </div>
       </div>
@@ -273,13 +364,15 @@
 </template>
 
 <script>
+import Carousel from "../layouts/Carousel.vue";
 import InputText from "../layouts/InputText.vue";
 export default {
-  components: { InputText },
+  components: { InputText, Carousel },
   props: ["product_id"],
   data() {
     return {
       product: {},
+      productPictures: {},
       stores: [],
       storeBarCodes: [],
       storeBarCodesTimeout: null,
@@ -331,12 +424,50 @@ export default {
           feedback: "",
         },
       },
+      pictureInputs: [],
+      initialPictureNo: 0,
     };
   },
 
   computed: {},
 
   methods: {
+    addNewPictureInput() {
+      this.pictureInputs.push({
+        no: this.initialPictureNo++,
+        link: null,
+        type: "P",
+        path: null,
+      });
+    },
+
+    pictureLinkChange($event, pictureInput) {
+      this.pictureInputs[pictureInput.no].link = $event.target.value;
+    },
+
+    pictureChange($event, pictureInput) {
+      this.pictureInputs[pictureInput.no].path = $event.target.files[0];
+    },
+
+    savePictures() {
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      };
+      this.pictureInputs.forEach((pictureInput) => {
+        const formData = new FormData();
+        //formData.append("link", pictureInput.link);
+        formData.append("no", pictureInput.no);
+        formData.append("type", pictureInput.type);
+        formData.append("path", pictureInput.path, "jjejej.jpg");
+
+        axios.post("/api/picture/", formData, config).then((response) => {
+          console.log(response);
+        });
+      });
+    },
+
     getBarCodes() {
       axios
         .get("/api/allProducts", {
@@ -573,7 +704,8 @@ export default {
 
     findProduct(callback) {
       axios.get("/api/products/" + this.product_id).then((response) => {
-        this.product = response.data;
+        this.product = response.data.product;
+        this.productPictures = response.data.pictures;
         this.selectedStoreId = this.product.store_id;
       });
       callback();

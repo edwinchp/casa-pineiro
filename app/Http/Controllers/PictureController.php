@@ -41,12 +41,13 @@ class PictureController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
+            'foreign_key' => 'required',
             'no' => 'required',
             'type' => 'required'
         ]);
 
         if ($validator->fails()) {
-            return response()->json('Not a valid request', 400);
+            return response()->json(['comments' => 'Missing attributes in your request', 'request' => $request], 400);
         }
 
         if ($file = $request->file('path')) {
@@ -54,20 +55,23 @@ class PictureController extends Controller
             $pictureName = 'picture_' . $request->no . $date->format(' - d-M-Y_h.i.s.v.') . $request->file('path')->extension();
 
             $picture = Picture::create([
+                'foreign_key' => $request->foreign_key,
                 'no' => $request->no,
                 'type' => $request->type,
                 'path' => $pictureName,
             ]);
             Storage::putFileAs('images/products/', $file, $pictureName);
-            return response()->json($picture, 200);
+            return response()->json(['comments' => 'New picture created', 'picture' => $picture], 200);
         } else if ($link = $request->link) {
             $picture = Picture::create([
+                'foreign_key' => $request->foreign_key,
                 'no' => $request->no,
                 'type' => $request->type,
                 'link' => $link
             ]);
-            return response()->json($picture, 200);
+            return response()->json(['comments' => 'New link created', 'picture' => $picture], 200);
         }
+        return response()->json(['comments' => 'Something went wrong with your request', 'request' => $request], 400);
     }
 
     /**

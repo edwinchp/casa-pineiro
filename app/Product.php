@@ -58,6 +58,6 @@ class Product extends Model
     }
 
     public function pictures(){
-        return $this->hasMany('App\Picture');
+        return $this->hasMany('App\Picture', 'foreign_key');
     }
 }

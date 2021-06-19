@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Picture extends Model
 {
-    protected $fillable = ['no', 'type', 'path', 'link'];
+    protected $fillable = ['foreign_key', 'no', 'type', 'path', 'link'];
 }

@@ -15,6 +15,7 @@ class CreatePicturesTable extends Migration
     {
         Schema::create('pictures', function (Blueprint $table) {
             $table->id();
+            $table->integer('foreign_key');
             $table->string('no');
             $table->char('type');
             $table->string('path')->nullable();

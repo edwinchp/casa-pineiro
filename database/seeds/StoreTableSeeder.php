@@ -33,5 +33,19 @@ class StoreTableSeeder extends Seeder
                 ]
             );
         }
+
+        for($i = 1; $i < 4; $i++){
+            DB::table('store_user')->insert([
+                'store_id' => $i,
+                'user_id' => 1
+            ]);
+        }
+
+        for($i = 3; $i < 6; $i++){
+            DB::table('store_user')->insert([
+                'store_id' => $i,
+                'user_id' => 2
+            ]);
+        }
     }
 }
