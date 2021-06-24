@@ -149,13 +149,10 @@
 
                 <!-- PICTURES -->
                 <div class="col-md-3 pl-4">
-                  <carousel :pictures="productPictures"> </carousel>
+                  <carousel :foreign_key="product_id" type="P"></carousel>
                 </div>
                 <!-- END PICTURES -->
               </div>
-
-
-
             </div>
 
             <div class="col-md-12">
@@ -239,73 +236,6 @@
     </div>
 
     <!-- Upload picture -->
-    <div
-      class="modal fade"
-      id="uploadPictureModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Modificar Imágenes
-            </h5>
-
-            <button @click="addNewPictureInput">Nueva imagen</button>
-            <button
-              class="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <hr />
-
-            <!-- New Images -->
-            <div>
-              <div v-for="pictureInput in pictureInputs" :key="pictureInput.no">
-                <label for="1">{{ pictureInput.no }}</label>
-                <input
-                  type="file"
-                  :value="pictureInput.path"
-                  @input="pictureChange($event, pictureInput)"
-                />
-                <input
-                  type="text"
-                  :value="pictureInput.link"
-                  @input="pictureLinkChange($event, pictureInput)"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="modal-footer">
-            <button
-              class="btn btn-secondary"
-              type="button"
-              data-dismiss="modal"
-            >
-              Cancelar
-            </button>
-            <button
-              class="btn btn-success btn-icon-split"
-              @click="savePictures"
-            >
-              <span class="icon text-white-50">
-                <i class="fas fa-trash"></i>
-              </span>
-              <span class="text">Guardar</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Confirm delete Modal-->
     <div
@@ -372,7 +302,7 @@ export default {
   data() {
     return {
       product: {},
-      productPictures: {},
+      productPictures: [],
       stores: [],
       storeBarCodes: [],
       storeBarCodesTimeout: null,
@@ -424,50 +354,12 @@ export default {
           feedback: "",
         },
       },
-      pictureInputs: [],
-      initialPictureNo: 0,
     };
   },
 
   computed: {},
 
   methods: {
-    addNewPictureInput() {
-      this.pictureInputs.push({
-        no: this.initialPictureNo++,
-        link: null,
-        type: "P",
-        path: null,
-      });
-    },
-
-    pictureLinkChange($event, pictureInput) {
-      this.pictureInputs[pictureInput.no].link = $event.target.value;
-    },
-
-    pictureChange($event, pictureInput) {
-      this.pictureInputs[pictureInput.no].path = $event.target.files[0];
-    },
-
-    savePictures() {
-      const config = {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      };
-      this.pictureInputs.forEach((pictureInput) => {
-        const formData = new FormData();
-        //formData.append("link", pictureInput.link);
-        formData.append("no", pictureInput.no);
-        formData.append("type", pictureInput.type);
-        formData.append("path", pictureInput.path, "jjejej.jpg");
-
-        axios.post("/api/picture/", formData, config).then((response) => {
-          console.log(response);
-        });
-      });
-    },
-
     getBarCodes() {
       axios
         .get("/api/allProducts", {

@@ -18,7 +18,7 @@ class PictureController extends Controller
      */
     public function index()
     {
-        return "Hello wey";
+        return "Hello";
     }
 
     /**
@@ -80,9 +80,13 @@ class PictureController extends Controller
      * @param  \App\Picture  $picture
      * @return \Illuminate\Http\Response
      */
-    public function show(Picture $picture)
+    public function show(Request $request)
     {
-        //
+        $picture = Picture::where([
+            'type' => $request->type,
+            'foreign_key' => $request->foreign_key
+        ])->get();
+        return $picture;
     }
 
     /**
@@ -103,9 +107,16 @@ class PictureController extends Controller
      * @param  \App\Picture  $picture
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Picture $picture)
+    public function update(Request $request, $id)
     {
-        //
+        $picture = Picture::findOrFail($id);
+
+        foreach ($request->all() as $key => $value) {
+            $picture->{$key} = $value;
+        }
+        $picture->save();
+
+        return $picture;
     }
 
     /**
@@ -114,8 +125,15 @@ class PictureController extends Controller
      * @param  \App\Picture  $picture
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Picture $picture)
+    public function destroy($id)
     {
-        //
+        $picture = Picture::findOrFail($id);
+
+        if ($picture->path != null) {
+            Storage::delete('/images/products/' . $picture->path);
+        }
+
+        $picture->delete();
+        return response()->json('Picture ' . $id . ' deleted', 200);
     }
 }
