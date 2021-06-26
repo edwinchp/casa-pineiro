@@ -239,7 +239,7 @@
           <td>
             <a href="#!" data-toggle="modal" data-target="#myModal"
               ><img
-                :src="getPicture(product.picture)"
+                :src="product.primary_picture"
                 alt=""
                 class="img-40 rounded"
               />
@@ -358,18 +358,6 @@ export default {
       //console.log('Picture: ' + this.products[5].picture.path);
     },
 
-    getPicture(picture) {
-      if (picture != null) {
-        if (picture.path) {
-          return "/images/products/" + picture.path;
-        } else if (picture.link) {
-          return picture.link;
-        } else {
-          return "No Pictureeee";
-        }
-      }
-      return "No picture";
-    },
   },
 
   computed: {

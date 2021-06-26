@@ -28,12 +28,18 @@ class ApiProductController extends Controller
             return response()->json($products, 200);
         }
 
-        $products = Product::where('store_id', '=', $request->store_id)->orderBy('created_at', 'DESC')->paginate(5);
+        $products = Product::where('store_id', '=', $request->store_id)->orderBy('created_at', 'DESC')->paginate(8);
 
         $productsArray = [];
 
         foreach ($products as $product) {
-            $product['picture'] = $product->pictures()->get()->first();
+            $first = $product->pictures()->get()->first();
+            if($first){
+                $primaryPicture = $first->path ? '/images/products/' . $first->path : $first->link;
+                $product['primary_picture'] = $primaryPicture;
+            }else{
+                $product['primary_picture'] = null;
+            }
             array_push($productsArray, $product);
         }
 

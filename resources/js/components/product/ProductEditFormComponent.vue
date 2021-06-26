@@ -168,28 +168,6 @@
                     v-model="product.description"
                   ></textarea>
                 </div>
-
-                <div class="col-md-3">
-                  <label for="cp_offer_duration">Imagen por link</label>
-                  <input-text
-                    :inputText="product.picture_link"
-                    @inputChanged="pictureLinkChanged($event)"
-                    :inputField="{}"
-                    iconClass="fas fa-link"
-                    v-model="product.picture_link"
-                  ></input-text>
-                </div>
-
-                <div class="col-md-3">
-                  <label for="cp_offer_duration">Imagen por link</label>
-                  <input-text
-                    :inputText="product.picture_link"
-                    @inputChanged="pictureLinkChanged($event)"
-                    :inputField="{}"
-                    iconClass="fas fa-link"
-                    v-model="product.picture_link"
-                  ></input-text>
-                </div>
               </div>
             </div>
 
