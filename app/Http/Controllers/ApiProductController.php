@@ -25,23 +25,14 @@ class ApiProductController extends Controller
 
         if ($request->productsFound) {
             $products = Product::filterByNameBarcodeAndBrand($request->productsFound, $request->store_id)->get();
-            return response()->json($products, 200);
+            $productsWithPictures = $this->setPrimaryPicture($products);
+            return response()->json($productsWithPictures, 200);
         }
 
         $products = Product::where('store_id', '=', $request->store_id)->orderBy('created_at', 'DESC')->paginate(8);
 
-        $productsArray = [];
+        $productsWithPictures = $this->setPrimaryPicture($products);
 
-        foreach ($products as $product) {
-            $first = $product->pictures()->get()->first();
-            if($first){
-                $primaryPicture = $first->path ? '/images/products/' . $first->path : $first->link;
-                $product['primary_picture'] = $primaryPicture;
-            }else{
-                $product['primary_picture'] = null;
-            }
-            array_push($productsArray, $product);
-        }
 
         return [
             'pagination' => [
@@ -52,7 +43,7 @@ class ApiProductController extends Controller
                 'from' => $products->firstItem(),
                 'to' => $products->lastPage(),
             ],
-            'products' => $productsArray
+            'products' => $productsWithPictures
         ];
     }
 
@@ -196,5 +187,22 @@ class ApiProductController extends Controller
             ],
             'products' => $user
         ];
+    }
+
+    public function setPrimaryPicture($products)
+    {
+        $productsArray = [];
+
+        foreach ($products as $product) {
+            $first = $product->pictures()->get()->first();
+            if ($first) {
+                $primaryPicture = $first->path ? '/images/products/' . $first->path : $first->link;
+                $product['primary_picture'] = $primaryPicture;
+            } else {
+                $product['primary_picture'] = null;
+            }
+            array_push($productsArray, $product);
+        }
+        return $productsArray;
     }
 }

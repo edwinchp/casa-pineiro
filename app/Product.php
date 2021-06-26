@@ -53,11 +53,14 @@ class Product extends Model
         //     ->orWhere('brand', 'LIKE', '%' . $foundByUser . '%');
         return $query->where([
             ['store_id', '=', $store_id],
-            ['name', 'LIKE', '%' . $foundByUser . '%']
+            ['name', 'LIKE', '%' . $foundByUser . '%'],
+        ])->orWhere([
+            ['bar_code', 'LIKE', '%' . $foundByUser . '%'],
         ]);
     }
 
-    public function pictures(){
+    public function pictures()
+    {
         return $this->hasMany('App\Picture', 'foreign_key');
     }
 }

@@ -294,7 +294,7 @@ export default {
 
     getSearchProducts: function () {
       axios
-        .get("/api/products", {
+        .get("/api/products/", {
           params: {
             productsFound: this.productsFound,
             store_id: this.selectedStoreId,
