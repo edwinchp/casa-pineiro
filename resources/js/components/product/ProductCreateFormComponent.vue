@@ -68,13 +68,7 @@
                 </div>
               </div>
               <div class="col-md-4">
-                <input
-                  type="file"
-                  style="display: none"
-                  ref="fileInput"
-                  @change="onFileSelected"
-                />
-                <button @click="$refs.fileInput.click()">Subir imagen</button>
+                Crea el producto para añadir una imagen
               </div>
             </div>
           </div>
@@ -303,8 +297,8 @@ export default {
         if (this.imageFile)
           formData.append("picture", this.imageFile, this.imageFile.name);
 
-        axios.post("/api/products", formData).then((resp) => {
-          window.location.href = "/products";
+        axios.post("/api/products", formData).then((response) => {
+          window.location.href = "/products/" + response.data.id + "/edit";
         });
       }
     },

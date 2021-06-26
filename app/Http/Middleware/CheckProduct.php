@@ -17,7 +17,7 @@ class CheckProduct
     public function handle($request, Closure $next)
     {
 
-        if ($request->is('products')) {
+        if ($request->is('products') || $request->is('products/create')) {
             return $next($request);
         } else {
             $product = Product::findOrFail($request->route('product')); // products/2/edit
