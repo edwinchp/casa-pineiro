@@ -287,7 +287,7 @@ export default {
           },
         })
         .then((resp) => {
-          this.products = resp.data.products.data;
+          this.products = resp.data.products;
           this.pagination = resp.data.pagination;
         });
     },

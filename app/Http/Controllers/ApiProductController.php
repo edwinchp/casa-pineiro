@@ -30,6 +30,13 @@ class ApiProductController extends Controller
 
         $products = Product::where('store_id', '=', $request->store_id)->orderBy('created_at', 'DESC')->paginate(5);
 
+        $productsArray = [];
+
+        foreach ($products as $product) {
+            $product['picture'] = $product->pictures()->get()->first();
+            array_push($productsArray, $product);
+        }
+
         return [
             'pagination' => [
                 'total' => $products->total(),
@@ -39,7 +46,7 @@ class ApiProductController extends Controller
                 'from' => $products->firstItem(),
                 'to' => $products->lastPage(),
             ],
-            'products' => $products
+            'products' => $productsArray
         ];
     }
 
@@ -131,7 +138,7 @@ class ApiProductController extends Controller
         }
 
         $product->update();
-        
+
         return response()->json($request, 200);
     }
 

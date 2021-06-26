@@ -7,12 +7,17 @@ use App\Product;
 use App\Http\Requests\ProductCreateRequest;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Route;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
         //$products = Product::all();
+        //return $request->route('products');
+        //return $request->is('products');
+        //return $request->is('products');
+        //return $request->route('id');
         return view('product.index');
         //->with('products', $products);
 

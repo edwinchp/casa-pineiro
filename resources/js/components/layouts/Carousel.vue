@@ -155,6 +155,7 @@
                 <label for="1">{{ pictureInput.no }}</label>
                 <input
                   type="file"
+                  accept="image/png, image/jpeg"
                   :value="pictureInput.path"
                   @input="pictureChange($event, pictureInput)"
                 />

@@ -239,14 +239,7 @@
           <td>
             <a href="#!" data-toggle="modal" data-target="#myModal"
               ><img
-                v-if="product.picture_link"
-                :src="product.picture_link"
-                alt=""
-                class="img-40 rounded"
-              />
-              <img
-                v-else
-                :src="'images/products/' + product.picture"
+                :src="getPicture(product.picture)"
                 alt=""
                 class="img-40 rounded"
               />
@@ -293,6 +286,7 @@ export default {
       current_qty: 0,
       sum_qty: 0,
       miniCart: [],
+      receivedProducts: null,
     };
   },
 
@@ -351,12 +345,41 @@ export default {
       this.$emit("miniCartChanged", this.miniCart);
       this.$root.$emit("sharingCart", this.miniCart);
     },
+
+    waitForProducts() {
+      if (this.products.length < 1) {
+        setTimeout(() => {
+          console.log("Waiting for products in ProductsTableComponent");
+          this.waitForProducts();
+        }, 400);
+      } else {
+        //this.receivedProducts = this.products;
+      }
+      //console.log('Picture: ' + this.products[5].picture.path);
+    },
+
+    getPicture(picture) {
+      if (picture != null) {
+        if (picture.path) {
+          return "/images/products/" + picture.path;
+        } else if (picture.link) {
+          return picture.link;
+        } else {
+          return "No Pictureeee";
+        }
+      }
+      return "No picture";
+    },
   },
 
   computed: {
     sumQty() {
       return (this.sum_qty = this.current_qty + this.new_qty);
     },
+  },
+
+  mounted() {
+    this.waitForProducts();
   },
 };
 </script>

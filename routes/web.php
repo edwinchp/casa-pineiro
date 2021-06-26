@@ -42,7 +42,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', 'DashboardController@index');
     Route::resource('sales', 'SalesController');
-    Route::resource('products', 'ProductController');
+    Route::resource('products', 'ProductController')->middleware('checkProduct');
+    //Route::get('/products/{id}/edit', 'ProductController@edit')->middleware('checkProduct');
 });
 
 
