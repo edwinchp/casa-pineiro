@@ -1,7 +1,13 @@
 <template>
   <div>
     <nav
-      class="navbar navbar-expand-md navbar-dark topbar shadow fixed-top navbar-default"
+      class="
+        navbar navbar-expand-md navbar-dark
+        topbar
+        shadow
+        fixed-top
+        navbar-default
+      "
       style="margin-bottom: 300px; background-color: white"
     >
       <!-- Sidebar Toggle (Topbar) -->
@@ -31,7 +37,12 @@
           </a>
           <!-- Dropdown - Messages -->
           <div
-            class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+            class="
+              dropdown-menu dropdown-menu-right
+              p-3
+              shadow
+              animated--grow-in
+            "
             aria-labelledby="searchDropdown"
           >
             <form class="form-inline mr-auto w-100 navbar-search">

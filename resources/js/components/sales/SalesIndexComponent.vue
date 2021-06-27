@@ -25,9 +25,17 @@
                               >Nuevo</a
                             >
 
+                            <store-dropdown
+                              @storeIdChanged="selectedStoreId"
+                            ></store-dropdown>
+
                             <div class="dropdown-inverse dropdown open">
                               <button
-                                class="btn btn-inverse dropdown-toggle waves-effect waves-light"
+                                class="
+                                  btn btn-inverse
+                                  dropdown-toggle
+                                  waves-effect waves-light
+                                "
                                 type="button"
                                 id="dropdown-7"
                                 data-toggle="dropdown"
@@ -43,7 +51,11 @@
                                 data-dropdown-out="fadeOut"
                               >
                                 <a
-                                  class="dropdown-item waves-light waves-effect active"
+                                  class="
+                                    dropdown-item
+                                    waves-light waves-effect
+                                    active
+                                  "
                                   href="#"
                                   >Todos</a
                                 >
@@ -129,9 +141,17 @@
                                   <td class="table-name">
                                     <div class="row">
                                       <div class="col-xl-11">
-                                        <a href="product.edit.html">{{
-                                          shortAttribute(sale.name, 25)
-                                        }}</a>
+                                        <a
+                                          :href="
+                                            '/products/' +
+                                            sale.product_id +
+                                            '/edit'
+                                          "
+                                          target="_blank"
+                                          >{{
+                                            shortAttribute(sale.name, 25)
+                                          }}</a
+                                        >
                                       </div>
                                     </div>
                                   </td>
@@ -253,12 +273,17 @@
 </template>
 
 <script>
+import StoreDropdown from "../layouts/StoreDropdown.vue";
+
 export default {
+  components: { StoreDropdown },
+
   data() {
     return {
       sales: [],
       salesToFind: "",
       searchTimeout: "",
+      store_id: null,
     };
   },
 
@@ -267,8 +292,14 @@ export default {
      * SALES
      */
     getSales(page) {
-      axios.get("/api/sales/?page=" + page).then((resp) => {
-        this.sales = resp.data.sales.data;
+      const params = {
+        params: {
+          store_id: this.store_id,
+        },
+      };
+
+      axios.get("/api/sales/?page=" + page, params).then((resp) => {
+        this.sales = resp.data.sales;
       });
     },
 
@@ -341,6 +372,28 @@ export default {
       }
       return att.substring(0, limit) + "...";
     },
+
+    selectedStoreId($event) {
+      this.store_id = $event;
+    },
+
+    waitStoreId(callback) {
+      if (this.store_id == null) {
+        setTimeout(() => {
+          console.log("Wating for store_id in SalesIndexComponent");
+          this.waitStoreId();
+        }, 800);
+      } else {
+        console.log("store_id = " + this.store_id);
+        this.getSales(1);
+      }
+    },
+  },
+
+  watch: {
+    store_id() {
+      this.getSales(1);
+    },
   },
 
   computed: {
@@ -350,7 +403,10 @@ export default {
   },
 
   created() {
-    this.getSales(1);
+    axios.defaults.headers.common["Authorization"] =
+      "Bearer " + localStorage.getItem("user_token");
+
+    this.waitStoreId();
   },
 };
 </script>

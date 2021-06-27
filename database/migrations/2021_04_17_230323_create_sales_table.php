@@ -16,11 +16,11 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->integer('product_id');
+            $table->integer('store_id');
             $table->string('name');
             $table->integer('qty');
             $table->integer('price');
             $table->integer('customer_id')->nullable();
-            $table->integer('store_id')->nullable();
             $table->integer('payment_type')->nullable();
             $table->integer('paid')->nullable();
             $table->integer('received')->nullable();

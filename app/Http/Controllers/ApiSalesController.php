@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sale;
+use Illuminate\Support\Facades\DB;
 
 class ApiSalesController extends Controller
 {
@@ -12,18 +13,38 @@ class ApiSalesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sales = Sale::orderBy('created_at', 'DESC')->paginate(10);
+        $request->validate([
+            'store_id' => 'required'
+        ]);
+
+        $sales = DB::table('sales')
+            ->join('products', 'sales.product_id', '=', 'products.id')
+            ->where('sales.store_id', '=', $request->store_id)
+            ->select(
+                'sales.id',
+                'sales.qty',
+                'sales.price',
+                'sales.store_id',
+                'sales.user_id',
+                'sales.created_at',
+                'products.id as product_id',
+                'products.name',
+                'products.bar_code',
+                'products.brand',
+            )
+            ->get();
+
         return [
-            'pagination' => [
-                'total' => $sales->total(),
-                'current_page' => $sales->currentPage(),
-                'per_page' => $sales->perPage(),
-                'last_page' => $sales->lastPage(),
-                'from' => $sales->firstItem(),
-                'to' => $sales->lastPage(),
-            ],
+            // 'pagination' => [
+            //     'total' => $sales->total(),
+            //     'current_page' => $sales->currentPage(),
+            //     'per_page' => $sales->perPage(),
+            //     'last_page' => $sales->lastPage(),
+            //     'from' => $sales->firstItem(),
+            //     'to' => $sales->lastPage(),
+            // ],
             'sales' => $sales
         ];
     }
