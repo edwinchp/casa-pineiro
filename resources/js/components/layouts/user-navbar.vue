@@ -312,21 +312,13 @@ export default {
     },
 
     checkoutCart(miniCart) {
-      // axios({
-      //   method: 'POST',
-      //   url: 'api/sales',
-      //   data: this.miniCart
-      // });
-
-      axios.post("api/sales", miniCart).then(
-        (response) => {
-          //this.miniCart = []
-          this.miniCart.splice(0, this.miniCart.length);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      miniCart.forEach((product) => {
+        axios.post("/api/sales", product).then((response) => {
+          console.log(response);
+        });
+      });
+      this.miniCart.splice(0, this.miniCart.length);
+    // get the total of items of this.miniCart 
     },
 
     logout() {

@@ -17,7 +17,6 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->integer('product_id');
             $table->integer('store_id');
-            $table->string('name');
             $table->integer('qty');
             $table->integer('price');
             $table->integer('customer_id')->nullable();
@@ -27,6 +26,9 @@ class CreateSalesTable extends Migration
             $table->integer('change')->nullable();
             $table->integer('order_id')->nullable();
             $table->integer('user_id')->nullable();
+            $table->integer('is_offer')->nullable();
+            $table->integer('status');
+            $table->string('comments')->nullable();
             $table->timestamps();
         });
     }

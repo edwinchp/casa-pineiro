@@ -130,6 +130,7 @@
           <products-table-component
             :products="products"
             @miniCartChanged="miniCart = $event"
+            :store_id="selectedStoreId"
           />
 
           <div class="p-4" v-show="!searchIsActive">

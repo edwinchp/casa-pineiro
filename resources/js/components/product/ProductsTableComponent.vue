@@ -278,7 +278,7 @@
 import productComponent from "./ProductComponent";
 
 export default {
-  props: ["products"],
+  props: ["products", "store_id"],
 
   data() {
     return {
@@ -311,15 +311,15 @@ export default {
     },
 
     addToCart(product) {
-      if (this.miniCart.length < 1) {
-        this.miniCart.push({
-          product_id: product.id,
-          name: product.name,
-          qty: 0,
-          price: product.price,
-        });
+      // When product "A" is added first time.
+      if (this.miniCart.length < 1 && product.qty > 0) {
+        this.pushToMiniCart(product, 1);
+        this.$emit("miniCartChanged", this.miniCart);
+        this.$root.$emit("sharingCart", this.miniCart);
+        return; // When cart is empty, add product "A", emit, and skip rest of the logic.
       }
 
+      // Determine if product "A" is already added.
       let duplicate = false;
       for (var i = 0; i < this.miniCart.length; i++) {
         if (this.miniCart[i].product_id === product.id) {
@@ -327,23 +327,47 @@ export default {
         }
       }
 
-      if (duplicate) {
+      console.log("this.miniCart.length: " + this.miniCart.length);
+      console.log("duplicate: " + duplicate);
+      console.log("product.qtyy>0: " + product.qty > 0);
+
+      // If product "A" is already added, increase cart qty and decrease current product "A" qty.
+      if (duplicate && product.qty > 0) {
+        console.log("duplicate found");
         for (var i = 0; i < this.miniCart.length; i++) {
           if (this.miniCart[i].product_id === product.id) {
             this.miniCart[i].qty = this.miniCart[i].qty + 1;
+            product.qty--;
           }
         }
-      } else {
-        this.miniCart.push({
-          product_id: product.id,
-          name: product.name,
-          qty: 1,
-          price: product.price,
-        });
       }
 
+      // If product "B" has not been added before.
+      if (!duplicate && product.qty > 0) {
+        this.pushToMiniCart(product, 1);
+      }
+
+      // Alert the user that he/she la está cagando.
+      if (product.qty < 1) {
+        alert("No hay más productos.");
+      }
+
+      console.log("-------------------------------");
       this.$emit("miniCartChanged", this.miniCart);
       this.$root.$emit("sharingCart", this.miniCart);
+    },
+
+    pushToMiniCart(product, qty) {
+      console.log("pushing to car with qty of: " + qty);
+      this.miniCart.push({
+        product_id: product.id,
+        store_id: this.store_id,
+        name: product.name,
+        qty: qty,
+        price: product.price,
+        status: 1,
+      });
+      product.qty--;
     },
 
     waitForProducts() {
@@ -357,7 +381,6 @@ export default {
       }
       //console.log('Picture: ' + this.products[5].picture.path);
     },
-
   },
 
   computed: {

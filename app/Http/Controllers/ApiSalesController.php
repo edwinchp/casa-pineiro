@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sale;
+use App\Product;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ApiSalesController extends Controller
 {
@@ -33,7 +35,7 @@ class ApiSalesController extends Controller
                 'products.name',
                 'products.bar_code',
                 'products.brand',
-            )
+            )->orderBy('sales.created_at', 'desc')
             ->get();
 
         return [
@@ -67,46 +69,38 @@ class ApiSalesController extends Controller
      */
     public function store(Request $request)
     {
-        // $sale = 
-        // Sale::create([
-        //     "product_id" => $request['product_id'],
-        //     "name" => $request['name'],
-        //     "qty" => $request['qty'],
-        //     "price" => $request['price'],
 
-        // ]);
-        // $sale->save();
+        $validator = Validator::make($request->all(), [
+            'product_id' => 'required',
+            'store_id' => 'required',
+            'qty' => 'required',
+            'price' => 'required',
+            'status' => 'required|numeric',
+        ]);
 
-
-        //$sale['']
-        //$sale = Sale::create($request->all());
-        //$sale->save();
-        //return response()->json($sale, 200);
-
-        // foreach(){
-        //   $sale=  Sale::create([
-        //     "product_id" => $product['product_id'],
-        //     "name" => $product['name'],
-        //     "qty" => $product['qty'],
-        //     "price" => $product['price'],
-
-        // ]);
-        // $sale->save();
-        // }
-
-        for ($i = 0; $i < count((array)$request->all()); $i++) {
-
-            $sale =  Sale::create([
-                "product_id" => $request[$i]['product_id'],
-                "name" => $request[$i]['name'],
-                "qty" => $request[$i]['qty'],
-                "price" => $request[$i]['price'],
-
-            ]);
-            $sale->save();
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json($errors->all(), 400);
         }
 
-        return $request->all();
+        $product = Product::find($request->product_id);
+        $newQty = $product->qty - $request->qty;
+
+        if ($newQty >= 0) {
+            $product->qty = $newQty;
+            $product->save();
+
+            $sale =  Sale::create($request->all());
+            $sale->user_id = auth()->user()->id;
+            $sale->save();
+            return $sale;
+        } else {
+            return response()->json([
+                'message' => 'There are not enough products. Validate quantities.',
+                'request' => $request->all(),
+                'product' => $product
+            ], 400);
+        }
     }
 
     /**
