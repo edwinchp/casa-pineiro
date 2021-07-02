@@ -7,6 +7,8 @@ use App\Sale;
 use App\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 
 class ApiSalesController extends Controller
 {
@@ -18,12 +20,26 @@ class ApiSalesController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'store_id' => 'required'
+            'store_id' => 'required',
+            'filter' => 'required',
         ]);
+
+        $filter = array(
+            'today' => CarbonImmutable::today()->locale('mx'),
+            'weekly' => CarbonImmutable::now()->locale('es_mx')->startOfWeek(),
+            'monthly' => CarbonImmutable::now()->locale('es_mx')->startOfMonth(),
+            'yearly' => CarbonImmutable::now()->locale('es_mx')->startOfYear(),
+            'all' => CarbonImmutable::now()->locale('es_mx')->startOfCentury(),
+        );
+
+        $conditions = [
+            ['sales.store_id', '=', $request->store_id],
+            ['sales.created_at', '>=', $filter[$request->filter]]
+        ];
 
         $sales = DB::table('sales')
             ->join('products', 'sales.product_id', '=', 'products.id')
-            ->where('sales.store_id', '=', $request->store_id)
+            ->where($conditions)
             ->select(
                 'sales.id',
                 'sales.qty',
@@ -34,20 +50,29 @@ class ApiSalesController extends Controller
                 'products.id as product_id',
                 'products.name',
                 'products.bar_code',
-                'products.brand',
-            )->orderBy('sales.created_at', 'desc')
-            ->get();
+                'products.brand'
+            )->orderBy('sales.created_at', 'desc')->paginate(8);
+
+        $sales_data = DB::table('sales')->where($conditions);
+
+        setlocale(LC_MONETARY, 'es_MX.UTF-8');
 
         return [
-            // 'pagination' => [
-            //     'total' => $sales->total(),
-            //     'current_page' => $sales->currentPage(),
-            //     'per_page' => $sales->perPage(),
-            //     'last_page' => $sales->lastPage(),
-            //     'from' => $sales->firstItem(),
-            //     'to' => $sales->lastPage(),
-            // ],
-            'sales' => $sales
+            //'filter' => $filter,
+            'pagination' => [
+                'total' => $sales->total(),
+                'current_page' => $sales->currentPage(),
+                'per_page' => $sales->perPage(),
+                'last_page' => $sales->lastPage(),
+                'from' => $sales->firstItem(),
+                'to' => $sales->lastPage(),
+            ],
+            'sales' => $sales,
+            'sales_data' => [
+                'products_sold' => $sales_data->count(),
+                'products_qty_sold' => $sales_data->sum('qty'),
+                'sold_price' =>  number_format($sales_data->sum('qty') * $sales_data->sum('price'), 2, '.', ','),
+            ]
         ];
     }
 

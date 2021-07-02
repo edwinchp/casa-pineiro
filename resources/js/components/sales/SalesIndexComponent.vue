@@ -88,12 +88,16 @@
                       </div>
                       <div class="card-block text-center">
                         <div class="row">
-                          <div class="col-6 b-r-default">
-                            <h2>40</h2>
-                            <p class="text-muted">Productos vendidos</p>
+                          <div class="col-4 b-r-default">
+                            <h2>{{ getSalesData.products_sold }}</h2>
+                            <p class="text-muted">Productos</p>
                           </div>
-                          <div class="col-6">
-                            <h2>$656</h2>
+                          <div class="col-4 b-r-default">
+                            <h2>{{ getSalesData.products_qty_sold }}</h2>
+                            <p class="text-muted">Productos en cantidad</p>
+                          </div>
+                          <div class="col-4">
+                            <h2>${{ getSalesData.sold_price }}</h2>
                             <p class="text-muted">Total</p>
                           </div>
                         </div>
@@ -233,30 +237,10 @@
                                 </tr>
                               </tbody>
                             </table>
-
-                            <div class="p-4">
-                              <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-end">
-                                  <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1"
-                                      >Anterior</a
-                                    >
-                                  </li>
-                                  <li class="page-item active">
-                                    <a class="page-link" href="#">1</a>
-                                  </li>
-                                  <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                  </li>
-                                  <li class="page-item">
-                                    <a class="page-link" href="#">3</a>
-                                  </li>
-                                  <li class="page-item">
-                                    <a class="page-link" href="#">Siguiente</a>
-                                  </li>
-                                </ul>
-                              </nav>
-                            </div>
+                            <pagination-component
+                              :pagination="pagination"
+                              @pageChanged="setNewPage"
+                            ></pagination-component>
                           </div>
                         </div>
                       </div>
@@ -274,16 +258,19 @@
 
 <script>
 import StoreDropdown from "../layouts/StoreDropdown.vue";
+import PaginationComponent from "../layouts/PaginationComponent.vue";
 
 export default {
-  components: { StoreDropdown },
+  components: { PaginationComponent, StoreDropdown },
 
   data() {
     return {
       sales: [],
+      salesData: {},
       salesToFind: "",
       searchTimeout: "",
       store_id: null,
+      pagination: {},
     };
   },
 
@@ -295,11 +282,14 @@ export default {
       const params = {
         params: {
           store_id: this.store_id,
+          filter: "all",
         },
       };
 
       axios.get("/api/sales/?page=" + page, params).then((resp) => {
-        this.sales = resp.data.sales;
+        this.sales = resp.data.sales.data;
+        this.pagination = resp.data.pagination;
+        this.salesData = resp.data.sales_data;
       });
     },
 
@@ -388,6 +378,10 @@ export default {
         this.getSales(1);
       }
     },
+
+    setNewPage(event) {
+      this.getSales(event);
+    },
   },
 
   watch: {
@@ -399,6 +393,10 @@ export default {
   computed: {
     searchContainsChars() {
       return this.salesToFind.length > 2;
+    },
+
+    getSalesData() {
+      return this.salesData;
     },
   },
 
