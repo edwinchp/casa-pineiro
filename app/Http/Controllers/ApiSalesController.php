@@ -168,9 +168,26 @@ class ApiSalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $sale = Sale::findOrFail($id);
+        if ($request->restore_qty) {
+            $product = Product::find($sale->product_id);
+            $product->qty = $product->qty + $sale->qty;
+            $product->save();
+            $sale->delete();
+            return response()->json([
+                'comments' => 'Sale deleted. Quantity restored to product.',
+                'sale qty' => $sale->qty,
+                'product qty' => $product->qty,
+            ]);
+        }
+
+        $sale->delete();
+        return response()->json([
+            'comments' => 'Sale deleted.',
+            'sale' => $sale,
+        ]);
     }
 
     public function allSales(Request $request)
