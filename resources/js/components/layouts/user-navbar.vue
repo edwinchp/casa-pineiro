@@ -18,6 +18,13 @@
         <i class="fa fa-bars"></i>
       </button>
 
+      <a href="/"
+        ><img
+          src="/images/layouts/casa_pineiro_logo.png"
+          alt=""
+          style="width: 60px"
+      /></a>
+
       <!-- Topbar Search -->
 
       <!-- Topbar Navbar -->
@@ -318,7 +325,7 @@ export default {
         });
       });
       this.miniCart.splice(0, this.miniCart.length);
-    // get the total of items of this.miniCart 
+      // get the total of items of this.miniCart
     },
 
     logout() {

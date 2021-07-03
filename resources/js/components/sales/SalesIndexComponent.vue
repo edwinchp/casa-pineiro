@@ -29,53 +29,9 @@
                               @storeIdChanged="selectedStoreId"
                             ></store-dropdown>
 
-                            <div class="dropdown-inverse dropdown open">
-                              <button
-                                class="
-                                  btn btn-inverse
-                                  dropdown-toggle
-                                  waves-effect waves-light
-                                "
-                                type="button"
-                                id="dropdown-7"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="true"
-                              >
-                                Todos los productos
-                              </button>
-                              <div
-                                class="dropdown-menu"
-                                aria-labelledby="dropdown-7"
-                                data-dropdown-in="fadeIn"
-                                data-dropdown-out="fadeOut"
-                              >
-                                <a
-                                  class="
-                                    dropdown-item
-                                    waves-light waves-effect
-                                    active
-                                  "
-                                  href="#"
-                                  >Todos</a
-                                >
-                                <a
-                                  class="dropdown-item waves-light waves-effect"
-                                  href="#"
-                                  >Hoy</a
-                                >
-                                <a
-                                  class="dropdown-item waves-light waves-effect"
-                                  href="#"
-                                  >Esta semana</a
-                                >
-                                <a
-                                  class="dropdown-item waves-light waves-effect"
-                                  href="#"
-                                  >Este mes</a
-                                >
-                              </div>
-                            </div>
+                            <filter-dropdown
+                              @filterChanged="selectedFilter"
+                            ></filter-dropdown>
 
                             <button v-show="false" class="btn btn-inverse">
                               <i
@@ -259,9 +215,10 @@
 <script>
 import StoreDropdown from "../layouts/StoreDropdown.vue";
 import PaginationComponent from "../layouts/PaginationComponent.vue";
+import FilterDropdown from "../layouts/FilterDropdown.vue";
 
 export default {
-  components: { PaginationComponent, StoreDropdown },
+  components: { PaginationComponent, StoreDropdown, FilterDropdown },
 
   data() {
     return {
@@ -271,6 +228,7 @@ export default {
       searchTimeout: "",
       store_id: null,
       pagination: {},
+      selectedFilterName: "weekly",
     };
   },
 
@@ -282,7 +240,7 @@ export default {
       const params = {
         params: {
           store_id: this.store_id,
-          filter: "all",
+          filter: this.selectedFilterName,
         },
       };
 
@@ -367,7 +325,7 @@ export default {
       this.store_id = $event;
     },
 
-    waitStoreId(callback) {
+    waitStoreId() {
       if (this.store_id == null) {
         setTimeout(() => {
           console.log("Wating for store_id in SalesIndexComponent");
@@ -382,10 +340,18 @@ export default {
     setNewPage(event) {
       this.getSales(event);
     },
+
+    selectedFilter(event) {
+      this.selectedFilterName = event;
+    },
   },
 
   watch: {
     store_id() {
+      this.getSales(1);
+    },
+
+    selectedFilterName() {
       this.getSales(1);
     },
   },
