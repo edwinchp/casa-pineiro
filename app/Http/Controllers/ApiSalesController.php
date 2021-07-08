@@ -19,6 +19,7 @@ class ApiSalesController extends Controller
      */
     public function index(Request $request)
     {
+        //DB::enableQueryLog();
         $request->validate([
             'store_id' => 'required',
             'filter' => 'required',
@@ -37,8 +38,24 @@ class ApiSalesController extends Controller
             ['sales.created_at', '>=', $filter[$request->filter]]
         ];
 
+        $user_input = $request->user_input;
+
         $sales = DB::table('sales')
-            ->join('products', 'sales.product_id', '=', 'products.id')
+            ->join('products', function ($join) use ($user_input) {
+                $products = $join->on('sales.product_id', '=', 'products.id');
+
+                // In case user is using the search box
+                if ($user_input) {
+                    $products->where(
+                        function ($query) use ($user_input) {
+                            $query->where('products.name', 'like', '%' . $user_input . '%')
+                                ->orWhere('products.bar_code', 'like', '%' . $user_input . '%');
+                        }
+
+                    );
+                }
+            })
+            ->join('users', 'sales.user_id', '=', 'users.id')
             ->where($conditions)
             ->select(
                 'sales.id',
@@ -50,7 +67,8 @@ class ApiSalesController extends Controller
                 'products.id as product_id',
                 'products.name',
                 'products.bar_code',
-                'products.brand'
+                'products.brand',
+                'users.name as user_name',
             )->orderBy('sales.created_at', 'desc')->paginate(8);
 
         $sales_data = DB::table('sales')->where($conditions);
@@ -58,7 +76,8 @@ class ApiSalesController extends Controller
         setlocale(LC_MONETARY, 'es_MX.UTF-8');
 
         return [
-            //'filter' => $filter,
+            //'query' => DB::getQueryLog(),
+            //'user_input' => $user_input,
             'pagination' => [
                 'total' => $sales->total(),
                 'current_page' => $sales->currentPage(),

@@ -320,7 +320,15 @@ export default {
 
     checkoutCart(miniCart) {
       miniCart.forEach((product) => {
-        axios.post("/api/sales", product).then((response) => {
+        const formData = new FormData();
+
+        formData.append("product_id", product.product_id);
+        formData.append("store_id", product.store_id);
+        formData.append("qty", product.qty);
+        formData.append("price", product.price);
+        formData.append("status", 1);
+
+        axios.post("/api/sales", formData).then((response) => {
           console.log(response);
         });
       });

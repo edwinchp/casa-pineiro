@@ -156,7 +156,7 @@
                                     <div class="row">
                                       <div class="col-xl-11">
                                         <div class="">
-                                          {{ sale.user_id }} Juan Chi
+                                          {{ sale.user_name }}
                                         </div>
                                       </div>
                                     </div>
@@ -178,15 +178,8 @@
                                         href="#"
                                         data-toggle="tooltip"
                                         data-placement="bottom"
-                                        data-original-title="Añadir al carrito"
-                                        ><i class="ti-shopping-cart"></i
-                                      ></a>
-                                      <a
-                                        href="#"
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
                                         data-original-title="Editar"
-                                        ><i class="ti-pencil-alt"></i
+                                        ><i class="ti-trash"></i
                                       ></a>
                                     </div>
                                   </td>
