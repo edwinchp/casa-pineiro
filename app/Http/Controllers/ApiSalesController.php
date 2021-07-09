@@ -71,7 +71,22 @@ class ApiSalesController extends Controller
                 'users.name as user_name',
             )->orderBy('sales.created_at', 'desc')->paginate(8);
 
-        $sales_data = DB::table('sales')->where($conditions);
+        $sales_data = DB::table('sales')
+            ->join('products', function ($join) use ($user_input) {
+                $products = $join->on('sales.product_id', '=', 'products.id');
+
+                // In case user is using the search box
+                if ($user_input) {
+                    $products->where(
+                        function ($query) use ($user_input) {
+                            $query->where('products.name', 'like', '%' . $user_input . '%')
+                                ->orWhere('products.bar_code', 'like', '%' . $user_input . '%');
+                        }
+
+                    );
+                }
+            })->join('users', 'sales.user_id', '=', 'users.id')
+            ->where($conditions);
 
         setlocale(LC_MONETARY, 'es_MX.UTF-8');
 
@@ -89,8 +104,8 @@ class ApiSalesController extends Controller
             'sales' => $sales,
             'sales_data' => [
                 'products_sold' => $sales_data->count(),
-                'products_qty_sold' => $sales_data->sum('qty'),
-                'sold_price' =>  number_format($sales_data->sum('qty') * $sales_data->sum('price'), 2, '.', ','),
+                'products_qty_sold' => $sales_data->sum('sales.qty'),
+                'sold_price' =>  number_format($sales_data->sum('sales.qty') * $sales_data->sum('sales.price'), 2, '.', ','),
             ]
         ];
     }

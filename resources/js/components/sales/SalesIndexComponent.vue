@@ -289,15 +289,19 @@ export default {
     },
 
     getFoundSales() {
-      axios
-        .get("api/allSales", {
-          params: {
-            userInput: this.salesToFind,
-          },
-        })
-        .then((resp) => {
-          this.sales = resp.data;
-        });
+      const params = {
+        params: {
+          store_id: this.store_id,
+          filter: this.selectedFilterName,
+          user_input: this.salesToFind,
+        },
+      };
+
+      axios.get("/api/sales/?page=1", params).then((resp) => {
+        this.sales = resp.data.sales.data;
+        this.pagination = resp.data.pagination;
+        this.salesData = resp.data.sales_data;
+      });
     },
 
     /**
@@ -342,10 +346,12 @@ export default {
   watch: {
     store_id() {
       this.getSales(1);
+      this.salesToFind = "";
     },
 
     selectedFilterName() {
-      this.getSales(1);
+      //this.getSales(1);
+      this.findSales();
     },
   },
 
