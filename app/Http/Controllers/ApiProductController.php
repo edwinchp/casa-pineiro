@@ -130,7 +130,7 @@ class ApiProductController extends Controller
 
         $product = Product::findOrFail($id);
 
-        foreach ($request->all() as $key => $value) {
+        foreach ($request->except(['created_at', 'created_by']) as $key => $value) {
             $product->{$key} = $value;
         }
 

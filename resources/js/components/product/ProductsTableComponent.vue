@@ -6,7 +6,7 @@
           <th>Nombre</th>
           <th>Existentes</th>
           <th v-show="this.editingProduct">Nuevos</th>
-          <th>Precio de compra</th>
+          <!-- <th>Precio de compra</th> -->
           <th>Precio de venta</th>
           <th>Imagen</th>
           <th>Opciones</th>
@@ -220,13 +220,13 @@
             </div>
           </td>
 
-          <td class="table-bought-product">
+          <!-- <td class="table-bought-product">
             <div class="row">
               <div class="col-xl-11" v-show="product.cost_price">
                 ${{ product.cost_price }}
               </div>
             </div>
-          </td>
+          </td> -->
 
           <td class="table-sell-product">
             <div class="row">
@@ -237,11 +237,11 @@
           </td>
 
           <td>
-            <a href="#!" data-toggle="modal" data-target="#myModal"
+            <a :href="product.primary_picture" target="blank"
               ><img
                 :src="product.primary_picture"
                 alt=""
-                class="img-40 rounded"
+                class="img-70 rounded"
               />
             </a>
           </td>

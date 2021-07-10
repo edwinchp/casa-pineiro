@@ -136,34 +136,6 @@
                     </div>
                   </div>
                 </div>
-
-                <div class="col-md-4">
-                  <label for="cp_offer_price">Precio de oferta</label>
-                  <input-text
-                    :inputText="product.offer_price"
-                    @inputChanged="offerPriceChanged($event)"
-                    :inputField="inputFields.offer_price"
-                    iconClass="fas fa-certificate"
-                  ></input-text>
-                </div>
-                <div class="col-md-4">
-                  <label for="cp_offer_duration">Oferta termina</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fas fa-calendar-alt"></i
-                      ></span>
-                    </div>
-                    <input
-                      type="date"
-                      class="form-control"
-                      name="cp_offer_duration"
-                      value="sssssss"
-                      autocomplete="off"
-                      v-model="product.offer_ends"
-                    />
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -180,16 +152,6 @@
                     v-model="product.description"
                   >
                   </textarea>
-                </div>
-
-                <div class="col-md-4">
-                  <label for="cp_offer_price">Imagen por link</label>
-                  <input-text
-                    :inputText="product.picture_link"
-                    @inputChanged="pictureLinkChanged($event)"
-                    :inputField="inputFields.picture_link"
-                    iconClass="fas fa-link"
-                  ></input-text>
                 </div>
               </div>
             </div>

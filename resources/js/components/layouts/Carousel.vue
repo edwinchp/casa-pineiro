@@ -30,7 +30,15 @@
 
           <div class="carousel-caption d-none d-md-block mb-3">
             <a
+              v-if="picture.path"
               :href="'/images/products/' + picture.path"
+              class="btn btn-outline-light btn-sm"
+              target="_blank"
+              >Ampliar</a
+            >
+            <a
+              v-else
+              :href="picture.link"
               class="btn btn-outline-light btn-sm"
               target="_blank"
               >Ampliar</a
@@ -208,6 +216,7 @@ export default {
       initialPictureNo: 0,
       carouselPictures: [],
       maxPictureNo: 0,
+      includePictures: false,
     };
   },
 
@@ -300,6 +309,7 @@ export default {
           // console.log(no);
           // console.log(key);
           this.pictureInputs[key].path = $event.target.files[0];
+          this.includePictures = true;
         }
       }
     },
@@ -325,6 +335,10 @@ export default {
           this.pictureInputs = [];
         });
       });
+
+      if (this.includePictures) {
+        location.reload();
+      }
     },
 
     waitUntilPicturesAreReady() {

@@ -227,7 +227,7 @@
                     {{ product.qty }}
                     <button @click="addCartQty(product)">+</button>
                   </td>
-                  <td>${{ product.price * product.qty }}</td>
+                  <td>${{ getSubTotal(product.price, product.qty) }}</td>
                   <td>
                     <button @click="removeFromCart(product)">X</button>
                   </td>
@@ -288,7 +288,7 @@ export default {
       for (var i = 0; i < this.miniCart.length; i++) {
         total = total + this.miniCart[i].qty * this.miniCart[i].price;
       }
-      return total;
+      return parseFloat(total).toFixed(2);
     },
   },
 
@@ -316,6 +316,10 @@ export default {
         this.miniCart.findIndex((a) => a.product_id === product.product_id),
         1
       );
+    },
+
+    getSubTotal(price, qty) {
+      return parseFloat(price * qty).toFixed(2);
     },
 
     checkoutCart(miniCart) {

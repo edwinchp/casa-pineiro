@@ -127,7 +127,7 @@
                                   <td class="table-number">
                                     <div class="row">
                                       <div class="col-xl-11">
-                                        <div class="">${{ sale.price }}</div>
+                                        <div class="">${{ getRoundedDigit(sale.price) }}</div>
                                       </div>
                                     </div>
                                   </td>
@@ -136,7 +136,7 @@
                                     <div class="row">
                                       <div class="col-xl-11">
                                         <div class="">
-                                          ${{ sale.qty * sale.price }}
+                                          ${{ getRoundedDigit(sale.qty * sale.price) }}
                                         </div>
                                       </div>
                                     </div>
@@ -316,6 +316,10 @@ export default {
         return att.substring(0, limit);
       }
       return att.substring(0, limit) + "...";
+    },
+
+    getRoundedDigit(floatNum){
+      return parseFloat(floatNum).toFixed(2);
     },
 
     selectedStoreId($event) {
