@@ -50,10 +50,12 @@ Route::middleware('auth:api')->group(function () {
     Route::get('testing-products', 'ApiProductController@testingProducts');
     Route::post('/logout', 'ApiUserController@logout');
     Route::get('/current-user', 'ApiUserController@currentUser');
-    
+
     // Picture
     Route::resource('/picture', 'PictureController');
-    
+
+    //Customer
+    Route::resource('customer', 'ApiCustomerController');
 });
 
 /**

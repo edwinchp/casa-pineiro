@@ -28,6 +28,7 @@ class CreateSalesTable extends Migration
             $table->integer('user_id')->nullable();
             $table->integer('is_offer')->nullable();
             $table->integer('status');
+            $table->integer('is_paid');
             $table->string('comments')->nullable();
             $table->timestamps();
         });

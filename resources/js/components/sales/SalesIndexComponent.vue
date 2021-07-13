@@ -127,16 +127,8 @@
                                   <td class="table-number">
                                     <div class="row">
                                       <div class="col-xl-11">
-                                        <div class="">${{ getRoundedDigit(sale.price) }}</div>
-                                      </div>
-                                    </div>
-                                  </td>
-
-                                  <td class="table-number">
-                                    <div class="row">
-                                      <div class="col-xl-11">
                                         <div class="">
-                                          ${{ getRoundedDigit(sale.qty * sale.price) }}
+                                          ${{ getRoundedDigit(sale.price) }}
                                         </div>
                                       </div>
                                     </div>
@@ -146,7 +138,29 @@
                                     <div class="row">
                                       <div class="col-xl-11">
                                         <div class="">
-                                          {{ sale.customer_id }} Genérico
+                                          ${{
+                                            getRoundedDigit(
+                                              sale.qty * sale.price
+                                            )
+                                          }}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+
+                                  <td class="table-number">
+                                    <div class="row">
+                                      <div class="col-xl-11">
+                                        <div class="">
+                                          <a
+                                            v-if="sale.customer_name"
+                                            :href="
+                                              '/customer/' + sale.customer_id
+                                            "
+                                          >
+                                            {{ sale.customer_name }}
+                                          </a>
+                                          <div v-else>Genérico</div>
                                         </div>
                                       </div>
                                     </div>
@@ -318,7 +332,7 @@ export default {
       return att.substring(0, limit) + "...";
     },
 
-    getRoundedDigit(floatNum){
+    getRoundedDigit(floatNum) {
       return parseFloat(floatNum).toFixed(2);
     },
 

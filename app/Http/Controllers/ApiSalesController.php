@@ -56,6 +56,7 @@ class ApiSalesController extends Controller
                 }
             })
             ->join('users', 'sales.user_id', '=', 'users.id')
+            ->leftJoin('customers', 'sales.customer_id', '=', 'customers.id')
             ->where($conditions)
             ->select(
                 'sales.id',
@@ -69,6 +70,8 @@ class ApiSalesController extends Controller
                 'products.bar_code',
                 'products.brand',
                 'users.name as user_name',
+                'customers.name as customer_name',
+                'sales.customer_id',
             )->orderBy('sales.created_at', 'desc')->paginate(8);
 
         $sales_data = DB::table('sales')

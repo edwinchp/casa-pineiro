@@ -73,7 +73,7 @@
 
         <!--CART-->
 
-        <li class="nav-item dropdown pt-2">
+        <li v-if="miniCart.length > 0" class="nav-item dropdown pt-2">
           <button class="" data-target="#miniCartModal" data-toggle="modal">
             <i class="icofont icofont-cart icofont-alt"></i>Carrito
             <label class="badge badge-danger">{{ getTotalQtyMiniCart }}</label>
@@ -236,6 +236,20 @@
             </table>
           </div>
           <div class="modal-footer">
+            <div class="col-md-6">
+              <span>Cliente</span>
+              <select name="select" class="form-control">
+                <option @click="customer_id = null" value="G">Genérico</option>
+                <option
+                  v-for="customer in customers"
+                  :key="customer.id"
+                  @click="customer_id = customer.id"
+                >
+                  {{ customer.name }}
+                </option>
+              </select>
+            </div>
+
             <button
               class="btn btn-secondary"
               type="button"
@@ -268,6 +282,8 @@ export default {
   data() {
     return {
       miniCart: [],
+      customers: null,
+      customer_id: null,
     };
   },
 
@@ -293,6 +309,13 @@ export default {
   },
 
   methods: {
+    getCustomers() {
+      axios.get("/api/customer/").then((response) => {
+        console.log(response);
+        this.customers = response.data;
+      });
+    },
+
     shortProductName(product) {
       let short = product.substring(0, 30);
       short = short.length >= 30 ? short + "... " : short;
@@ -331,6 +354,7 @@ export default {
         formData.append("qty", product.qty);
         formData.append("price", product.price);
         formData.append("status", 1);
+        if (this.customer_id) formData.append("customer_id", this.customer_id);
 
         axios.post("/api/sales", formData).then((response) => {
           console.log(response);
@@ -353,6 +377,12 @@ export default {
     this.$root.$on("sharingCart", (data) => {
       this.miniCart = data;
     });
+  },
+
+  created() {
+    axios.defaults.headers.common["Authorization"] =
+      "Bearer " + localStorage.getItem("user_token");
+    this.getCustomers();
   },
 };
 </script>
