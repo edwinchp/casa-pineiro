@@ -38,11 +38,11 @@
                     <h4>$553</h4>
                     <div class="pt-2">
                         <span class="f-left m-t-10 text-muted">
-                            <a href="client.index.html" class="text-c-green"><i class="text-c-green f-16 icofont icofont-external-link m-r-10"></i>Ver
+                            <a href="{{route('customer.index')}}" class="text-c-green"><i class="text-c-green f-16 icofont icofont-external-link m-r-10"></i>Ver
                                 más</a>
                         </span>
                         <div class="icon-btn plus-icon plus-icon-success">
-                            <a href="client.create.html" class="btn btn-success btn-outline-success btn-icon"><i class="icofont icofont-plus"></i></a>
+                            <a href="{{route('customer.create')}}" class="btn btn-success btn-outline-success btn-icon"><i class="icofont icofont-plus"></i></a>
                         </div>
                     </div>
                 </div>

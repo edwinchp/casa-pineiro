@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/', 'DashboardController@index');
     Route::resource('sales', 'SalesController');
     Route::resource('products', 'ProductController')->middleware('checkProduct');
+    Route::resource('customer', 'CustomerController');
     //Route::get('/products/{id}/edit', 'ProductController@edit')->middleware('checkProduct');
 });
 
