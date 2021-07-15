@@ -119,5 +119,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="css" scoped>
+nav {
+  margin: 1em;
+}
+</style>>
 </style>

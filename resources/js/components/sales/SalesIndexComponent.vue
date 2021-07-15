@@ -200,11 +200,12 @@
                                 </tr>
                               </tbody>
                             </table>
+                           
+                          </div>
                             <pagination-component
                               :pagination="pagination"
                               @pageChanged="setNewPage"
                             ></pagination-component>
-                          </div>
                         </div>
                       </div>
                     </div>

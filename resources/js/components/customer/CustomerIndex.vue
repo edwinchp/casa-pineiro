@@ -95,19 +95,19 @@
       <div class="card-block text-center">
         <div class="row">
           <div class="col-6 b-r-default">
-            <h2>{{ totalProducts }}</h2>
-            <p class="text-muted">Productos</p>
+            <h2>{{ customers_data.total_customers }}</h2>
+            <p class="text-muted">Clientes</p>
           </div>
           <div class="col-6">
-            <h2>{{ allProductsQty }}</h2>
-            <p class="text-muted">Existentes</p>
+            <h2>${{ customers_data.total_amount }}</h2>
+            <p class="text-muted">Salto total</p>
           </div>
         </div>
       </div>
     </div>
 
     <div class="card pt-3 table-products-scope">
-      <div class="section-header pl-3">
+      <div v-show="false" class="section-header pl-3">
         <div class="col-xl-6">
           <div class="input-group search-box">
             <span class="input-group-addon" id="name"
@@ -126,51 +126,41 @@
 
       <div class="card-block table-border-style">
         <div class="table-responsive pr-4 pl-4">
-          <!--Product table-->
-          <products-table-component
-            :products="products"
-            @miniCartChanged="miniCart = $event"
-            :store_id="selectedStoreId"
-          />
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Saldo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="customer in customers" :key="customer.id">
+                <td class="table-name">
+                  <div class="row">
+                    <div class="col-xl-11">
+                      <a :href="'/customer/' + customer.id">{{
+                        customer.name
+                      }}</a>
+                    </div>
+                  </div>
+                </td>
 
-          <div class="p-4" v-show="!searchIsActive">
-            <nav aria-label="Page navigation example">
-              <ul class="pagination justify-content-end">
-                <li class="page-item" v-if="pagination.current_page > 1">
-                  <a
-                    class="page-link"
-                    href="#"
-                    tabindex="-1"
-                    @click.prevent="changePage(pagination.current_page - 1)"
-                    >Anterior</a
-                  >
-                </li>
-                <li
-                  v-for="page in pagesNumber"
-                  :key="page"
-                  v-bind:class="page == isActive ? 'active' : ''"
-                  class="page-item"
-                >
-                  <a
-                    class="page-link"
-                    href="#"
-                    @click.prevent="changePage(page)"
-                    >{{ page }}</a
-                  >
-                </li>
-                <li
-                  class="page-item"
-                  v-if="pagination.current_page < pagination.last_page"
-                >
-                  <a
-                    class="page-link"
-                    @click.prevent="changePage(pagination.current_page + 1)"
-                    >Siguiente</a
-                  >
-                </li>
-              </ul>
-            </nav>
-          </div>
+                <td class="table-number">
+                  <div class="row">
+                    <div class="col-xl-11">
+                      <div class="">
+                        {{ "$" + customer.amount }}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination-component
+            :pagination="pagination"
+            @pageChanged="setNewPage"
+          ></pagination-component>
         </div>
       </div>
     </div>
@@ -178,14 +168,15 @@
 </template>
 
 <script>
-import ProductsTableComponent from "../product/ProductsTableComponent.vue";
+import PaginationComponent from "../layouts/PaginationComponent.vue";
 export default {
-  components: { ProductsTableComponent },
+  components: { PaginationComponent },
 
   data() {
     return {
-      products: [],
+      //products: [],
       customers: [],
+      customers_data: {},
       allProducts: [],
       productsFound: "",
       productTimeOut: "",
@@ -224,34 +215,6 @@ export default {
       }
     },
 
-    isActive: function () {
-      return this.pagination.current_page;
-    },
-
-    pagesNumber: function () {
-      if (!this.pagination.to) {
-        return [];
-      }
-
-      var from = this.pagination.current_page - 2; //TODO OFFSET
-      if (from < 1) {
-        from = 1;
-      }
-
-      var to = from + 2 * 2; //TODO OFFSET
-      if (to >= this.pagination.last_page) {
-        to = this.pagination.last_page;
-      }
-
-      var pagesArray = [];
-      while (from <= to) {
-        pagesArray.push(from);
-        from++;
-      }
-
-      return pagesArray;
-    },
-
     searchIsActive: function () {
       return this.productsFound.length > 2;
     },
@@ -268,7 +231,7 @@ export default {
       if (this.searchIsActive) {
         this.productTimeOut = setTimeout(this.getSearchProducts, 800);
       } else {
-        this.getProducts(1);
+        this.getCustomers(1);
       }
     },
 
@@ -281,7 +244,7 @@ export default {
       });
     },
 
-    getProducts: function (page) {
+    getCustomers: function (page) {
       axios
         .get("/api/customer/?page=" + page, {
           params: {
@@ -289,8 +252,9 @@ export default {
           },
         })
         .then((resp) => {
-          this.products = resp.data;
-          //this.pagination = resp.data.pagination;
+          this.customers = resp.data.customers.data;
+          this.pagination = resp.data.pagination;
+          this.customers_data = resp.data.customers_data;
         });
     },
 
@@ -339,14 +303,8 @@ export default {
      * Pagination
      */
 
-    changePage: function (page) {
-      this.pagination.current_page = page;
-      this.getProducts(page);
-    },
-
-    getProductName(product) {
-      let shortName = product.name.substring(0, 40);
-      return shortName.length >= 40 ? shortName + "..." : shortName;
+    setNewPage(event) {
+      this.getCustomers(event);
     },
 
     /**
@@ -355,7 +313,7 @@ export default {
     selectStore(store) {
       this.selectedStoreId = store.id;
       this.selectedStoreName = store.name;
-      this.getProducts(1);
+      this.getCustomers(1);
       this.getAllProducts();
     },
   },
@@ -365,7 +323,7 @@ export default {
       "Bearer " + localStorage.getItem("user_token");
     //this.$store.dispatch("currentUser/getUser");
     this.getStores(() => {
-      this.getProducts(1);
+      this.getCustomers(1);
       this.getAllProducts();
     });
   },
