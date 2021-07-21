@@ -106,20 +106,36 @@
             class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
             aria-labelledby="userDropdown"
           >
-            <a class="dropdown-item" href="#">
-              <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-700"></i>
-              Perfil
+            <a class="dropdown-item" href="/sales">
+              <i
+                class="icofont icofont-money fa-lg fa-fw mr-2 text-gray-700"
+              ></i>
+              Ventas
             </a>
-            <a class="dropdown-item" href="#">
-              <i class="fas fa-store-alt fa-sm fa-fw mr-2 text-gray-700"></i>
-              Casa Pineiro
+            <a class="dropdown-item" href="/customer">
+              <i
+                class="
+                  icofont icofont-users-alt-5
+                  fa-lg fa-fw
+                  mr-2
+                  text-gray-700
+                "
+              ></i>
+              Clientes
             </a>
-            <a class="dropdown-item" href="#">
-              <i class="fas fa-store fa-sm fa-fw mr-2 text-gray-700"></i>
-              Tendejón Evelyn
+            <a class="dropdown-item" href="/products">
+              <i
+                class="
+                  icofont icofont-food-basket
+                  fa-lg fa-fw
+                  mr-2
+                  text-gray-700
+                "
+              ></i>
+              Productos
             </a>
             <a class="dropdown-item" href="">
-              <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-700"></i>
+              <i class="fas fa-list fa-lg fa-fw mr-2 text-gray-700"></i>
               Todos los productos
             </a>
             <div class="dropdown-divider"></div>
@@ -368,7 +384,7 @@ export default {
       axios.post("/logout").then((resp) => {
         console.log("resp: " + resp);
         localStorage.setItem("user_token", "");
-        window.location.href = "login";
+        window.location.href = "/login";
       });
     },
   },

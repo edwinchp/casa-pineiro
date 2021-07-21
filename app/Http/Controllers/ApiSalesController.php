@@ -108,7 +108,7 @@ class ApiSalesController extends Controller
             'sales_data' => [
                 'products_sold' => $sales_data->count(),
                 'products_qty_sold' => $sales_data->sum('sales.qty'),
-                'sold_price' =>  number_format($sales_data->sum('sales.qty') * $sales_data->sum('sales.price'), 2, '.', ','),
+                'sold_price' =>  number_format($sales_data->sum('sales.price'), 2, '.', ','),
             ]
         ];
     }
