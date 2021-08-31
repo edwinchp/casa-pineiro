@@ -1,156 +1,68 @@
 <template>
   <div>
-    <nav
-      class="
-        navbar navbar-expand-md navbar-dark
-        topbar
-        shadow
-        fixed-top
-        navbar-default
-      "
-      style="margin-bottom: 300px; background-color: white"
-    >
-      <!-- Sidebar Toggle (Topbar) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <a class="navbar-brand" href="/">Casa Pineiro</a>
+
       <button
-        id="sidebarToggleTop"
-        class="btn btn-link d-md-none rounded-circle mr-3"
+        v-if="miniCart.length > 0"
+        class="btn btn-outline-success my-2 my-sm-0"
+        data-toggle="modal"
+        data-target="#miniCartModal"
       >
-        <i class="fa fa-bars"></i>
+        Carrito
+        <span class="badge badge-warning">{{ getTotalQtyMiniCart }}</span>
       </button>
 
-      <a href="/"
-        ><img
-          src="/images/layouts/casa_pineiro_logo.png"
-          alt=""
-          style="width: 60px"
-      /></a>
+      <button
+        @click="showContent = !showContent"
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-      <!-- Topbar Search -->
-
-      <!-- Topbar Navbar -->
-      <ul class="navbar-nav ml-auto">
-        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-        <li class="nav-item dropdown no-arrow d-sm-none">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="searchDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <i class="fas fa-search fa-fw"></i>
-          </a>
-          <!-- Dropdown - Messages -->
-          <div
-            class="
-              dropdown-menu dropdown-menu-right
-              p-3
-              shadow
-              animated--grow-in
-            "
-            aria-labelledby="searchDropdown"
-          >
-            <form class="form-inline mr-auto w-100 navbar-search">
-              <div class="input-group">
-                <input
-                  type="text"
-                  class="form-control bg-light border-0 small"
-                  placeholder="Search for..."
-                  aria-label="Search"
-                  aria-describedby="basic-addon2"
-                />
-                <div class="input-group-append">
-                  <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search fa-sm"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </li>
-
-        <!--CART-->
-
-        <li v-if="miniCart.length > 0" class="nav-item dropdown pt-2">
-          <button class="" data-target="#miniCartModal" data-toggle="modal">
-            <i class="icofont icofont-cart icofont-alt"></i>Carrito
-            <label class="badge badge-danger">{{ getTotalQtyMiniCart }}</label>
-          </button>
-        </li>
-
-        <!---END CART-->
-
-        <div class="topbar-divider d-none d-sm-block"></div>
-
-        <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="userDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
-            <img
-              class="img-profile rounded-circle"
-              src="https://source.unsplash.com/QAB-WJcbgJk/60x60"
-            />
-          </a>
-          <!-- Dropdown - User Information -->
-          <div
-            class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-            aria-labelledby="userDropdown"
-          >
-            <a class="dropdown-item" href="/sales">
-              <i
-                class="icofont icofont-money fa-lg fa-fw mr-2 text-gray-700"
-              ></i>
-              Ventas
-            </a>
-            <a class="dropdown-item" href="/customer">
-              <i
-                class="
-                  icofont icofont-users-alt-5
-                  fa-lg fa-fw
-                  mr-2
-                  text-gray-700
-                "
-              ></i>
-              Clientes
-            </a>
-            <a class="dropdown-item" href="/products">
-              <i
-                class="
-                  icofont icofont-food-basket
-                  fa-lg fa-fw
-                  mr-2
-                  text-gray-700
-                "
-              ></i>
-              Productos
-            </a>
-            <a class="dropdown-item" href="">
-              <i class="fas fa-list fa-lg fa-fw mr-2 text-gray-700"></i>
-              Todos los productos
-            </a>
-            <div class="dropdown-divider"></div>
+      <div
+        class="collapse navbar-collapse"
+        v-bind:class="{ show: showContent }"
+      >
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
             <a
-              class="dropdown-item"
+              class="nav-link dropdown-toggle"
               href="#"
-              data-toggle="modal"
-              data-target="#logoutModal"
+              id="navbarDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
             >
-              <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-              Cerrar sesión
+              Mi perfil
             </a>
-          </div>
-        </li>
-      </ul>
+            <div
+              class="dropdown-menu my-profile"
+              aria-labelledby="navbarDropdown"
+            >
+              <a class="dropdown-item" href="/sales">Ventas</a>
+              <a class="dropdown-item" href="/products">Productos</a>
+              <a class="dropdown-item" href="/customers">Clientes</a>
+              <div class="dropdown-divider"></div>
+              <a
+                class="dropdown-item"
+                href="#"
+                data-toggle="modal"
+                data-target="#logoutModal"
+                >Cerrar sesión</a
+              >
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
     </nav>
     <!-- End of Topbar -->
 
@@ -300,6 +212,7 @@ export default {
       miniCart: [],
       customers: null,
       customer_id: null,
+      showContent: false,
     };
   },
 
@@ -403,5 +316,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+@media (min-width: 768px) {
+  .my-profile {
+    margin-left: -70px;
+  }
+}
 </style>
