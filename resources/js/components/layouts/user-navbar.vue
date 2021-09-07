@@ -117,12 +117,12 @@
     <div
       class="modal fade"
       id="miniCartModal"
-      tabindex="-1"
+      tabindex="-20"
       role="dialog"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Carrito</h5>
@@ -136,7 +136,11 @@
             </button>
           </div>
           <div class="modal-body">
-            <table class="table">
+            <table
+              class="table"
+              :class="tableClasses"
+              style="table-layout: auto"
+            >
               <thead>
                 <tr>
                   <th>Producto</th>
@@ -151,13 +155,30 @@
                   <th scope="row">{{ shortProductName(product.name) }}</th>
                   <td>${{ product.price }}</td>
                   <td>
-                    <button @click="reduceCartQty(product)">-</button>
+                    <button
+                      class="btn btn-dark btn-sm btn-td"
+                      @click="reduceCartQty(product)"
+                    >
+                      -
+                    </button>
                     {{ product.qty }}
-                    <button @click="addCartQty(product)">+</button>
+                    <button
+                      class="btn btn-dark btn-sm btn-td"
+                      @click="addCartQty(product)"
+                    >
+                      +
+                    </button>
                   </td>
                   <td>${{ getSubTotal(product.price, product.qty) }}</td>
                   <td>
-                    <button @click="removeFromCart(product)">X</button>
+                    <button
+                      class="btn btn-danger btn-sm btn-td btn-td-delete"
+                      @click="removeFromCart(product)"
+                    >
+                      <span class="icon text-white-50">
+                        <i class="fas fa-trash"></i>
+                      </span>
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -190,11 +211,8 @@
                 @click.prevent="checkoutCart(miniCart)"
                 type="submit"
                 data-dismiss="modal"
-                class="btn btn-danger btn-icon-split"
+                class="btn btn-success"
               >
-                <span class="icon text-white-50">
-                  <i class="fas fa-trash"></i>
-                </span>
                 <span class="text">Pagar ${{ getTotalPriceMiniCart }}</span>
               </button>
             </form>
@@ -213,6 +231,8 @@ export default {
       customers: null,
       customer_id: null,
       showContent: false,
+      windowWidth: window.innerWidth,
+      tableClasses: "",
     };
   },
 
@@ -300,18 +320,41 @@ export default {
         window.location.href = "/login";
       });
     },
+
+    onResize() {
+      this.windowWidth = window.innerWidth;
+    },
+
+    updateTable(width) {
+      if (width < 993) {
+        this.tableClasses = "table-responsive";
+      } else {
+        this.tableClasses = "";
+      }
+    },
   },
 
   mounted() {
     this.$root.$on("sharingCart", (data) => {
       this.miniCart = data;
     });
+
+    this.$nextTick(() => {
+      window.addEventListener("resize", this.onResize);
+    });
+  },
+
+  watch: {
+    windowWidth(newWidth, oldWidth) {
+      this.updateTable(newWidth)
+    },
   },
 
   created() {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("user_token");
     this.getCustomers();
+    this.updateTable(this.windowWidth)
   },
 };
 </script>
@@ -321,5 +364,19 @@ export default {
   .my-profile {
     margin-left: -70px;
   }
+
+  table {
+    table-layout: fixed;
+  }
+}
+
+.btn-td {
+  font-size: 20px;
+  margin: 10px;
+  text-align: center;
+  margin: 0px 10px;
+}
+.btn-td-delete {
+  font-size: 15px;
 }
 </style>

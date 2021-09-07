@@ -177,7 +177,14 @@
           <td class="table-name">
             <div class="row">
               <div class="col-xl-11">
-                <a :href="'products/' + product.id + '/edit'">
+                <!-- <a :href="'products/' + product.id + '/edit'">
+                  {{ shortProductName(product.name) }}
+                </a> -->
+                <a
+                  data-toggle="modal"
+                  data-target="#product-details"
+                  @click="selectedProduct = product"
+                >
                   {{ shortProductName(product.name) }}
                 </a>
               </div>
@@ -271,13 +278,18 @@
         </tr>
       </tbody>
     </table>
+
+    <product-details :product="selectedProduct"></product-details>
+
   </div>
 </template>
 
 <script>
 import productComponent from "./ProductComponent";
+import ProductDetails from './ProductDetails.vue';
 
 export default {
+  components: { ProductDetails },
   props: ["products", "store_id"],
 
   data() {
@@ -287,6 +299,7 @@ export default {
       sum_qty: 0,
       miniCart: [],
       receivedProducts: null,
+      selectedProduct: null
     };
   },
 
