@@ -107,7 +107,7 @@
     </div>
 
     <div class="card pt-3 table-products-scope">
-      <div class="section-header pl-3">
+      <div class="section-header">
         <div class="col-xl-6">
           <div class="input-group search-box">
             <span class="input-group-addon" id="name"
@@ -125,7 +125,7 @@
       </div>
 
       <div class="card-block table-border-style">
-        <div class="table-responsive pr-4 pl-4">
+        <div class="table-responsive pr-1 pl-1">
           <!--Product table-->
           <products-table-component
             :products="products"
@@ -375,6 +375,6 @@ export default {
 
 <style scoped>
 .table-products-scope {
-  margin-bottom: 200px;
+  margin-bottom: 50px;
 }
 </style>

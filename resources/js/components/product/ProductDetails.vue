@@ -61,7 +61,7 @@
             <i class="ti-pencil-alt"></i>
           </a>
           <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-          <button class="btn">
+          <button @click="addToCart(product.id)" class="btn" :disabled="product.qty < 1">
             <i class="ti-shopping-cart"></i>
           </button>
         </div>
@@ -72,6 +72,8 @@
 
 <script>
 export default {
+  emits: ['addedToCart'],
+
   props: {
     product: Object,
   },
@@ -96,6 +98,10 @@ export default {
         this.badgeColor = "badge-primary";
       }
     },
+    addToCart(productId){
+      this.$emit('addedToCart', productId);
+      this.changeBadgeColor();
+    }
   },
 
   watch: {

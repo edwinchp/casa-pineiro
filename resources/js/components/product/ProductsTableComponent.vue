@@ -255,7 +255,7 @@
           <td>
             <!--READ MODE-->
             <div v-if="!product.editing" class="table-options">
-              <button class="btn" @click="addToCart(product)">
+              <button class="btn" @click="addToCart(product)" :disabled="product.qty < 1">
                 <i class="ti-shopping-cart"></i>
               </button>
 
@@ -279,7 +279,7 @@
       </tbody>
     </table>
 
-    <product-details :product="selectedProduct"></product-details>
+    <product-details :product="selectedProduct" @addedToCart="addToCartFromModal"></product-details>
 
   </div>
 </template>
@@ -304,6 +304,11 @@ export default {
   },
 
   methods: {
+
+    addToCartFromModal(){
+      this.addToCart(this.selectedProduct);
+    },
+
     shortProductName(product) {
       let shortName = product.substring(0, 35);
       return product.length >= 35 ? shortName + "..." : shortName;

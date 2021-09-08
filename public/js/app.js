@@ -3995,6 +3995,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  emits: ['addedToCart'],
   props: {
     product: Object
   },
@@ -4015,6 +4016,10 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.badgeColor = "badge-primary";
       }
+    },
+    addToCart: function addToCart(productId) {
+      this.$emit('addedToCart', productId);
+      this.changeBadgeColor();
     }
   },
   watch: {
@@ -5329,6 +5334,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    addToCartFromModal: function addToCartFromModal() {
+      this.addToCart(this.selectedProduct);
+    },
     shortProductName: function shortProductName(product) {
       var shortName = product.substring(0, 35);
       return product.length >= 35 ? shortName + "..." : shortName;
@@ -10941,7 +10949,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-products-scope[data-v-7734829f] {\n  margin-bottom: 200px;\n}\n", ""]);
+exports.push([module.i, "\n.table-products-scope[data-v-7734829f] {\n  margin-bottom: 50px;\n}\n", ""]);
 
 // exports
 
@@ -45128,7 +45136,19 @@ var render = function() {
                   [_c("i", { staticClass: "ti-pencil-alt" })]
                 ),
                 _vm._v(" "),
-                _vm._m(1)
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn",
+                    attrs: { disabled: _vm.product.qty < 1 },
+                    on: {
+                      click: function($event) {
+                        return _vm.addToCart(_vm.product.id)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "ti-shopping-cart" })]
+                )
               ])
             ])
           ])
@@ -45153,14 +45173,6 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn" }, [
-      _c("i", { staticClass: "ti-shopping-cart" })
-    ])
   }
 ]
 render._withStripped = true
@@ -45957,7 +45969,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card pt-3 table-products-scope" }, [
-      _c("div", { staticClass: "section-header pl-3" }, [
+      _c("div", { staticClass: "section-header" }, [
         _c("div", { staticClass: "col-xl-6" }, [
           _c("div", { staticClass: "input-group search-box" }, [
             _vm._m(1),
@@ -45991,7 +46003,7 @@ var render = function() {
       _c("div", { staticClass: "card-block table-border-style" }, [
         _c(
           "div",
-          { staticClass: "table-responsive pr-4 pl-4" },
+          { staticClass: "table-responsive pr-1 pl-1" },
           [
             _c("products-table-component", {
               attrs: { products: _vm.products, store_id: _vm.selectedStoreId },
@@ -46323,6 +46335,7 @@ var render = function() {
                           "button",
                           {
                             staticClass: "btn",
+                            attrs: { disabled: product.qty < 1 },
                             on: {
                               click: function($event) {
                                 return _vm.addToCart(product)
@@ -46392,7 +46405,10 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("product-details", { attrs: { product: _vm.selectedProduct } })
+      _c("product-details", {
+        attrs: { product: _vm.selectedProduct },
+        on: { addedToCart: _vm.addToCartFromModal }
+      })
     ],
     1
   )

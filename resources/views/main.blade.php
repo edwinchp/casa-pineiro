@@ -30,13 +30,13 @@
           @include('layouts.user-navbar')
 
           <!-- Begin Page Content -->
-          <div class="container-fluid">
+          <!-- <div class="container"> -->
 
             <!-- Page Heading -->
-            <div class="container" style="margin-top: 100px;">
+            <div class="container-sm" style="margin-top: 75px;">
               @yield('content')
             </div>
-          </div>
+          <!-- </div> -->
           <!-- /.container-fluid -->
 
         </div>
