@@ -88,8 +88,11 @@
                   <!-- ROW 4 -->
                   <div class="form-row">
                     <div class="form-group col-md-4">
-                       <!-- <label for="delivery_option">Tienda</label> -->
-                      <store-input-dropdown @storeIdChanged="selectedStoreId = $event" :currentStoreId="selectedStoreId"></store-input-dropdown>
+                      <!-- <label for="delivery_option">Tienda</label> -->
+                      <store-input-dropdown
+                        @storeIdChanged="selectedStoreId = $event"
+                        :currentStoreId="selectedStoreId"
+                      ></store-input-dropdown>
                       <!-- <div class="input-group">
                         <div class="input-group-prepend">
                           <span class="input-group-text"
@@ -194,13 +197,10 @@
               </div>
 
               <div class="p-1">
-                <a
-                  href="#"
-                  class="btn btn-primary"
-                  data-target="#uploadPictureModal"
-                  data-toggle="modal"
-                  >Imágenes</a
-                >
+                <upload-picture
+                  :foreign_key="product_id"
+                  type="P"
+                ></upload-picture>
               </div>
 
               <div v-if="displayStatus" class="p-1">
@@ -276,8 +276,9 @@
 import Carousel from "../layouts/Carousel.vue";
 import InputText from "../layouts/InputText.vue";
 import StoreInputDropdown from "../layouts/StoreInputDropdown.vue";
+import UploadPicture from "../layouts/UploadPicture.vue";
 export default {
-  components: { InputText, Carousel, StoreInputDropdown },
+  components: { InputText, Carousel, StoreInputDropdown, UploadPicture },
   props: ["product_id"],
   data() {
     return {

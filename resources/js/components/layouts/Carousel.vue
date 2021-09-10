@@ -217,7 +217,7 @@ export default {
       carouselPictures: [],
       maxPictureNo: 0,
       includePictures: false,
-      uploadErrors: ''
+      uploadErrors: "",
     };
   },
 
@@ -331,23 +331,32 @@ export default {
         formData.append("path", pictureInput.path);
         formData.append("link", pictureInput.link);
 
-        axios.post("/api/picture/", formData, { onUploadProgress: uploadEvent => {
-          console.log('Image upload progress: ' + Math.round(uploadEvent.loaded / uploadEvent.total * 100) + '%')
-        }}).then((response) => {
-          console.log(response);
-          this.getPictures();
-          this.pictureInputs = [];
-        }).catch(error => {
-          errors = true
-          alert('Error al subir la imagen. Intenta de nuevo.')
-        });
+        axios
+          .post("/api/picture/", formData, {
+            onUploadProgress: (uploadEvent) => {
+              console.log(
+                "Image upload progress: " +
+                  Math.round((uploadEvent.loaded / uploadEvent.total) * 100) +
+                  "%"
+              );
+            },
+          })
+          .then((response) => {
+            console.log(response);
+            this.getPictures();
+            this.pictureInputs = [];
+          })
+          .catch((error) => {
+            errors = true;
+            alert("Error al subir la imagen. Intenta de nuevo.");
+          });
       });
-      console.log(errors)
+      console.log(errors);
       //console.log(!errors)
 
       if (this.includePictures && !errors) {
         //location.reload();
-        console.log('reloaded')
+        console.log("reloaded");
       }
     },
 
