@@ -109,8 +109,10 @@
 
               <div class="form-row">
                 <div class="form-group col-md-4">
-                  <label for="delivery_option">Tienda</label>
-                  <div class="input-group">
+                  <!-- <label for="delivery_option">Tienda</label> -->
+                  <store-dropdown @storeIdChanged="selectedStoreId = $event"></store-dropdown>
+
+                  <!-- <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text"
                         ><i class="fas fa-store"></i
@@ -133,7 +135,7 @@
                     </select>
                     <div class="invalid-feedback">
                       {{ inputFields.store.feedback }}
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -177,8 +179,9 @@
 
 <script>
 import InputText from "../layouts/InputText.vue";
+import StoreDropdown from "../layouts/StoreDropdown.vue";
 export default {
-  components: { InputText },
+  components: { InputText, StoreDropdown },
   inputOk: {},
   data() {
     return {

@@ -88,8 +88,9 @@
                   <!-- ROW 4 -->
                   <div class="form-row">
                     <div class="form-group col-md-4">
-                      <label for="delivery_option">Tienda</label>
-                      <div class="input-group">
+                       <!-- <label for="delivery_option">Tienda</label> -->
+                      <store-input-dropdown @storeIdChanged="selectedStoreId = $event" :currentStoreId="selectedStoreId"></store-input-dropdown>
+                      <!-- <div class="input-group">
                         <div class="input-group-prepend">
                           <span class="input-group-text"
                             ><i class="fas fa-store"></i
@@ -113,7 +114,7 @@
                         <div class="invalid-feedback">
                           {{ inputFields.store.feedback }}
                         </div>
-                      </div>
+                      </div> -->
                     </div>
 
                     <div v-show="false" class="col-md-4">
@@ -274,8 +275,9 @@
 <script>
 import Carousel from "../layouts/Carousel.vue";
 import InputText from "../layouts/InputText.vue";
+import StoreInputDropdown from "../layouts/StoreInputDropdown.vue";
 export default {
-  components: { InputText, Carousel },
+  components: { InputText, Carousel, StoreInputDropdown },
   props: ["product_id"],
   data() {
     return {
