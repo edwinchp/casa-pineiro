@@ -45,7 +45,7 @@
             >
           </div>
         </div>
-        <div class="picture-options">
+        <div v-show="false" class="picture-options">
           <button
             class="btn btn-inverse btn-icon"
             data-target="#pictureOptionsModal"
@@ -78,6 +78,7 @@
 
     <div v-else class="add-pictures">
       <button
+        v-show="false"
         class="btn btn-inverse"
         data-target="#pictureOptionsModal"
         data-toggle="modal"

@@ -60,7 +60,10 @@ class PictureController extends Controller
                 'type' => $request->type,
                 'path' => $pictureName,
             ]);
-            Storage::putFileAs('images/products/', $file, $pictureName);
+            //Storage::putFileAs('images/products/', $file, $pictureName);
+            $img = Image::make($file);
+            $img->orientate();
+            $img->save('images/products/' . $pictureName, 50, 'jpg');
             return response()->json(['comments' => 'New picture created', 'picture' => $picture], 200);
         } else if ($link = $request->link) {
             $picture = Picture::create([

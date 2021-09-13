@@ -24,6 +24,7 @@
         >Agregar imagen</a
       >
       <a
+        v-show="true"
         class="dropdown-item waves-light waves-effect"
         href="#"
         data-toggle="modal"
@@ -31,7 +32,13 @@
         >Agregar por link</a
       >
       <div class="dropdown-divider"></div>
-      <a class="dropdown-item waves-light waves-effect" href="#">Editar</a>
+      <a
+        class="dropdown-item waves-light waves-effect"
+        href="#"
+        data-toggle="modal"
+        data-target="#managePicturesModal"
+        >Editar</a
+      >
     </div>
 
     <!-- PICTURE LINK MODAL -->
@@ -70,7 +77,7 @@
                   type="text"
                   autocomplete="off"
                   class="form-control"
-                  :value="pictureLink"
+                  v-model="pictureLink"
                 />
               </div>
             </div>
@@ -84,7 +91,12 @@
             >
               Cancelar
             </button>
-            <button class="btn btn-success btn-icon-split">Guardar</button>
+            <button
+              class="btn btn-success btn-icon-split"
+              @click="savePicture('link')"
+            >
+              Guardar
+            </button>
           </div>
         </div>
       </div>
@@ -134,7 +146,7 @@
             <button
               class="btn btn-success btn-icon-split"
               v-bind:disabled="disableBtn"
-              @click="savePictureFile"
+              @click="savePicture('file')"
             >
               Guardar
             </button>
@@ -142,11 +154,19 @@
         </div>
       </div>
     </div>
+    <manage-pictures
+      :pictures="pictures"
+      @deletedPicture="updatePictures"
+    ></manage-pictures>
   </div>
 </template>
 
 <script>
+import ManagePictures from "../layouts/ManagePictures.vue";
 export default {
+  components: {
+    ManagePictures,
+  },
   props: {
     foreign_key: String,
     type: String,
@@ -154,10 +174,10 @@ export default {
   data() {
     return {
       pictures: [],
-      maxPictureNo: 0,
+      maxPictureNo: null,
       pictureFile: null,
       pictureFileProgress: 0,
-      pictureLink: "www.testing.com",
+      pictureLink: "",
       disableBtn: true,
     };
   },
@@ -174,15 +194,16 @@ export default {
       this.pictureFile = $event.target.files[0];
     },
 
-    savePictureFile() {
+    savePicture(pictureType) {
       this.disableBtn = true;
+      let no = this.pictures.length > 0 ? ++this.maxPictureNo : 0;
       const formData = new FormData();
       //formData.append("link", pictureInput.link);
-      formData.append("no", ++this.maxPictureNo);
+      formData.append("no", no);
       formData.append("foreign_key", this.foreign_key);
       formData.append("type", this.type);
-      formData.append("path", this.pictureFile);
-      //formData.append("link", pictureInput.link);
+      if (pictureType === "file") formData.append("path", this.pictureFile);
+      else formData.append("link", this.pictureLink);
 
       axios
         .post("/api/picture/", formData, {
@@ -197,7 +218,9 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          this.getPictures();
+          this.getPictures(() => {
+            this.calculateMaxPicture();
+          });
           if (this.pictureFileProgress == 100) {
             location.reload();
           }
@@ -239,6 +262,33 @@ export default {
         }
       }
       //return this.maxNum;
+    },
+
+    recalculateAllPicturesNo() {
+      let updatedNo = 0;
+      this.pictures.forEach((picture) => {
+        const params = {
+          no: updatedNo++,
+        };
+        console.log("current no: " + picture.no);
+        console.log("updated no: " + updatedNo);
+        console.log("------------");
+        axios.put("/api/picture/" + picture.id, params).then((response) => {
+          console.log(response);
+        });
+      });
+
+      this.getPictures(() => {
+        this.calculateMaxPicture();
+      });
+    },
+
+    updatePictures() {
+      this.getPictures(() => {
+        this.calculateMaxPicture();
+        this.recalculateAllPicturesNo();
+        this.calculateMaxPicture();
+      });
     },
   },
 
