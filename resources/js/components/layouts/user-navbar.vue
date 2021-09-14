@@ -165,6 +165,7 @@
                     <button
                       class="btn btn-dark btn-sm btn-td"
                       @click="addCartQty(product)"
+                      :disabled="product.qty >= product.current_qty"
                     >
                       +
                     </button>
@@ -273,11 +274,12 @@ export default {
 
     addCartQty(product) {
       product.qty = product.qty + 1;
-      this.$root.$emit("shareCart", this.miniCart);
+      this.$root.$emit("cartUpdated", product.product_id);
     },
 
     reduceCartQty(product) {
       product.qty = product.qty - 1;
+      this.$root.$emit("cartUpdated", product.product_id);
       if (product.qty == 0) {
         this.removeFromCart(product);
       }
@@ -305,9 +307,18 @@ export default {
         formData.append("status", 1);
         if (this.customer_id) formData.append("customer_id", this.customer_id);
 
-        axios.post("/api/sales", formData).then((response) => {
-          console.log(response);
-        });
+        axios
+          .post("/api/sales", formData)
+          .then((response) => {
+            if (response.status === 201) {
+              console.log("Pago exitoso");
+            }
+            console.log(response);
+          })
+          .catch((error) => {
+            alert("No fue posible realizar el pago de estos productos.");
+            console.log(error);
+          });
       });
       this.miniCart.splice(0, this.miniCart.length);
       // get the total of items of this.miniCart
@@ -346,7 +357,7 @@ export default {
 
   watch: {
     windowWidth(newWidth, oldWidth) {
-      this.updateTable(newWidth)
+      this.updateTable(newWidth);
     },
   },
 
@@ -354,7 +365,7 @@ export default {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("user_token");
     this.getCustomers();
-    this.updateTable(this.windowWidth)
+    this.updateTable(this.windowWidth);
   },
 };
 </script>

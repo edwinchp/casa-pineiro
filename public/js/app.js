@@ -3797,6 +3797,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3848,10 +3849,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     addCartQty: function addCartQty(product) {
       product.qty = product.qty + 1;
-      this.$root.$emit("shareCart", this.miniCart);
+      this.$root.$emit("cartUpdated", product.product_id);
     },
     reduceCartQty: function reduceCartQty(product) {
       product.qty = product.qty - 1;
+      this.$root.$emit("cartUpdated", product.product_id);
 
       if (product.qty == 0) {
         this.removeFromCart(product);
@@ -3877,7 +3879,14 @@ __webpack_require__.r(__webpack_exports__);
         formData.append("status", 1);
         if (_this2.customer_id) formData.append("customer_id", _this2.customer_id);
         axios.post("/api/sales", formData).then(function (response) {
+          if (response.status === 201) {
+            console.log("Pago exitoso");
+          }
+
           console.log(response);
+        })["catch"](function (error) {
+          alert("No fue posible realizar el pago de estos productos.");
+          console.log(error);
         });
       });
       this.miniCart.splice(0, this.miniCart.length); // get the total of items of this.miniCart
@@ -4510,8 +4519,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  emits: ['addedToCart'],
+  emits: ["addedToCart"],
   props: {
     product: Object
   },
@@ -4534,9 +4547,20 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     addToCart: function addToCart(productId) {
-      this.$emit('addedToCart', productId);
+      this.$emit("addedToCart", productId);
       this.changeBadgeColor();
-    }
+    } // waitForProduct() {
+    //   if (this.product == null) {
+    //     setTimeout(() => {
+    //       console.log("Waiting for product in ProducDetails.vue");
+    //       this.waitForProduct()
+    //     }, 400);
+    //   } else {
+    //     //this.receivedProducts = this.products;
+    //   }
+    //   //console.log('Picture: ' + this.products[5].picture.path);
+    // },
+
   },
   watch: {
     product: function product() {
@@ -4545,11 +4569,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
+    //this.waitForProduct();
     this.changeBadgeColor();
-  },
-  mounted: function mounted() {
-    this.changeBadgeColor();
-  }
+  } // mounted() {
+  //   this.changeBadgeColor();
+  // },
+
 });
 
 /***/ }),
@@ -5524,17 +5549,30 @@ __webpack_require__.r(__webpack_exports__);
       this.selectedStoreName = store.name;
       this.getProducts(1);
       this.getAllProducts();
+    },
+    productChangedInCart: function productChangedInCart() {
+      var _this5 = this;
+
+      this.$root.$on("cartUpdated", function (data) {
+        var product = _this5.products.find(function (product) {
+          return product.id == data;
+        });
+
+        product.qty = 666;
+        console.log(data);
+        console.log(product);
+      });
     }
   },
   created: function created() {
-    var _this5 = this;
+    var _this6 = this;
 
     axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("user_token");
     this.$store.dispatch("currentUser/getUser");
     this.getStores(function () {
-      _this5.getProducts(1);
+      _this6.getProducts(1);
 
-      _this5.getAllProducts();
+      _this6.getAllProducts();
     });
   },
   mounted: function mounted() {}
@@ -5839,6 +5877,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5853,7 +5897,7 @@ __webpack_require__.r(__webpack_exports__);
       sum_qty: 0,
       miniCart: [],
       receivedProducts: null,
-      selectedProduct: null
+      selectedProduct: {}
     };
   },
   methods: {
@@ -5879,7 +5923,9 @@ __webpack_require__.r(__webpack_exports__);
     addToCart: function addToCart(product) {
       // When product "A" is added first time.
       if (this.miniCart.length < 1 && product.qty > 0) {
-        this.pushToMiniCart(product, 1);
+        this.pushToMiniCart(product, 1); //this.miniCart.push({"originalQty": "product.qty"});
+        //Object.assign({originalQty: product.qty}, this.miniCart);
+
         this.$emit("miniCartChanged", this.miniCart);
         this.$root.$emit("sharingCart", this.miniCart);
         return; // When cart is empty, add product "A", emit, and skip rest of the logic.
@@ -5930,6 +5976,7 @@ __webpack_require__.r(__webpack_exports__);
         store_id: this.store_id,
         name: product.name,
         qty: qty,
+        current_qty: product.qty,
         price: product.price,
         status: 1
       });
@@ -45420,6 +45467,9 @@ var render = function() {
                             "button",
                             {
                               staticClass: "btn btn-dark btn-sm btn-td",
+                              attrs: {
+                                disabled: product.qty >= product.current_qty
+                              },
                               on: {
                                 click: function($event) {
                                   return _vm.addCartQty(product)

@@ -357,6 +357,15 @@ export default {
       this.getProducts(1);
       this.getAllProducts();
     },
+
+    productChangedInCart() {
+      this.$root.$on("cartUpdated", (data) => {
+        let product = this.products.find((product) => product.id == data);
+        product.qty = 666;
+        console.log(data);
+        console.log(product);
+      });
+    },
   },
 
   created() {

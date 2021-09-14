@@ -61,7 +61,11 @@
             <i class="ti-pencil-alt"></i>
           </a>
           <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-          <button @click="addToCart(product.id)" class="btn" :disabled="product.qty < 1">
+          <button
+            @click="addToCart(product.id)"
+            class="btn"
+            :disabled="product.qty < 1"
+          >
             <i class="ti-shopping-cart"></i>
           </button>
         </div>
@@ -72,7 +76,7 @@
 
 <script>
 export default {
-  emits: ['addedToCart'],
+  emits: ["addedToCart"],
 
   props: {
     product: Object,
@@ -98,10 +102,22 @@ export default {
         this.badgeColor = "badge-primary";
       }
     },
-    addToCart(productId){
-      this.$emit('addedToCart', productId);
+    addToCart(productId) {
+      this.$emit("addedToCart", productId);
       this.changeBadgeColor();
-    }
+    },
+
+    // waitForProduct() {
+    //   if (this.product == null) {
+    //     setTimeout(() => {
+    //       console.log("Waiting for product in ProducDetails.vue");
+    //       this.waitForProduct()
+    //     }, 400);
+    //   } else {
+    //     //this.receivedProducts = this.products;
+    //   }
+    //   //console.log('Picture: ' + this.products[5].picture.path);
+    // },
   },
 
   watch: {
@@ -112,12 +128,13 @@ export default {
   },
 
   created() {
+    //this.waitForProduct();
     this.changeBadgeColor();
   },
 
-  mounted() {
-    this.changeBadgeColor();
-  },
+  // mounted() {
+  //   this.changeBadgeColor();
+  // },
 };
 </script>
 

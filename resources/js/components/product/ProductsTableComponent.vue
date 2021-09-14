@@ -255,7 +255,11 @@
           <td>
             <!--READ MODE-->
             <div v-if="!product.editing" class="table-options">
-              <button class="btn" @click="addToCart(product)" :disabled="product.qty < 1">
+              <button
+                class="btn"
+                @click="addToCart(product)"
+                :disabled="product.qty < 1"
+              >
                 <i class="ti-shopping-cart"></i>
               </button>
 
@@ -279,14 +283,16 @@
       </tbody>
     </table>
 
-    <product-details :product="selectedProduct" @addedToCart="addToCartFromModal"></product-details>
-
+    <product-details
+      :product="selectedProduct"
+      @addedToCart="addToCartFromModal"
+    ></product-details>
   </div>
 </template>
 
 <script>
 import productComponent from "./ProductComponent";
-import ProductDetails from './ProductDetails.vue';
+import ProductDetails from "./ProductDetails.vue";
 
 export default {
   components: { ProductDetails },
@@ -299,13 +305,12 @@ export default {
       sum_qty: 0,
       miniCart: [],
       receivedProducts: null,
-      selectedProduct: null
+      selectedProduct: {},
     };
   },
 
   methods: {
-
-    addToCartFromModal(){
+    addToCartFromModal() {
       this.addToCart(this.selectedProduct);
     },
 
@@ -332,6 +337,9 @@ export default {
       // When product "A" is added first time.
       if (this.miniCart.length < 1 && product.qty > 0) {
         this.pushToMiniCart(product, 1);
+
+        //this.miniCart.push({"originalQty": "product.qty"});
+        //Object.assign({originalQty: product.qty}, this.miniCart);
         this.$emit("miniCartChanged", this.miniCart);
         this.$root.$emit("sharingCart", this.miniCart);
         return; // When cart is empty, add product "A", emit, and skip rest of the logic.
@@ -382,6 +390,7 @@ export default {
         store_id: this.store_id,
         name: product.name,
         qty: qty,
+        current_qty: product.qty,
         price: product.price,
         status: 1,
       });
