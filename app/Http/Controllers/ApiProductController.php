@@ -205,4 +205,14 @@ class ApiProductController extends Controller
         }
         return $productsArray;
     }
+
+    public function barcodeSearch(Request $request)
+    {
+        $product = Product::where(
+            'store_id',
+            '=',
+            $request->store_id
+        )->where('bar_code', '=', $request->barcode)->get();
+        return $product;
+    }
 }

@@ -3,7 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\User;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,10 +37,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-
-
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', 'DashboardController@index');
+    Route::get('/sales/basket', 'SalesController@basket')->name('sales.basket');
     Route::resource('sales', 'SalesController');
     Route::resource('products', 'ProductController')->middleware('checkProduct');
     Route::resource('customer', 'CustomerController');

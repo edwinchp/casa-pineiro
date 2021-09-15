@@ -40,6 +40,7 @@ Route::middleware('auth:api')->group(function () {
     // Users
     Route::get('user/stores', 'ApiStoreController@getUserStores');
     // Products
+    Route::get('products/barcode-search', 'ApiProductController@barcodeSearch');
     Route::resource('products', 'ApiProductController');
     Route::get('allProducts', 'ApiProductController@allProducts');
     // Store

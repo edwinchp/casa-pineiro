@@ -34,6 +34,7 @@ Vue.component('input-text', require('./components/layouts/InputText.vue').defaul
 Vue.component('carousel', require('./components/layouts/Carousel.vue').default);
 Vue.component('customer-index', require('./components/customer/CustomerIndex.vue').default);
 //Vue.component('pagination', require('laravel-vue-pagination'));
+Vue.component('basket-index', require('./components/sales/basket/BasketIndex.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

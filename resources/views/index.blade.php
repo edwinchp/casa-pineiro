@@ -22,7 +22,7 @@
                                 semana</a>
                         </span>
                         <div class="icon-btn plus-icon plus-icon-primary">
-                            <a href="#" class="btn btn-primary btn-outline-primary btn-icon"><i class="icofont icofont-plus "></i></a>
+                            <a href="{{route('sales.basket')}}" class="btn btn-primary btn-outline-primary btn-icon"><i class="icofont icofont-plus "></i></a>
                         </div>
                     </div>
 

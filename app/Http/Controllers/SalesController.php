@@ -81,4 +81,8 @@ class SalesController extends Controller
     {
         //
     }
+
+    public function basket(){
+        return view('sell.create', ['accessToken' => null]);
+    }
 }
