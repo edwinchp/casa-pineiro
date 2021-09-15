@@ -290,6 +290,9 @@ export default {
         this.miniCart.findIndex((a) => a.product_id === product.product_id),
         1
       );
+      if (this.miniCart.length < 1) {
+        location.reload();
+      }
     },
 
     getSubTotal(price, qty) {
@@ -316,7 +319,8 @@ export default {
             console.log(response);
           })
           .catch((error) => {
-            alert("No fue posible realizar el pago de estos productos.");
+            alert("No fue posible realizar el pago. Intente nuevamente");
+            location.reload();
             console.log(error);
           });
       });

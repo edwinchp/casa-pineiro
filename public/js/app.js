@@ -3863,6 +3863,10 @@ __webpack_require__.r(__webpack_exports__);
       this.miniCart.splice(this.miniCart.findIndex(function (a) {
         return a.product_id === product.product_id;
       }), 1);
+
+      if (this.miniCart.length < 1) {
+        location.reload();
+      }
     },
     getSubTotal: function getSubTotal(price, qty) {
       return parseFloat(price * qty).toFixed(2);
@@ -3885,7 +3889,8 @@ __webpack_require__.r(__webpack_exports__);
 
           console.log(response);
         })["catch"](function (error) {
-          alert("No fue posible realizar el pago de estos productos.");
+          alert("No fue posible realizar el pago. Intente nuevamente");
+          location.reload();
           console.log(error);
         });
       });
