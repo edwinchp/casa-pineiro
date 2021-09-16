@@ -6803,87 +6803,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -6892,28 +6811,108 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       barcode: null,
+      product: {},
       basket: [],
-      products: [],
-      selectedStoreId: 1
+      selectedStoreId: 1,
+      timeOutBarcode: ""
     };
   },
   methods: {
-    getProducts: function getProducts() {
+    searchByBarcode: function searchByBarcode() {
       var _this = this;
 
       axios.get("/api/products/barcode-search", {
         params: {
-          store_id: this.selectedStoreId
+          store_id: this.selectedStoreId,
+          barcode: this.barcode
         }
       }).then(function (response) {
-        _this.products = response.data;
+        console.log("response.data");
+        console.log(response.data);
+
+        if (response.data !== "") {
+          _this.product = response.data;
+
+          _this.addToBasket(_this.product);
+        }
       });
+    },
+    inputBarcode: function inputBarcode() {
+      clearTimeout(this.timeOutBarcode);
+      if (this.getBarcode.length > 3) this.timeOutBarcode = setTimeout(this.searchByBarcode, 10);
+    },
+    pushToBasket: function pushToBasket(product, qty) {
+      console.log("pushing to car with qty of: " + qty);
+      this.basket.push({
+        product_id: product.id,
+        store_id: this.selectedStoreId,
+        name: product.name,
+        qty: qty,
+        current_qty: product.qty,
+        price: product.price,
+        status: 1
+      });
+      product.qty--;
+    },
+    addToBasket: function addToBasket(product) {
+      // When product "A" is added first time.
+      if (this.basket.length < 1 && product.qty > 0) {
+        this.pushToBasket(product, 1);
+        this.barcode = null;
+        return;
+      }
+
+      var productInBacket = {};
+      var duplicate = false;
+
+      for (var i = 0; i < this.basket.length; i++) {
+        if (this.basket[i].product_id === product.id) {
+          productInBacket = this.basket[i];
+          duplicate = true;
+        }
+      }
+
+      console.log("this.miniCart.length: " + this.basket.length);
+      console.log("duplicate: " + duplicate);
+      console.log("product.qtyy>0: " + product.qty > 0); // If product "A" is already added, increase cart qty and decrease current product "A" qty.
+
+      if (duplicate && productInBacket.qty != product.qty) {
+        console.log("duplicate found");
+
+        for (var i = 0; i < this.basket.length; i++) {
+          if (this.basket[i].product_id === product.id) {
+            this.basket[i].qty = this.basket[i].qty + 1; //this.basket[i].current_qty--;
+            //product.qty--;
+          }
+        }
+      } // If product "B" has not been added before.
+
+
+      if (!duplicate && product.qty > 0) {
+        this.pushToBasket(product, 1);
+      }
+
+      if (productInBacket.qty == product.qty) {
+        alert("No hay más productos.");
+      }
+
+      this.barcode = null; //this.product = {};
     }
   },
   // end methods
-  created: function created() {
-    this.getProducts();
-  }
+  computed: {
+    getBarcode: function getBarcode() {
+      return this.barcode;
+    }
+  } // watch: {
+  //   barcode() {
+  //     this.searchByBarcode();
+  //   },
+  // },
+  // created() {
+  //   this.getProducts();
+  // },
+
 });
 
 /***/ }),
@@ -48705,6 +48704,7 @@ var render = function() {
                                       focusout: function($event) {
                                         _vm.barcode = null
                                       },
+                                      keyup: _vm.inputBarcode,
                                       input: function($event) {
                                         if ($event.target.composing) {
                                           return
@@ -48723,7 +48723,137 @@ var render = function() {
                           ])
                         ]),
                         _vm._v(" "),
-                        _vm._m(4)
+                        _c("div", { staticClass: "col-sm-6 mobile-inputs" }, [
+                          _c("div", [
+                            _c("h4", { staticClass: "sub-title" }, [
+                              _vm._v("Productos añadidos")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "table-sub-table" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "card-block table-border-style"
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "table-responsive" },
+                                    [
+                                      _c(
+                                        "table",
+                                        { staticClass: "table table-hover" },
+                                        [
+                                          _vm._m(4),
+                                          _vm._v(" "),
+                                          _c(
+                                            "tbody",
+                                            _vm._l(_vm.basket, function(
+                                              product
+                                            ) {
+                                              return _c(
+                                                "tr",
+                                                { key: product.product_id },
+                                                [
+                                                  _c(
+                                                    "td",
+                                                    {
+                                                      staticClass: "table-name"
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "div",
+                                                        { staticClass: "row" },
+                                                        [
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "col-xl-11"
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "a",
+                                                                {
+                                                                  attrs: {
+                                                                    href: "",
+                                                                    "data-toggle":
+                                                                      "modal",
+                                                                    "data-target":
+                                                                      "#myModal"
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    _vm._s(
+                                                                      product.name
+                                                                    )
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ]
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "td",
+                                                    {
+                                                      staticClass: "table-price"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                        $" +
+                                                          _vm._s(
+                                                            product.price
+                                                          ) +
+                                                          "\n                                      "
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "td",
+                                                    {
+                                                      staticClass: "table-input"
+                                                    },
+                                                    [
+                                                      _c("input", {
+                                                        staticClass:
+                                                          "form-control form-control-sm",
+                                                        attrs: {
+                                                          type: "number",
+                                                          placeholder:
+                                                            "Cantidad"
+                                                        },
+                                                        domProps: {
+                                                          value: product.qty
+                                                        }
+                                                      })
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _vm._m(5, true)
+                                                ]
+                                              )
+                                            }),
+                                            0
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._m(6)
+                                    ]
+                                  )
+                                ]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(7)
+                        ])
                       ])
                     ])
                   ])
@@ -49083,285 +49213,105 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-6 mobile-inputs" }, [
-      _c("div", [
-        _c("h4", { staticClass: "sub-title" }, [_vm._v("Productos añadidos")]),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Producto")]),
         _vm._v(" "),
-        _c("div", { staticClass: "table-sub-table" }, [
-          _c("div", { staticClass: "card-block table-border-style" }, [
-            _c("div", { staticClass: "table-responsive" }, [
-              _c("table", { staticClass: "table table-hover" }, [
-                _c("thead", [
-                  _c("tr", [
-                    _c("th", [_vm._v("Producto")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Precio")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Cantidad")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Opciones")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("tbody", [
-                  _c("tr", [
-                    _c("td", { staticClass: "table-name" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-xl-11" }, [
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "",
-                                "data-toggle": "modal",
-                                "data-target": "#myModal"
-                              }
-                            },
-                            [_vm._v("Cheetos bolita 35g")]
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-price" }, [_vm._v("$56")]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-input" }, [
-                      _c("input", {
-                        staticClass: "form-control form-control-sm",
-                        attrs: {
-                          type: "number",
-                          placeholder: "Cantidad",
-                          value: "1"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("div", { staticClass: "table-options" }, [
-                        _c(
-                          "a",
-                          {
-                            attrs: {
-                              href: "#",
-                              "data-toggle": "modal",
-                              "data-target": "#deleteProduct"
-                            }
-                          },
-                          [_c("i", { staticClass: "ti-trash" })]
-                        )
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", { staticClass: "table-name" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-xl-11" }, [
-                          _c("a", { attrs: { href: "" } }, [
-                            _vm._v("Media crema san marcos 23g")
-                          ])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-price" }, [
-                      _vm._v("$232.50")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-input" }, [
-                      _c("input", {
-                        staticClass: "form-control form-control-sm",
-                        attrs: {
-                          type: "number",
-                          placeholder: "Cantidad",
-                          value: "2"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("div", { staticClass: "table-options" }, [
-                        _c(
-                          "a",
-                          {
-                            attrs: {
-                              href: "#",
-                              "data-toggle": "modal",
-                              "data-target": "#deleteProduct"
-                            }
-                          },
-                          [_c("i", { staticClass: "ti-trash" })]
-                        )
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", { staticClass: "table-name" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-xl-11" }, [
-                          _c("a", { attrs: { href: "" } }, [
-                            _vm._v("Pepsi 2.5L")
-                          ])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-price" }, [
-                      _vm._v("$35.50")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-input" }, [
-                      _c("input", {
-                        staticClass: "form-control form-control-sm",
-                        attrs: {
-                          type: "number",
-                          placeholder: "Cantidad",
-                          value: "1"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("div", { staticClass: "table-options" }, [
-                        _c(
-                          "a",
-                          {
-                            attrs: {
-                              href: "#",
-                              "data-toggle": "modal",
-                              "data-target": "#deleteProduct"
-                            }
-                          },
-                          [_c("i", { staticClass: "ti-trash" })]
-                        )
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", { staticClass: "table-name" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-xl-11" }, [
-                          _c("a", { attrs: { href: "" } }, [
-                            _vm._v("Gansito Marinela 34g")
-                          ])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-price" }, [_vm._v("$15")]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-input" }, [
-                      _c("input", {
-                        staticClass: "form-control form-control-sm",
-                        attrs: {
-                          type: "number",
-                          placeholder: "Cantidad",
-                          value: "2"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("div", { staticClass: "table-options" }, [
-                        _c(
-                          "a",
-                          {
-                            attrs: {
-                              href: "#",
-                              "data-toggle": "modal",
-                              "data-target": "#deleteProduct"
-                            }
-                          },
-                          [_c("i", { staticClass: "ti-trash" })]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p-4" }, [
-                _c(
-                  "nav",
-                  { attrs: { "aria-label": "Page navigation example" } },
-                  [
-                    _c(
-                      "ul",
-                      { staticClass: "pagination justify-content-end" },
-                      [
-                        _c("li", { staticClass: "page-item disabled" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "page-link",
-                              attrs: { href: "#", tabindex: "-1" }
-                            },
-                            [_vm._v("Anterior")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "page-item active" }, [
-                          _c(
-                            "a",
-                            { staticClass: "page-link", attrs: { href: "#" } },
-                            [_vm._v("1")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "page-item" }, [
-                          _c(
-                            "a",
-                            { staticClass: "page-link", attrs: { href: "#" } },
-                            [_vm._v("2")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "page-item" }, [
-                          _c(
-                            "a",
-                            { staticClass: "page-link", attrs: { href: "#" } },
-                            [_vm._v("3")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "page-item" }, [
-                          _c(
-                            "a",
-                            { staticClass: "page-link", attrs: { href: "#" } },
-                            [_vm._v("Siguiente")]
-                          )
-                        ])
-                      ]
-                    )
-                  ]
-                )
-              ])
+        _c("th", [_vm._v("Precio")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Cantidad")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Opciones")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("div", { staticClass: "table-options" }, [
+        _c(
+          "a",
+          {
+            attrs: {
+              href: "#",
+              "data-toggle": "modal",
+              "data-target": "#deleteProduct"
+            }
+          },
+          [_c("i", { staticClass: "ti-trash" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-4" }, [
+      _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+        _c("ul", { staticClass: "pagination justify-content-end" }, [
+          _c("li", { staticClass: "page-item disabled" }, [
+            _c(
+              "a",
+              {
+                staticClass: "page-link",
+                attrs: { href: "#", tabindex: "-1" }
+              },
+              [_vm._v("Anterior")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "page-item active" }, [
+            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+              _vm._v("1")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "page-item" }, [
+            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+              _vm._v("2")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "page-item" }, [
+            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+              _vm._v("3")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "page-item" }, [
+            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+              _vm._v("Siguiente")
             ])
           ])
         ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "sell-summary" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("h3", [_vm._v("Total: "), _c("strong", [_vm._v("$87.50")])])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "sell-summary" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("h3", [_vm._v("Total: "), _c("strong", [_vm._v("$87.50")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-success",
-              attrs: { "data-toggle": "modal", "data-target": "#confirmSell" }
-            },
-            [
-              _vm._v(
-                "\n                              Pagar\n                            "
-              )
-            ]
-          )
-        ])
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success",
+            attrs: { "data-toggle": "modal", "data-target": "#confirmSell" }
+          },
+          [
+            _vm._v(
+              "\n                              Pagar\n                            "
+            )
+          ]
+        )
       ])
     ])
   }

@@ -100,7 +100,9 @@
                                     v-model="barcode"
                                     id="bar-code"
                                     @focusout="barcode = null"
+                                    @keyup="inputBarcode"
                                   />
+                                  <!-- @focusout="barcode = null" -->
                                 </div>
 
                                 <div class="input-group">
@@ -271,7 +273,10 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <tr>
+                                      <tr
+                                        v-for="product in basket"
+                                        :key="product.product_id"
+                                      >
                                         <td class="table-name">
                                           <div class="row">
                                             <div class="col-xl-11">
@@ -279,106 +284,20 @@
                                                 href=""
                                                 data-toggle="modal"
                                                 data-target="#myModal"
-                                                >Cheetos bolita 35g</a
+                                                >{{ product.name }}</a
                                               >
                                             </div>
                                           </div>
                                         </td>
-                                        <td class="table-price">$56</td>
+                                        <td class="table-price">
+                                          ${{ product.price }}
+                                        </td>
                                         <td class="table-input">
                                           <input
                                             type="number"
                                             class="form-control form-control-sm"
                                             placeholder="Cantidad"
-                                            value="1"
-                                          />
-                                        </td>
-                                        <td>
-                                          <div class="table-options">
-                                            <a
-                                              href="#"
-                                              data-toggle="modal"
-                                              data-target="#deleteProduct"
-                                              ><i class="ti-trash"></i
-                                            ></a>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td class="table-name">
-                                          <div class="row">
-                                            <div class="col-xl-11">
-                                              <a href=""
-                                                >Media crema san marcos 23g</a
-                                              >
-                                            </div>
-                                          </div>
-                                        </td>
-                                        <td class="table-price">$232.50</td>
-                                        <td class="table-input">
-                                          <input
-                                            type="number"
-                                            class="form-control form-control-sm"
-                                            placeholder="Cantidad"
-                                            value="2"
-                                          />
-                                        </td>
-                                        <td>
-                                          <div class="table-options">
-                                            <a
-                                              href="#"
-                                              data-toggle="modal"
-                                              data-target="#deleteProduct"
-                                              ><i class="ti-trash"></i
-                                            ></a>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td class="table-name">
-                                          <div class="row">
-                                            <div class="col-xl-11">
-                                              <a href="">Pepsi 2.5L</a>
-                                            </div>
-                                          </div>
-                                        </td>
-                                        <td class="table-price">$35.50</td>
-                                        <td class="table-input">
-                                          <input
-                                            type="number"
-                                            class="form-control form-control-sm"
-                                            placeholder="Cantidad"
-                                            value="1"
-                                          />
-                                        </td>
-                                        <td>
-                                          <div class="table-options">
-                                            <a
-                                              href="#"
-                                              data-toggle="modal"
-                                              data-target="#deleteProduct"
-                                              ><i class="ti-trash"></i
-                                            ></a>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td class="table-name">
-                                          <div class="row">
-                                            <div class="col-xl-11">
-                                              <a href=""
-                                                >Gansito Marinela 34g</a
-                                              >
-                                            </div>
-                                          </div>
-                                        </td>
-                                        <td class="table-price">$15</td>
-                                        <td class="table-input">
-                                          <input
-                                            type="number"
-                                            class="form-control form-control-sm"
-                                            placeholder="Cantidad"
-                                            value="2"
+                                            :value="product.qty"
                                           />
                                         </td>
                                         <td>
@@ -467,29 +386,116 @@ export default {
   data() {
     return {
       barcode: null,
+      product: {},
       basket: [],
-      products: [],
       selectedStoreId: 1,
+
+      timeOutBarcode: "",
     };
   },
 
   methods: {
-    getProducts: function () {
+    searchByBarcode: function () {
       axios
         .get("/api/products/barcode-search", {
           params: {
             store_id: this.selectedStoreId,
+            barcode: this.barcode,
           },
         })
         .then((response) => {
-          this.products = response.data;
+          console.log("response.data");
+          console.log(response.data);
+          if (response.data !== "") {
+            this.product = response.data;
+            this.addToBasket(this.product);
+          }
         });
+    },
+
+    inputBarcode() {
+      clearTimeout(this.timeOutBarcode);
+      if (this.getBarcode.length > 3)
+        this.timeOutBarcode = setTimeout(this.searchByBarcode, 10);
+    },
+
+    pushToBasket(product, qty) {
+      console.log("pushing to car with qty of: " + qty);
+      this.basket.push({
+        product_id: product.id,
+        store_id: this.selectedStoreId,
+        name: product.name,
+        qty: qty,
+        current_qty: product.qty,
+        price: product.price,
+        status: 1,
+      });
+      product.qty--;
+    },
+
+    addToBasket(product) {
+      // When product "A" is added first time.
+      if (this.basket.length < 1 && product.qty > 0) {
+        this.pushToBasket(product, 1);
+        this.barcode = null;
+        return;
+      }
+
+      let productInBacket = {};
+      let duplicate = false;
+
+      for (var i = 0; i < this.basket.length; i++) {
+        if (this.basket[i].product_id === product.id) {
+          productInBacket = this.basket[i];
+          duplicate = true;
+        }
+      }
+
+      console.log("this.miniCart.length: " + this.basket.length);
+      console.log("duplicate: " + duplicate);
+      console.log("product.qtyy>0: " + product.qty > 0);
+
+      // If product "A" is already added, increase cart qty and decrease current product "A" qty.
+      if (duplicate && productInBacket.qty != product.qty) {
+        console.log("duplicate found");
+        for (var i = 0; i < this.basket.length; i++) {
+          if (this.basket[i].product_id === product.id) {
+            this.basket[i].qty = this.basket[i].qty + 1;
+            //this.basket[i].current_qty--;
+            //product.qty--;
+          }
+        }
+      }
+
+      // If product "B" has not been added before.
+      if (!duplicate && product.qty > 0) {
+        this.pushToBasket(product, 1);
+      }
+
+      if (productInBacket.qty == product.qty) {
+        alert("No hay más productos.");
+      }
+
+      this.barcode = null;
+      //this.product = {};
     },
   }, // end methods
 
-  created() {
-    this.getProducts();
+  computed: {
+    getBarcode() {
+      return this.barcode;
+    },
   },
+
+  // watch: {
+  //   barcode() {
+  //     this.searchByBarcode();
+  //   },
+  // },
+
+  // created() {
+  //   this.getProducts();
+  // },
 };
 </script>
 

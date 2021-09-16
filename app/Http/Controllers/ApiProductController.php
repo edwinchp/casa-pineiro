@@ -208,11 +208,19 @@ class ApiProductController extends Controller
 
     public function barcodeSearch(Request $request)
     {
+        $request->validate([
+            'store_id' => 'integer|required',
+            'barcode' => 'required'
+        ]);
         $product = Product::where(
             'store_id',
             '=',
             $request->store_id
         )->where('bar_code', '=', $request->barcode)->get();
-        return $product;
+
+        if (count($product) > 0) {
+            return $product[0];
+        }
+        return null;
     }
 }
