@@ -79,7 +79,7 @@
                     <div class="card-block">
                       <div class="row">
                         <!--LEFT COLUMN-->
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                           <h4 class="sub-title">Buscar productos</h4>
                           <form>
                             <div class="form-group row">
@@ -257,13 +257,16 @@
                         <!--END LEFT COLUMN-->
 
                         <!--RIGHT COLUMN-->
-                        <div class="col-sm-6 mobile-inputs">
+                        <div class="col-sm-7 mobile-inputs">
                           <div>
                             <h4 class="sub-title">Productos añadidos</h4>
                             <div class="table-sub-table">
                               <div class="card-block table-border-style">
                                 <div class="table-responsive">
-                                  <table class="table table-hover">
+                                  <table
+                                    class="table table-hover"
+                                    v-if="basket.length > 0"
+                                  >
                                     <thead>
                                       <tr>
                                         <th>Producto</th>
@@ -284,7 +287,9 @@
                                                 href=""
                                                 data-toggle="modal"
                                                 data-target="#myModal"
-                                                >{{ product.name }}</a
+                                                >{{
+                                                  shortProductName(product.name)
+                                                }}</a
                                               >
                                             </div>
                                           </div>
@@ -313,7 +318,7 @@
                                       </tr>
                                     </tbody>
                                   </table>
-                                  <div class="p-4">
+                                  <div class="p-4" v-if="basket.length > 5">
                                     <nav aria-label="Page navigation example">
                                       <ul
                                         class="pagination justify-content-end"
@@ -348,11 +353,16 @@
                             </div>
                           </div>
 
-                          <div class="sell-summary">
+                          <div
+                            class="sell-summary pt-5"
+                            v-if="basket.length > 0"
+                          >
                             <div class="row">
-                              <h3>Total: <strong>$87.50</strong></h3>
+                              <h3>
+                                Total: <strong>${{ getTotal }}</strong>
+                              </h3>
                             </div>
-                            <div class="row">
+                            <div class="row pr-3">
                               <button
                                 class="btn btn-success"
                                 data-toggle="modal"
@@ -391,6 +401,7 @@ export default {
       selectedStoreId: 1,
 
       timeOutBarcode: "",
+      total: 0,
     };
   },
 
@@ -479,11 +490,25 @@ export default {
       this.barcode = null;
       //this.product = {};
     },
+
+    shortProductName(product) {
+      let short = product.substring(0, 30);
+      short = short.length >= 30 ? short + "... " : short;
+      return short;
+    },
   }, // end methods
 
   computed: {
     getBarcode() {
       return this.barcode;
+    },
+
+    getTotal() {
+      let total = 0;
+      for (var i = 0; i < this.basket.length; i++) {
+        total = total + this.basket[i].qty * this.basket[i].price;
+      }
+      return parseFloat(total).toFixed(2);
     },
   },
 

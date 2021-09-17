@@ -6803,6 +6803,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -6814,7 +6824,8 @@ __webpack_require__.r(__webpack_exports__);
       product: {},
       basket: [],
       selectedStoreId: 1,
-      timeOutBarcode: ""
+      timeOutBarcode: "",
+      total: 0
     };
   },
   methods: {
@@ -6897,12 +6908,27 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.barcode = null; //this.product = {};
+    },
+    shortProductName: function shortProductName(product) {
+      var _short = product.substring(0, 30);
+
+      _short = _short.length >= 30 ? _short + "... " : _short;
+      return _short;
     }
   },
   // end methods
   computed: {
     getBarcode: function getBarcode() {
       return this.barcode;
+    },
+    getTotal: function getTotal() {
+      var total = 0;
+
+      for (var i = 0; i < this.basket.length; i++) {
+        total = total + this.basket[i].qty * this.basket[i].price;
+      }
+
+      return parseFloat(total).toFixed(2);
     }
   } // watch: {
   //   barcode() {
@@ -48670,7 +48696,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "card-block" }, [
                       _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-sm-6" }, [
+                        _c("div", { staticClass: "col-sm-5" }, [
                           _c("h4", { staticClass: "sub-title" }, [
                             _vm._v("Buscar productos")
                           ]),
@@ -48723,7 +48749,7 @@ var render = function() {
                           ])
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-6 mobile-inputs" }, [
+                        _c("div", { staticClass: "col-sm-7 mobile-inputs" }, [
                           _c("div", [
                             _c("h4", { staticClass: "sub-title" }, [
                               _vm._v("Productos añadidos")
@@ -48740,111 +48766,127 @@ var render = function() {
                                     "div",
                                     { staticClass: "table-responsive" },
                                     [
-                                      _c(
-                                        "table",
-                                        { staticClass: "table table-hover" },
-                                        [
-                                          _vm._m(4),
-                                          _vm._v(" "),
-                                          _c(
-                                            "tbody",
-                                            _vm._l(_vm.basket, function(
-                                              product
-                                            ) {
-                                              return _c(
-                                                "tr",
-                                                { key: product.product_id },
-                                                [
-                                                  _c(
-                                                    "td",
-                                                    {
-                                                      staticClass: "table-name"
-                                                    },
+                                      _vm.basket.length > 0
+                                        ? _c(
+                                            "table",
+                                            {
+                                              staticClass: "table table-hover"
+                                            },
+                                            [
+                                              _vm._m(4),
+                                              _vm._v(" "),
+                                              _c(
+                                                "tbody",
+                                                _vm._l(_vm.basket, function(
+                                                  product
+                                                ) {
+                                                  return _c(
+                                                    "tr",
+                                                    { key: product.product_id },
                                                     [
                                                       _c(
-                                                        "div",
-                                                        { staticClass: "row" },
+                                                        "td",
+                                                        {
+                                                          staticClass:
+                                                            "table-name"
+                                                        },
                                                         [
                                                           _c(
                                                             "div",
                                                             {
-                                                              staticClass:
-                                                                "col-xl-11"
+                                                              staticClass: "row"
                                                             },
                                                             [
                                                               _c(
-                                                                "a",
+                                                                "div",
                                                                 {
-                                                                  attrs: {
-                                                                    href: "",
-                                                                    "data-toggle":
-                                                                      "modal",
-                                                                    "data-target":
-                                                                      "#myModal"
-                                                                  }
+                                                                  staticClass:
+                                                                    "col-xl-11"
                                                                 },
                                                                 [
-                                                                  _vm._v(
-                                                                    _vm._s(
-                                                                      product.name
-                                                                    )
+                                                                  _c(
+                                                                    "a",
+                                                                    {
+                                                                      attrs: {
+                                                                        href:
+                                                                          "",
+                                                                        "data-toggle":
+                                                                          "modal",
+                                                                        "data-target":
+                                                                          "#myModal"
+                                                                      }
+                                                                    },
+                                                                    [
+                                                                      _vm._v(
+                                                                        _vm._s(
+                                                                          _vm.shortProductName(
+                                                                            product.name
+                                                                          )
+                                                                        )
+                                                                      )
+                                                                    ]
                                                                   )
                                                                 ]
                                                               )
                                                             ]
                                                           )
                                                         ]
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "td",
-                                                    {
-                                                      staticClass: "table-price"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                                        $" +
-                                                          _vm._s(
-                                                            product.price
-                                                          ) +
-                                                          "\n                                      "
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "td",
-                                                    {
-                                                      staticClass: "table-input"
-                                                    },
-                                                    [
-                                                      _c("input", {
-                                                        staticClass:
-                                                          "form-control form-control-sm",
-                                                        attrs: {
-                                                          type: "number",
-                                                          placeholder:
-                                                            "Cantidad"
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "td",
+                                                        {
+                                                          staticClass:
+                                                            "table-price"
                                                         },
-                                                        domProps: {
-                                                          value: product.qty
-                                                        }
-                                                      })
+                                                        [
+                                                          _vm._v(
+                                                            "\n                                        $" +
+                                                              _vm._s(
+                                                                product.price
+                                                              ) +
+                                                              "\n                                      "
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "td",
+                                                        {
+                                                          staticClass:
+                                                            "table-input"
+                                                        },
+                                                        [
+                                                          _c("input", {
+                                                            staticClass:
+                                                              "form-control form-control-sm",
+                                                            attrs: {
+                                                              type: "number",
+                                                              placeholder:
+                                                                "Cantidad"
+                                                            },
+                                                            domProps: {
+                                                              value: product.qty
+                                                            }
+                                                          })
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _vm._m(5, true)
                                                     ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _vm._m(5, true)
-                                                ]
+                                                  )
+                                                }),
+                                                0
                                               )
-                                            }),
-                                            0
+                                            ]
                                           )
-                                        ]
-                                      ),
+                                        : _vm._e(),
                                       _vm._v(" "),
-                                      _vm._m(6)
+                                      _vm.basket.length > 5
+                                        ? _c("div", { staticClass: "p-4" }, [
+                                            _vm._m(6)
+                                          ])
+                                        : _vm._e()
                                     ]
                                   )
                                 ]
@@ -48852,7 +48894,22 @@ var render = function() {
                             ])
                           ]),
                           _vm._v(" "),
-                          _vm._m(7)
+                          _vm.basket.length > 0
+                            ? _c("div", { staticClass: "sell-summary pt-5" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _c("h3", [
+                                    _vm._v(
+                                      "\n                              Total: "
+                                    ),
+                                    _c("strong", [
+                                      _vm._v("$" + _vm._s(_vm.getTotal))
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _vm._m(7)
+                              ])
+                            : _vm._e()
                         ])
                       ])
                     ])
@@ -49249,42 +49306,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-4" }, [
-      _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
-        _c("ul", { staticClass: "pagination justify-content-end" }, [
-          _c("li", { staticClass: "page-item disabled" }, [
-            _c(
-              "a",
-              {
-                staticClass: "page-link",
-                attrs: { href: "#", tabindex: "-1" }
-              },
-              [_vm._v("Anterior")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item active" }, [
-            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _vm._v("1")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _vm._v("2")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _vm._v("3")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _vm._v("Siguiente")
-            ])
+    return _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+      _c("ul", { staticClass: "pagination justify-content-end" }, [
+        _c("li", { staticClass: "page-item disabled" }, [
+          _c(
+            "a",
+            { staticClass: "page-link", attrs: { href: "#", tabindex: "-1" } },
+            [_vm._v("Anterior")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item active" }, [
+          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+            _vm._v("1")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item" }, [
+          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+            _vm._v("2")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item" }, [
+          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+            _vm._v("3")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item" }, [
+          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+            _vm._v("Siguiente")
           ])
         ])
       ])
@@ -49294,25 +49346,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "sell-summary" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("h3", [_vm._v("Total: "), _c("strong", [_vm._v("$87.50")])])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-success",
-            attrs: { "data-toggle": "modal", "data-target": "#confirmSell" }
-          },
-          [
-            _vm._v(
-              "\n                              Pagar\n                            "
-            )
-          ]
-        )
-      ])
+    return _c("div", { staticClass: "row pr-3" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success",
+          attrs: { "data-toggle": "modal", "data-target": "#confirmSell" }
+        },
+        [
+          _vm._v(
+            "\n                              Pagar\n                            "
+          )
+        ]
+      )
     ])
   }
 ]
