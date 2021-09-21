@@ -14,4 +14,9 @@ class Sale extends Model
             //->orWhere('name', 'like', '%' + $userInput + '%')
         ;
     }
+
+    public function products()
+    {
+        return $this->hasMany('App\Product');
+    }
 }

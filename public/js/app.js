@@ -6813,6 +6813,68 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -6825,7 +6887,8 @@ __webpack_require__.r(__webpack_exports__);
       basket: [],
       selectedStoreId: 1,
       timeOutBarcode: "",
-      total: 0
+      total: 0,
+      findProductInput: ""
     };
   },
   methods: {
@@ -6929,6 +6992,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return parseFloat(total).toFixed(2);
+    },
+    searchProductIsActive: function searchProductIsActive() {
+      return this.findProductInput.length > 2;
     }
   } // watch: {
   //   barcode() {
@@ -48741,11 +48807,52 @@ var render = function() {
                                   })
                                 ]),
                                 _vm._v(" "),
-                                _vm._m(2)
+                                _c("div", { staticClass: "input-group" }, [
+                                  _vm._m(2),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.findProductInput,
+                                        expression: "findProductInput"
+                                      }
+                                    ],
+                                    staticClass: "form-control form-control-lg",
+                                    attrs: {
+                                      type: "text",
+                                      title: "",
+                                      "data-toggle": "tooltip",
+                                      placeholder: "Buscar producto"
+                                    },
+                                    domProps: { value: _vm.findProductInput },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.findProductInput =
+                                          $event.target.value
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.searchProductIsActive
+                                    ? _c(
+                                        "table",
+                                        {
+                                          staticClass:
+                                            "table border border-green table-hover"
+                                        },
+                                        [_vm._m(3), _vm._v(" "), _vm._m(4)]
+                                      )
+                                    : _vm._e()
+                                ])
                               ])
                             ]),
                             _vm._v(" "),
-                            _vm._m(3)
+                            _vm._m(5)
                           ])
                         ]),
                         _vm._v(" "),
@@ -48773,7 +48880,7 @@ var render = function() {
                                               staticClass: "table table-hover"
                                             },
                                             [
-                                              _vm._m(4),
+                                              _vm._m(6),
                                               _vm._v(" "),
                                               _c(
                                                 "tbody",
@@ -48872,7 +48979,7 @@ var render = function() {
                                                         ]
                                                       ),
                                                       _vm._v(" "),
-                                                      _vm._m(5, true)
+                                                      _vm._m(7, true)
                                                     ]
                                                   )
                                                 }),
@@ -48884,7 +48991,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _vm.basket.length > 5
                                         ? _c("div", { staticClass: "p-4" }, [
-                                            _vm._m(6)
+                                            _vm._m(8)
                                           ])
                                         : _vm._e()
                                     ]
@@ -48907,7 +49014,7 @@ var render = function() {
                                   ])
                                 ]),
                                 _vm._v(" "),
-                                _vm._m(7)
+                                _vm._m(9)
                               ])
                             : _vm._e()
                         ])
@@ -49047,20 +49154,85 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group" }, [
-      _c("span", { staticClass: "input-group-addon input-icon" }, [
-        _c("i", { staticClass: "icofont icofont-search" })
+    return _c("span", { staticClass: "input-group-addon input-icon" }, [
+      _c("i", { staticClass: "icofont icofont-search" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-green" }, [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Producto")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Precio")]),
+        _vm._v(" "),
+        _c("th")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tbody", [
+      _c("tr", [
+        _c("td", [_vm._v("Coca-Cola light 600 ml Retornable")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("$15.00")]),
+        _vm._v(" "),
+        _c("td", [
+          _c(
+            "button",
+            { staticClass: "btn btn-outline-dark", attrs: { type: "button" } },
+            [
+              _c("i", {
+                staticClass: "fa fa-cart-plus",
+                attrs: { "aria-hidden": "true" }
+              })
+            ]
+          )
+        ])
       ]),
       _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control form-control-lg",
-        attrs: {
-          type: "text",
-          title: "",
-          "data-toggle": "tooltip",
-          placeholder: "Buscar producto"
-        }
-      })
+      _c("tr", [
+        _c("td", [_vm._v("Galleta Emperador Chocolate")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("$11.00")]),
+        _vm._v(" "),
+        _c("td", [
+          _c(
+            "button",
+            { staticClass: "btn btn-outline-dark", attrs: { type: "button" } },
+            [
+              _c("i", {
+                staticClass: "fa fa-cart-plus",
+                attrs: { "aria-hidden": "true" }
+              })
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [_vm._v("Agua Mineral desechable 1lt")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("$25.00")]),
+        _vm._v(" "),
+        _c("td", [
+          _c(
+            "button",
+            { staticClass: "btn btn-outline-dark", attrs: { type: "button" } },
+            [
+              _c("i", {
+                staticClass: "fa fa-cart-plus",
+                attrs: { "aria-hidden": "true" }
+              })
+            ]
+          )
+        ])
+      ])
     ])
   },
   function() {

@@ -133,10 +133,10 @@ class ApiSalesController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'product_id' => 'required',
+            //'product_id' => 'required',
             'store_id' => 'required',
-            'qty' => 'required',
-            'price' => 'required',
+            //'qty' => 'required',
+            //'price' => 'required',
             'status' => 'required|numeric',
         ]);
 
@@ -145,24 +145,50 @@ class ApiSalesController extends Controller
             return response()->json($errors->all(), 400);
         }
 
-        $product = Product::find($request->product_id);
-        $newQty = $product->qty - $request->qty;
+        // $product = Product::find($request->product_id);
+        // $newQty = $product->qty - $request->qty;
 
-        if ($newQty >= 0) {
-            $product->qty = $newQty;
-            $product->save();
+        // if ($newQty >= 0) {
+        //     $product->qty = $newQty;
+        //     $product->save();
 
-            $sale =  Sale::create($request->all());
-            $sale->user_id = auth()->user()->id;
-            $sale->save();
-            return $sale;
-        } else {
-            return response()->json([
-                'message' => 'There are not enough products. Validate quantities.',
-                'request' => $request->all(),
-                'product' => $product
-            ], 400);
+        //     // $sale =  Sale::create($request->all());
+        //     // $sale->user_id = auth()->user()->id;
+        //     // $sale->save();
+        //     // return $sale;
+
+        // } else {
+        //     return response()->json([
+        //         'message' => 'There are not enough products. Validate quantities.',
+        //         'request' => $request->all(),
+        //         'product' => $product
+        //     ], 400);
+        // }
+
+        $sale = Sale::create([
+            'store_id' => $request->store_id,
+            'status' => 0,
+            'is_paid' => 0,
+        ]);
+
+        foreach ($request->products as $product) {
+            DB::table('sales_products')->insert(
+                [
+                    'sale_id' => $sale->id,
+                    'product_id' => $product['product_id'],
+                    'store_id' => $product['store_id'],
+                    'name' => $product['name'],
+                    'qty' => $product['qty'],
+                    'price' => $product['price'],
+                    'sub_total' => 548,
+                    'is_offer' => 0,
+                    //'status' => 1
+                ]
+            );
         }
+        //return $product;
+
+        return $request;
     }
 
     /**

@@ -115,7 +115,74 @@
                                     title=""
                                     data-toggle="tooltip"
                                     placeholder="Buscar producto"
+                                    v-model="findProductInput"
                                   />
+
+                                  <table
+                                    v-if="searchProductIsActive"
+                                    class="
+                                      table
+                                      border border-green
+                                      table-hover
+                                    "
+                                  >
+                                    <thead class="thead-green">
+                                      <tr>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Precio</th>
+                                        <th></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          Coca-Cola light 600 ml Retornable
+                                        </td>
+                                        <td>$15.00</td>
+                                        <td>
+                                          <button
+                                            type="button"
+                                            class="btn btn-outline-dark"
+                                          >
+                                            <i
+                                              class="fa fa-cart-plus"
+                                              aria-hidden="true"
+                                            ></i>
+                                          </button>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>Galleta Emperador Chocolate</td>
+                                        <td>$11.00</td>
+                                        <td>
+                                          <button
+                                            type="button"
+                                            class="btn btn-outline-dark"
+                                          >
+                                            <i
+                                              class="fa fa-cart-plus"
+                                              aria-hidden="true"
+                                            ></i>
+                                          </button>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>Agua Mineral desechable 1lt</td>
+                                        <td>$25.00</td>
+                                        <td>
+                                          <button
+                                            type="button"
+                                            class="btn btn-outline-dark"
+                                          >
+                                            <i
+                                              class="fa fa-cart-plus"
+                                              aria-hidden="true"
+                                            ></i>
+                                          </button>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
                                 </div>
                               </div>
                             </div>
@@ -402,6 +469,7 @@ export default {
 
       timeOutBarcode: "",
       total: 0,
+      findProductInput: "",
     };
   },
 
@@ -509,6 +577,10 @@ export default {
         total = total + this.basket[i].qty * this.basket[i].price;
       }
       return parseFloat(total).toFixed(2);
+    },
+
+    searchProductIsActive: function () {
+      return this.findProductInput.length > 2;
     },
   },
 
