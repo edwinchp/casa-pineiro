@@ -26,6 +26,18 @@ class ApiProductController extends Controller
         if ($request->productsFound) {
             $products = Product::filterByNameBarcodeAndBrand($request->productsFound, $request->store_id)->get();
             $productsWithPictures = $this->setPrimaryPicture($products);
+
+            if ($request->allStores == true) {
+                $userStores = auth()->user()->stores;
+                $stores_ids = [];
+                foreach ($userStores as $store) {
+                    array_push($stores_ids, $store->id);
+                }
+                $products = Product::filterByNameBarcodeAndBrandToAllStores($request->productsFound, $stores_ids)->get();
+
+                return response()->json($products, 200);
+            }
+
             return response()->json($productsWithPictures, 200);
         }
 
@@ -210,17 +222,37 @@ class ApiProductController extends Controller
     {
         $request->validate([
             'store_id' => 'integer|required',
-            'barcode' => 'required'
+            'barcode' => 'required',
         ]);
+
+        // Find user stores
+        $userStores = auth()->user()->stores;
+        $stores_ids = [];
+        foreach ($userStores as $store) {
+            array_push($stores_ids, $store->id);
+        }
+
+        // If user request for an specific store
         $product = Product::where(
             'store_id',
             '=',
             $request->store_id
         )->where('bar_code', '=', $request->barcode)->get();
 
+
+        // If user requests for all stores
+        if ($request->allStores == true) {
+            $product = Product::whereIn(
+                'store_id',
+                $stores_ids
+            )->where('bar_code', '=', $request->barcode)->get();
+        }
+
+
         if (count($product) > 0) {
             return $product[0];
         }
+
         return null;
     }
 }

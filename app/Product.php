@@ -59,6 +59,17 @@ class Product extends Model
         ]);
     }
 
+    public function scopeFilterByNameBarcodeAndBrandToAllStores($query, $foundByUser, $store_ids)
+    {
+
+        return $query->whereIn('store_id', $store_ids)
+            ->where([
+                ['name', 'LIKE', '%' . $foundByUser . '%'],
+            ])->orWhere([
+                ['bar_code', 'LIKE', '%' . $foundByUser . '%'],
+            ]);
+    }
+
     public function pictures()
     {
         return $this->hasMany('App\Picture', 'foreign_key');

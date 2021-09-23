@@ -116,10 +116,14 @@
                                     data-toggle="tooltip"
                                     placeholder="Buscar producto"
                                     v-model="findProductInput"
+                                    @keyup="seachProducts"
                                   />
 
                                   <table
-                                    v-if="searchProductIsActive"
+                                    v-if="
+                                      searchProductIsActive &&
+                                      productsFound.length > 0
+                                    "
                                     class="
                                       table
                                       border border-green
@@ -134,43 +138,17 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <tr>
+                                      <tr
+                                        v-for="product in productsFound"
+                                        :key="product.id"
+                                      >
                                         <td>
-                                          Coca-Cola light 600 ml Retornable
+                                          {{ product.name }}
                                         </td>
-                                        <td>$15.00</td>
+                                        <td>${{ product.price }}</td>
                                         <td>
                                           <button
-                                            type="button"
-                                            class="btn btn-outline-dark"
-                                          >
-                                            <i
-                                              class="fa fa-cart-plus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td>Galleta Emperador Chocolate</td>
-                                        <td>$11.00</td>
-                                        <td>
-                                          <button
-                                            type="button"
-                                            class="btn btn-outline-dark"
-                                          >
-                                            <i
-                                              class="fa fa-cart-plus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td>Agua Mineral desechable 1lt</td>
-                                        <td>$25.00</td>
-                                        <td>
-                                          <button
+                                            @click="addToBasket(product)"
                                             type="button"
                                             class="btn btn-outline-dark"
                                           >
@@ -378,6 +356,7 @@
                                               href="#"
                                               data-toggle="modal"
                                               data-target="#deleteProduct"
+                                              @click="removeFromBasket(product)"
                                               ><i class="ti-trash"></i
                                             ></a>
                                           </div>
@@ -468,8 +447,10 @@ export default {
       selectedStoreId: 1,
 
       timeOutBarcode: "",
+      findProductTimeout: "",
       total: 0,
       findProductInput: "",
+      productsFound: [],
     };
   },
 
@@ -480,6 +461,7 @@ export default {
           params: {
             store_id: this.selectedStoreId,
             barcode: this.barcode,
+            allStores: true,
           },
         })
         .then((response) => {
@@ -495,7 +477,7 @@ export default {
     inputBarcode() {
       clearTimeout(this.timeOutBarcode);
       if (this.getBarcode.length > 3)
-        this.timeOutBarcode = setTimeout(this.searchByBarcode, 10);
+        this.timeOutBarcode = setTimeout(this.searchByBarcode, 250);
     },
 
     pushToBasket(product, qty) {
@@ -564,6 +546,43 @@ export default {
       short = short.length >= 30 ? short + "... " : short;
       return short;
     },
+
+    async getFoundProducts() {
+      const url = "/api/products";
+      const response = await axios
+        .get(url, {
+          params: {
+            store_id: 1,
+            productsFound: this.findProductInput,
+            allStores: true,
+          },
+        })
+        .then((resp) => {
+          this.productsFound = resp.data;
+        });
+      //let data = await response.json();
+      //console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaasync getFoundProducts()")
+      //console.log(data)
+      return;
+    },
+
+    seachProducts() {
+      if (this.searchProductIsActive) {
+        clearTimeout(this.findProductTimeout);
+        this.findProductTimeout = setTimeout(this.getFoundProducts, 500);
+      }
+      //this.getFoundProducts();
+    },
+
+    removeFromBasket(product) {
+      this.basket.splice(
+        this.basket.findIndex((a) => a.product_id === product.product_id),
+        1
+      );
+      // if (this.miniCart.length < 1) {
+      //   location.reload();
+      // }
+    },
   }, // end methods
 
   computed: {
@@ -590,9 +609,17 @@ export default {
   //   },
   // },
 
-  // created() {
-  //   this.getProducts();
-  // },
+  created() {
+    this.getFoundProducts()
+      .then((r) => {
+        console.log("huevos");
+        console.log(r);
+      })
+      .catch((error) => {
+        console.log("huevos con erros");
+        console.log(error);
+      });
+  },
 };
 </script>
 
