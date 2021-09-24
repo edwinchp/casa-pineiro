@@ -50658,7 +50658,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "col-md-12 col-xl-12" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
-            _c("h4", [_vm._v("Nuevo producto")]),
+            _c("h4", [_vm._v("Crear proveedor")]),
             _vm._v(" "),
             _c("div", { staticClass: "card-header-left" })
           ]),
@@ -50670,120 +50670,233 @@ var staticRenderFns = [
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-8" }, [
-                  _c("div", { staticClass: "row pt-3" }, [
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("label", { attrs: { for: "bar_code" } }, [
-                        _vm._v("Código de barras")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "input-group" }, [
-                        _c("div", { staticClass: "input-group-prepend" }, [
-                          _c("span", { staticClass: "input-group-text" }, [
-                            _c("i", { staticClass: "fas fa-barcode" })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            name: "bar_code",
-                            autocomplete: "off"
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("label", { attrs: { for: "brand" } }, [
-                        _vm._v("Marca")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "input-group" }, [
-                        _c("div", { staticClass: "input-group-prepend" }, [
-                          _c("span", { staticClass: "input-group-text" }, [
-                            _c("i", { staticClass: "fas fa-circle" })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "form-control",
-                          attrs: { type: "text", name: "brand" }
-                        })
-                      ])
-                    ])
-                  ])
+            _c(
+              "div",
+              { staticClass: "col-lg-6 col-md-12 col-sm-12 row pt-3" },
+              [
+                _c("label", { attrs: { for: "bar_code" } }, [
+                  _vm._v("Nombre de proveedor")
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-4" }, [
-                  _vm._v(
-                    "\n               Crea el producto para añadir una imagen\n             "
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-12" }, [
-                _c("div", { staticClass: "form-row pt-4" }, [
-                  _c("div", { staticClass: "col-md-4" }, [
-                    _c("label", { attrs: { for: "qty" } }, [_vm._v("Precio")])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-4" }, [
-                    _c("label", { attrs: { for: "cp_price" } }, [
-                      _vm._v("Precio de compra")
+                _c("div", { staticClass: "input-group" }, [
+                  _c("div", { staticClass: "input-group-prepend" }, [
+                    _c("span", { staticClass: "input-group-text" }, [
+                      _c("i", { staticClass: "fas fa-square" })
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-md-4" }, [
-                    _c("label", { attrs: { for: "qty" } }, [_vm._v("Cantidad")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-row" }, [
-                  _c("div", { staticClass: "form-group col-md-4" })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "form-row" }, [
-                _c("div", { staticClass: "form-group pl-1" }, [
-                  _c("label", { attrs: { for: "description" } }, [
-                    _vm._v("Descripción")
-                  ]),
-                  _vm._v(" "),
-                  _c("textarea", {
+                  _c("input", {
                     staticClass: "form-control",
                     attrs: {
-                      name: "description",
-                      id: "",
-                      cols: "60",
-                      rows: "5"
+                      type: "text",
+                      name: "bar_code",
+                      autocomplete: "off"
                     }
                   })
                 ])
-              ])
-            ]),
+              ]
+            ),
             _vm._v(" "),
-            _c("div", { staticClass: "options" }, [
-              _c("div", { staticClass: "form-row pt-3" }, [
-                _c("div", { staticClass: "p-1" }, [
-                  _c("button", { staticClass: "btn btn-success" }, [
-                    _vm._v("\n                   Guardar\n                 ")
-                  ])
+            _c(
+              "div",
+              { staticClass: "col-lg-6 col-md-12 col-sm-12 row pt-3" },
+              [
+                _c("label", { attrs: { for: "brand" } }, [
+                  _vm._v("Nombre del surtidor")
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "p-1" }, [
-                  _c(
-                    "a",
-                    { staticClass: "btn btn-secondary", attrs: { href: "/" } },
-                    [_vm._v("Cancelar")]
-                  )
+                _c("div", { staticClass: "input-group" }, [
+                  _c("div", { staticClass: "input-group-prepend" }, [
+                    _c("span", { staticClass: "input-group-text" }, [
+                      _c("i", { staticClass: "fas fa-user-tie" })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: { type: "text", name: "brand" }
+                  })
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-lg-6 col-md-12 col-sm-12 row pt-3" },
+              [
+                _c("label", { attrs: { for: "brand" } }, [
+                  _vm._v("Número de telefono")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group" }, [
+                  _c("div", { staticClass: "input-group-prepend" }, [
+                    _c("span", { staticClass: "input-group-text" }, [
+                      _c("i", { staticClass: "fas fa-phone-square-alt" })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: { type: "text", name: "brand" }
+                  })
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "\n            dropdown-inverse dropdown\n            open\n            col-lg-6 col-md-12 col-sm-12\n            row\n            pt-3\n          "
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-light border border-dark dropdown-toggle",
+                    attrs: {
+                      type: "button",
+                      id: "dropdown-7",
+                      "data-toggle": "dropdown",
+                      "aria-haspopup": "true",
+                      "aria-expanded": "false"
+                    }
+                  },
+                  [_vm._v("\n            Día de visita\n          ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "dropdown-menu",
+                    staticStyle: {
+                      position: "absolute",
+                      transform: "translate3d(0px, 40px, 0px)",
+                      top: "0px",
+                      left: "0px",
+                      "will-change": "transform"
+                    },
+                    attrs: {
+                      "aria-labelledby": "dropdown-7",
+                      "data-dropdown-in": "fadeIn",
+                      "data-dropdown-out": "fadeOut",
+                      "x-placement": "bottom-start"
+                    }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item waves-light waves-effect",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v("Lunes")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item waves-light waves-effect",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v("Martes")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item waves-light waves-effect",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v("Miércoles")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item waves-light waves-effect",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v("Jueves")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item waves-light waves-effect",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v("Viernes")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item waves-light waves-effect",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v("Sábado")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item waves-light waves-effect",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v("Domingo")]
+                    )
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-lg-6 col-md-12 col-sm-12 row pt-3" },
+              [
+                _c("label", { attrs: { for: "brand" } }, [
+                  _vm._v("Crédito autorizado")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group" }, [
+                  _c("div", { staticClass: "input-group-prepend" }, [
+                    _c("span", { staticClass: "input-group-text" }, [
+                      _c("i", { staticClass: "fas fa-dollar-sign" })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: { type: "text", name: "brand" }
+                  })
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "form-row pt-4" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-row" }, [
+                _c("div", { staticClass: "form-group col-md-4" })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "options" }, [
+            _c("div", { staticClass: "form-row pt-3" }, [
+              _c("div", { staticClass: "p-1" }, [
+                _c("button", { staticClass: "btn btn-success" }, [
+                  _vm._v("Guardar")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "p-1" }, [
+                _c("button", { staticClass: "btn btn-secondary" }, [
+                  _vm._v("Cancelar")
                 ])
               ])
             ])
