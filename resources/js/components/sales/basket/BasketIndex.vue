@@ -409,13 +409,11 @@
                               </h3>
                             </div>
                             <div class="row pr-3">
-                              <button
-                                class="btn btn-success"
-                                data-toggle="modal"
-                                data-target="#confirmSell"
-                              >
-                                Pagar
-                              </button>
+                              <pay-button
+                                :basket="basket"
+                                :customer_id="666"
+                                @paymentSuccess="basket = []"
+                              ></pay-button>
                             </div>
                           </div>
                         </div>
@@ -436,8 +434,9 @@
 
 <script>
 import BarcodeFinder from "./BarcodeFinder.vue";
+import PayButton from "../PayButton.vue";
 export default {
-  components: { BarcodeFinder },
+  components: { BarcodeFinder, PayButton },
 
   data() {
     return {

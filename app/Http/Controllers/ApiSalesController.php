@@ -169,9 +169,10 @@ class ApiSalesController extends Controller
             'store_id' => $request->store_id,
             'status' => 0,
             'is_paid' => 0,
+            'user_id' => auth()->user()->id,
         ]);
 
-        foreach ($request->products as $product) {
+        foreach ($request["products"] as $product) {
             DB::table('sales_products')->insert(
                 [
                     'sale_id' => $sale->id,
@@ -188,7 +189,7 @@ class ApiSalesController extends Controller
         }
         //return $product;
 
-        return $request;
+        return response()->json($request);
     }
 
     /**

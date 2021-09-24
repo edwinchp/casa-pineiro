@@ -6025,6 +6025,69 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sales/PayButton.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/sales/PayButton.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  emits: ["paymentSuccess"],
+  props: {
+    basket: {
+      required: true
+    },
+    store_id: {
+      required: false,
+      "default": 0
+    },
+    customer_id: {
+      //type: String,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      basketProducts: this.basket
+    };
+  },
+  methods: {
+    checkout: function checkout() {
+      var _this = this;
+
+      var formData = {
+        store_id: 1,
+        status: 1,
+        products: this.basket
+      };
+      axios.post("/api/sales", formData).then(function (response) {
+        if (response.status == 200 || response.status == 201) {
+          console.log("Pago exitoso");
+          console.log(response);
+
+          _this.$emit("paymentSuccess");
+        }
+      })["catch"](function (error) {
+        console.log(error);
+        alert("No fue posible realizar el pago. Intente nuevamente");
+        location.reload();
+      }); //});
+      //this.miniCart.splice(0, this.miniCart.length);
+      // get the total of items of this.miniCart
+    }
+  } // end methods
+
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sales/SalesIndexComponent.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/sales/SalesIndexComponent.vue?vue&type=script&lang=js& ***!
@@ -6437,6 +6500,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _BarcodeFinder_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BarcodeFinder.vue */ "./resources/js/components/sales/basket/BarcodeFinder.vue");
+/* harmony import */ var _PayButton_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../PayButton.vue */ "./resources/js/components/sales/PayButton.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -6877,12 +6941,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    BarcodeFinder: _BarcodeFinder_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    BarcodeFinder: _BarcodeFinder_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    PayButton: _PayButton_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
@@ -49007,6 +49071,34 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sales/PayButton.vue?vue&type=template&id=7e9b159c&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/sales/PayButton.vue?vue&type=template&id=7e9b159c& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    { staticClass: "btn btn-success", on: { click: _vm.checkout } },
+    [_vm._v("Pagar")]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sales/SalesIndexComponent.vue?vue&type=template&id=28d2d5ce&":
 /*!****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/sales/SalesIndexComponent.vue?vue&type=template&id=28d2d5ce& ***!
@@ -49935,7 +50027,24 @@ var render = function() {
                                   ])
                                 ]),
                                 _vm._v(" "),
-                                _vm._m(7)
+                                _c(
+                                  "div",
+                                  { staticClass: "row pr-3" },
+                                  [
+                                    _c("pay-button", {
+                                      attrs: {
+                                        basket: _vm.basket,
+                                        customer_id: 666
+                                      },
+                                      on: {
+                                        paymentSuccess: function($event) {
+                                          _vm.basket = []
+                                        }
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
                               ])
                             : _vm._e()
                         ])
@@ -50350,25 +50459,6 @@ var staticRenderFns = [
           ])
         ])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row pr-3" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success",
-          attrs: { "data-toggle": "modal", "data-target": "#confirmSell" }
-        },
-        [
-          _vm._v(
-            "\n                              Pagar\n                            "
-          )
-        ]
-      )
     ])
   }
 ]
@@ -65270,6 +65360,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductsTableComponent_vue_vue_type_template_id_0804941e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductsTableComponent_vue_vue_type_template_id_0804941e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/sales/PayButton.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/sales/PayButton.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PayButton_vue_vue_type_template_id_7e9b159c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PayButton.vue?vue&type=template&id=7e9b159c& */ "./resources/js/components/sales/PayButton.vue?vue&type=template&id=7e9b159c&");
+/* harmony import */ var _PayButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PayButton.vue?vue&type=script&lang=js& */ "./resources/js/components/sales/PayButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PayButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PayButton_vue_vue_type_template_id_7e9b159c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PayButton_vue_vue_type_template_id_7e9b159c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/sales/PayButton.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/sales/PayButton.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/sales/PayButton.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PayButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./PayButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sales/PayButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PayButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/sales/PayButton.vue?vue&type=template&id=7e9b159c&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/sales/PayButton.vue?vue&type=template&id=7e9b159c& ***!
+  \************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PayButton_vue_vue_type_template_id_7e9b159c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./PayButton.vue?vue&type=template&id=7e9b159c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/sales/PayButton.vue?vue&type=template&id=7e9b159c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PayButton_vue_vue_type_template_id_7e9b159c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PayButton_vue_vue_type_template_id_7e9b159c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
