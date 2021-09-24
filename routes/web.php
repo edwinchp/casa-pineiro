@@ -51,3 +51,7 @@ Route::get('productss', function () {
     $user = Auth::user();
     return ['AuthUser' => $user];
 });
+
+Route::get('/supplier/create', function(){
+    return view('supplier.create');
+    });
