@@ -65737,8 +65737,8 @@ var mutations = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/edwin/Documents/laravel/casa-pineiro/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/edwin/Documents/laravel/casa-pineiro/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/mildred/Documentos/casaPineiro/casa-pineiro/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/mildred/Documentos/casaPineiro/casa-pineiro/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
