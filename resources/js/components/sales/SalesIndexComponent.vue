@@ -17,7 +17,7 @@
 
                           <div class="section-header-buttons pr-5">
                             <a
-                              href="product.create.html"
+                              href="sales/basket"
                               class="btn btn-inverse btn-success-a"
                               data-toggle="tooltip"
                               data-placement="bottom"
@@ -45,15 +45,15 @@
                       <div class="card-block text-center">
                         <div class="row">
                           <div class="col-4 b-r-default">
-                            <h2>{{ getSalesData.products_sold }}</h2>
+                            <h2>{{ "getSalesData.products_sold" }}</h2>
                             <p class="text-muted">Productos</p>
                           </div>
                           <div class="col-4 b-r-default">
-                            <h2>{{ getSalesData.products_qty_sold }}</h2>
+                            <h2>{{ "getSalesData.products_qty_sold" }}</h2>
                             <p class="text-muted">Productos en cantidad</p>
                           </div>
                           <div class="col-4">
-                            <h2>${{ getSalesData.sold_price }}</h2>
+                            <h2>${{ "getSalesData.sold_price" }}</h2>
                             <p class="text-muted">Total</p>
                           </div>
                         </div>
@@ -86,12 +86,14 @@
                             <table class="table table-hover">
                               <thead>
                                 <tr>
-                                  <th>Nombre</th>
-                                  <th>Cantidad</th>
-                                  <th>Precio Unit</th>
+                                  <th>ID</th>
+                                  <!-- <th>Cantidad</th> -->
+                                  <!-- <th>Precio Unit</th> -->
                                   <th>Precio Total</th>
                                   <th>Cliente</th>
-                                  <th>Vendido por</th>
+                                  <th>Recibido</th>
+                                  <th>Cambio</th>
+                                  <th>Vendedor</th>
                                   <th>Hora</th>
                                   <th>Opciones</th>
                                 </tr>
@@ -101,25 +103,7 @@
                                   <td class="table-name">
                                     <div class="row">
                                       <div class="col-xl-11">
-                                        <a
-                                          :href="
-                                            '/products/' +
-                                            sale.product_id +
-                                            '/edit'
-                                          "
-                                          target="_blank"
-                                          >{{
-                                            shortAttribute(sale.name, 25)
-                                          }}</a
-                                        >
-                                      </div>
-                                    </div>
-                                  </td>
-
-                                  <td class="table-number">
-                                    <div class="row">
-                                      <div class="col-xl-11">
-                                        <div class="">{{ sale.qty }}</div>
+                                        <a href="#">{{ sale.id }}</a>
                                       </div>
                                     </div>
                                   </td>
@@ -128,7 +112,7 @@
                                     <div class="row">
                                       <div class="col-xl-11">
                                         <div class="">
-                                          ${{ getRoundedDigit(sale.price) }}
+                                          ${{ getRoundedDigit(sale.total) }}
                                         </div>
                                       </div>
                                     </div>
@@ -138,11 +122,7 @@
                                     <div class="row">
                                       <div class="col-xl-11">
                                         <div class="">
-                                          ${{
-                                            getRoundedDigit(
-                                              sale.qty * sale.price
-                                            )
-                                          }}
+                                          {{ sale.customer_id }}
                                         </div>
                                       </div>
                                     </div>
@@ -152,25 +132,29 @@
                                     <div class="row">
                                       <div class="col-xl-11">
                                         <div class="">
-                                          <a
-                                            v-if="sale.customer_name"
-                                            :href="
-                                              '/customer/' + sale.customer_id
-                                            "
-                                          >
-                                            {{ sale.customer_name }}
+                                          ${{ getRoundedDigit(sale.received) }}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+
+                                  <td class="table-number">
+                                    <div class="row">
+                                      <div class="col-xl-11">
+                                        <div class="">
+                                          ${{ getRoundedDigit(sale.change) }}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+
+                                  <td class="table-number">
+                                    <div class="row">
+                                      <div class="col-xl-11">
+                                        <div class="">
+                                          <a href="#">
+                                            {{ sale.user_name }}
                                           </a>
-                                          <div v-else>Genérico</div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </td>
-
-                                  <td class="table-number">
-                                    <div class="row">
-                                      <div class="col-xl-11">
-                                        <div class="">
-                                          {{ sale.user_name }}
                                         </div>
                                       </div>
                                     </div>
@@ -200,12 +184,11 @@
                                 </tr>
                               </tbody>
                             </table>
-                           
                           </div>
-                            <pagination-component
-                              :pagination="pagination"
-                              @pageChanged="setNewPage"
-                            ></pagination-component>
+                          <pagination-component
+                            :pagination="pagination"
+                            @pageChanged="setNewPage"
+                          ></pagination-component>
                         </div>
                       </div>
                     </div>
@@ -334,7 +317,7 @@ export default {
     },
 
     getRoundedDigit(floatNum) {
-      return parseFloat(floatNum).toFixed(2);
+      if (floatNum != null) return parseFloat(floatNum).toFixed(2);
     },
 
     selectedStoreId($event) {
@@ -379,9 +362,9 @@ export default {
       return this.salesToFind.length > 2;
     },
 
-    getSalesData() {
-      return this.salesData;
-    },
+    // getSalesData() {
+    //   return this.salesData;
+    // },
   },
 
   created() {

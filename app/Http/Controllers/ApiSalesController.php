@@ -41,55 +41,57 @@ class ApiSalesController extends Controller
         $user_input = $request->user_input;
 
         $sales = DB::table('sales')
-            ->join('products', function ($join) use ($user_input) {
-                $products = $join->on('sales.product_id', '=', 'products.id');
+            // ->join('products', function ($join) use ($user_input) {
+            //     $products = $join->on('sales.product_id', '=', 'products.id');
 
-                // In case user is using the search box
-                if ($user_input) {
-                    $products->where(
-                        function ($query) use ($user_input) {
-                            $query->where('products.name', 'like', '%' . $user_input . '%')
-                                ->orWhere('products.bar_code', 'like', '%' . $user_input . '%');
-                        }
+            //     // In case user is using the search box
+            //     if ($user_input) {
+            //         $products->where(
+            //             function ($query) use ($user_input) {
+            //                 $query->where('products.name', 'like', '%' . $user_input . '%')
+            //                     ->orWhere('products.bar_code', 'like', '%' . $user_input . '%');
+            //             }
 
-                    );
-                }
-            })
+            //         );
+            //     }
+            // })
             ->join('users', 'sales.user_id', '=', 'users.id')
             ->leftJoin('customers', 'sales.customer_id', '=', 'customers.id')
             ->where($conditions)
             ->select(
                 'sales.id',
-                'sales.qty',
-                'sales.price',
-                'sales.store_id',
-                'sales.user_id',
+                'sales.total',
+                //'sales.price',
+                'sales.customer_id',
+                'sales.received',
+                'sales.change',
+                //'sales.user_id',
                 'sales.created_at',
-                'products.id as product_id',
-                'products.name',
-                'products.bar_code',
-                'products.brand',
+                //'products.id as product_id',
+                //'products.name',
+                //'products.bar_code',
+                //'products.brand',
                 'users.name as user_name',
                 'customers.name as customer_name',
                 'sales.customer_id',
             )->orderBy('sales.created_at', 'desc')->paginate(8);
 
-        $sales_data = DB::table('sales')
-            ->join('products', function ($join) use ($user_input) {
-                $products = $join->on('sales.product_id', '=', 'products.id');
+        // $sales_data = DB::table('sales')
+        //     ->join('products', function ($join) use ($user_input) {
+        //         $products = $join->on('sales.product_id', '=', 'products.id');
 
-                // In case user is using the search box
-                if ($user_input) {
-                    $products->where(
-                        function ($query) use ($user_input) {
-                            $query->where('products.name', 'like', '%' . $user_input . '%')
-                                ->orWhere('products.bar_code', 'like', '%' . $user_input . '%');
-                        }
+        //         // In case user is using the search box
+        //         if ($user_input) {
+        //             $products->where(
+        //                 function ($query) use ($user_input) {
+        //                     $query->where('products.name', 'like', '%' . $user_input . '%')
+        //                         ->orWhere('products.bar_code', 'like', '%' . $user_input . '%');
+        //                 }
 
-                    );
-                }
-            })->join('users', 'sales.user_id', '=', 'users.id')
-            ->where($conditions);
+        //             );
+        //         }
+        //     })->join('users', 'sales.user_id', '=', 'users.id')
+        //     ->where($conditions);
 
         setlocale(LC_MONETARY, 'es_MX.UTF-8');
 
@@ -105,11 +107,11 @@ class ApiSalesController extends Controller
                 'to' => $sales->lastPage(),
             ],
             'sales' => $sales,
-            'sales_data' => [
-                'products_sold' => $sales_data->count(),
-                'products_qty_sold' => $sales_data->sum('sales.qty'),
-                'sold_price' =>  number_format($sales_data->sum('sales.price'), 2, '.', ','),
-            ]
+            // 'sales_data' => [
+            //     'products_sold' => $sales_data->count(),
+            //     'products_qty_sold' => $sales_data->sum('sales.qty'),
+            //     'sold_price' =>  number_format($sales_data->sum('sales.price'), 2, '.', ','),
+            // ]
         ];
     }
 
@@ -135,8 +137,9 @@ class ApiSalesController extends Controller
         $validator = Validator::make($request->all(), [
             //'product_id' => 'required',
             'store_id' => 'required',
-            //'qty' => 'required',
-            //'price' => 'required',
+            'total' => 'required',
+            'received' => 'required',
+            'change' => 'required',
             'status' => 'required|numeric',
         ]);
 
@@ -169,6 +172,9 @@ class ApiSalesController extends Controller
             'store_id' => $request->store_id,
             'status' => 0,
             'is_paid' => 0,
+            'total' => $request->total,
+            'received' => $request->received,
+            'change' => $request->change,
             'user_id' => auth()->user()->id,
         ]);
 

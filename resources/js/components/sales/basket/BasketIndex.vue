@@ -412,6 +412,7 @@
                               <pay-button
                                 :basket="basket"
                                 :customer_id="666"
+                                :total="getTotal"
                                 @paymentSuccess="basket = []"
                               ></pay-button>
                             </div>

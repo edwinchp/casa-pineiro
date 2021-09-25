@@ -19,6 +19,14 @@ export default {
       //type: String,
       required: true,
     },
+    total: {
+      required: true,
+    },
+
+    received: {
+      required: true,
+      default: 200,
+    },
   },
 
   data() {
@@ -33,6 +41,9 @@ export default {
         store_id: 1,
         status: 1,
         products: this.basket,
+        total: this.total,
+        received: this.received,
+        change: this.received - this.total,
       };
 
       axios
