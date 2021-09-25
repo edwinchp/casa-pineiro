@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('sales', 'SalesController');
     Route::resource('products', 'ProductController')->middleware('checkProduct');
     Route::resource('customer', 'CustomerController');
+    Route::resource('supplier', 'SupplierController');
     //Route::get('/products/{id}/edit', 'ProductController@edit')->middleware('checkProduct');
 });
 
@@ -51,7 +52,3 @@ Route::get('productss', function () {
     $user = Auth::user();
     return ['AuthUser' => $user];
 });
-
-Route::get('/supplier/create', function(){
-    return view('supplier.create');
-    });
