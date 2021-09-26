@@ -6,90 +6,83 @@
         <div class="d-inline-block">
           <h2>Productos</h2>
 
-         
-            <a
-              href="products/create"
-              class="btn btn-inverse btn-success-a"
-              data-toggle="tooltip"
-              data-placement="bottom"
-              data-original-title="Nuevo producto"
-              >Nuevo</a
+          <a
+            href="products/create"
+            class="btn btn-inverse btn-success-a"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            data-original-title="Nuevo producto"
+            >Nuevo</a
+          >
+
+          <div v-if="stores.length > 0" class="dropdown-inverse dropdown open">
+            <button
+              class="btn btn-inverse dropdown-toggle waves-effect waves-light"
+              type="button"
+              id="dropdown-7"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
             >
-
-            <div
-              v-if="stores.length > 0"
-              class="dropdown-inverse dropdown open"
-            >
-              <button
-                class="btn btn-inverse dropdown-toggle waves-effect waves-light"
-                type="button"
-                id="dropdown-7"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                {{ selectedStoreName }}
-              </button>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="dropdown-7"
-                data-dropdown-in="fadeIn"
-                data-dropdown-out="fadeOut"
-                x-placement="bottom-start"
-                style="
-                  position: absolute;
-                  transform: translate3d(0px, 40px, 0px);
-                  top: 0px;
-                  left: 0px;
-                  will-change: transform;
-                "
-              >
-                <a
-                  v-for="(store, index) in stores"
-                  :key="index"
-                  @click="selectStore(store)"
-                  class="dropdown-item waves-light waves-effect"
-                >
-                  {{ store.name }}</a
-                >
-              </div>
-            </div>
-
-            <div v-show="false" class="dropdown-inverse dropdown open">
-              <button
-                class="btn btn-inverse dropdown-toggle waves-effect waves-light"
-                type="button"
-                id="dropdown-7"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="true"
-              >
-                Todos los productos
-              </button>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="dropdown-7"
-                data-dropdown-in="fadeIn"
-                data-dropdown-out="fadeOut"
-              >
-                <a
-                  class="dropdown-item waves-light waves-effect active"
-                  href="#"
-                  >Todos los productos</a
-                >
-                <a class="dropdown-item waves-light waves-effect" href="#"
-                  >Apunto de caducar</a
-                >
-                <a class="dropdown-item waves-light waves-effect" href="#"
-                  >Apunto de acabarse</a
-                >
-              </div>
-            </div>
-
-            <button v-show="false" class="btn btn-inverse">
-              <i class="icofont icofont-download icofont-alt"></i>Descargar
+              {{ selectedStoreName }}
             </button>
-         
+            <div
+              class="dropdown-menu"
+              aria-labelledby="dropdown-7"
+              data-dropdown-in="fadeIn"
+              data-dropdown-out="fadeOut"
+              x-placement="bottom-start"
+              style="
+                position: absolute;
+                transform: translate3d(0px, 40px, 0px);
+                top: 0px;
+                left: 0px;
+                will-change: transform;
+              "
+            >
+              <a
+                v-for="(store, index) in stores"
+                :key="index"
+                @click="selectStore(store)"
+                class="dropdown-item waves-light waves-effect"
+              >
+                {{ store.name }}</a
+              >
+            </div>
+          </div>
+
+          <div v-show="false" class="dropdown-inverse dropdown open">
+            <button
+              class="btn btn-inverse dropdown-toggle waves-effect waves-light"
+              type="button"
+              id="dropdown-7"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="true"
+            >
+              Todos los productos
+            </button>
+            <div
+              class="dropdown-menu"
+              aria-labelledby="dropdown-7"
+              data-dropdown-in="fadeIn"
+              data-dropdown-out="fadeOut"
+            >
+              <a class="dropdown-item waves-light waves-effect active" href="#"
+                >Todos los productos</a
+              >
+              <a class="dropdown-item waves-light waves-effect" href="#"
+                >Apunto de caducar</a
+              >
+              <a class="dropdown-item waves-light waves-effect" href="#"
+                >Apunto de acabarse</a
+              >
+            </div>
+          </div>
+
+          <button v-show="false" class="btn btn-inverse">
+            <i class="icofont icofont-download icofont-alt"></i>Descargar
+          </button>
         </div>
       </div>
       <div class="card-block text-center">
