@@ -61,14 +61,12 @@
           </div>-->
         <div class="container-fluid mt-3">
           <div class="row ml-5 pl-3">
-                     
-              <supplier-card></supplier-card>
-              <supplier-card></supplier-card>
-              <supplier-card></supplier-card>
-              <supplier-card></supplier-card>
-              <supplier-card></supplier-card>
-              <supplier-card></supplier-card>
-            
+            <supplier-card></supplier-card>
+            <supplier-card></supplier-card>
+            <supplier-card></supplier-card>
+            <supplier-card></supplier-card>
+            <supplier-card></supplier-card>
+            <supplier-card></supplier-card>
           </div>
         </div>
       </div>
