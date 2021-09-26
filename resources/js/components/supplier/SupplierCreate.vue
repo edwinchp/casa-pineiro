@@ -18,7 +18,7 @@
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">
-                    <i class="fas fa-square"></i>
+                    <i class="fas fa-truck-moving"></i>
                   </span>
                 </div>
                 <input
