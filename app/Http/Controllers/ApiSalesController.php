@@ -77,27 +77,11 @@ class ApiSalesController extends Controller
                 'sales.customer_id',
             )->orderBy('sales.created_at', 'desc')->paginate(8);
 
-        $sales_data = DB::table('sales')
-            // ->join('sales_products', function ($join) use ($user_input) {
-            //     $products = $join->on('sales.product_id', '=', 'products.id');
-
-            //     // In case user is using the search box
-            //     // if ($user_input) {
-            //     //     $products->where(
-            //     //         function ($query) use ($user_input) {
-            //     //             $query->where('products.name', 'like', '%' . $user_input . '%')
-            //     //                 ->orWhere('products.bar_code', 'like', '%' . $user_input . '%');
-            //     //         }
-
-            //     //     );
-            //     // }
-            //})
-            ->join('sales_products', 'sales.id', '=', 'sales_products.sale_id')
+        $sales_data = DB::table('sales_products')
+            ->join('sales', 'sales.id', '=', 'sales_products.sale_id')
             ->where($conditions);
 
         setlocale(LC_MONETARY, 'es_MX.UTF-8');
-
-        $details = Sale::getProductsSold($sales);
 
         return [
             //'query' => DB::getQueryLog(),
@@ -112,11 +96,10 @@ class ApiSalesController extends Controller
             ],
             'sales' => $sales,
             'sales_data' => [
-                'products_sold' => $sales_data->count(),
-                'products_qty_sold' => $sales_data->sum('sales_products.price'),
-                'sold_price' =>  number_format($sales_data->sum('sales.total'), 2, '.', ','),
+                'sales_total' => $sales->total(),
+                'products_qty_sold' => $sales_data->sum('sales_products.qty'),
+                'sold_price' =>  number_format($sales_data->sum('sales_products.sub_total'), 2, '.', ','),
             ]
-            //'details' => [$sales_data]
         ];
     }
 
@@ -192,7 +175,7 @@ class ApiSalesController extends Controller
                     'name' => $product['name'],
                     'qty' => $product['qty'],
                     'price' => $product['price'],
-                    'sub_total' => 548,
+                    'sub_total' => $product['qty'] * $product['price'],
                     'is_offer' => 0,
                     //'status' => 1
                 ]

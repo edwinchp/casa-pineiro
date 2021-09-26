@@ -45,15 +45,15 @@
                       <div class="card-block text-center">
                         <div class="row">
                           <div class="col-4 b-r-default">
-                            <h2>{{ "getSalesData.products_sold" }}</h2>
-                            <p class="text-muted">Productos</p>
+                            <h2>{{ getSalesData.sales_total }}</h2>
+                            <p class="text-muted">Ventas</p>
                           </div>
                           <div class="col-4 b-r-default">
-                            <h2>{{ "getSalesData.products_qty_sold" }}</h2>
-                            <p class="text-muted">Productos en cantidad</p>
+                            <h2>{{ getSalesData.products_qty_sold }}</h2>
+                            <p class="text-muted">Productos vendidos</p>
                           </div>
                           <div class="col-4">
-                            <h2>${{ "getSalesData.sold_price" }}</h2>
+                            <h2>${{ getSalesData.sold_price }}</h2>
                             <p class="text-muted">Total</p>
                           </div>
                         </div>
@@ -376,9 +376,9 @@ export default {
       return this.salesToFind.length > 2;
     },
 
-    // getSalesData() {
-    //   return this.salesData;
-    // },
+    getSalesData() {
+      return this.salesData;
+    },
   },
 
   created() {
