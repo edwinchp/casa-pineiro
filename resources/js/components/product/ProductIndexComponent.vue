@@ -6,7 +6,7 @@
         <div class="d-inline-block">
           <h2>Productos</h2>
 
-          <div class="section-header-buttons pr-5">
+         
             <a
               href="products/create"
               class="btn btn-inverse btn-success-a"
@@ -89,7 +89,7 @@
             <button v-show="false" class="btn btn-inverse">
               <i class="icofont icofont-download icofont-alt"></i>Descargar
             </button>
-          </div>
+         
         </div>
       </div>
       <div class="card-block text-center">
