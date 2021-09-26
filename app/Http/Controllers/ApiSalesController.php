@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sale;
+use App\SalesProducts;
 use App\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -76,24 +77,27 @@ class ApiSalesController extends Controller
                 'sales.customer_id',
             )->orderBy('sales.created_at', 'desc')->paginate(8);
 
-        // $sales_data = DB::table('sales')
-        //     ->join('products', function ($join) use ($user_input) {
-        //         $products = $join->on('sales.product_id', '=', 'products.id');
+        $sales_data = DB::table('sales')
+            // ->join('sales_products', function ($join) use ($user_input) {
+            //     $products = $join->on('sales.product_id', '=', 'products.id');
 
-        //         // In case user is using the search box
-        //         if ($user_input) {
-        //             $products->where(
-        //                 function ($query) use ($user_input) {
-        //                     $query->where('products.name', 'like', '%' . $user_input . '%')
-        //                         ->orWhere('products.bar_code', 'like', '%' . $user_input . '%');
-        //                 }
+            //     // In case user is using the search box
+            //     // if ($user_input) {
+            //     //     $products->where(
+            //     //         function ($query) use ($user_input) {
+            //     //             $query->where('products.name', 'like', '%' . $user_input . '%')
+            //     //                 ->orWhere('products.bar_code', 'like', '%' . $user_input . '%');
+            //     //         }
 
-        //             );
-        //         }
-        //     })->join('users', 'sales.user_id', '=', 'users.id')
-        //     ->where($conditions);
+            //     //     );
+            //     // }
+            //})
+            ->join('sales_products', 'sales.id', '=', 'sales_products.sale_id')
+            ->where($conditions);
 
         setlocale(LC_MONETARY, 'es_MX.UTF-8');
+
+        $details = Sale::getProductsSold($sales);
 
         return [
             //'query' => DB::getQueryLog(),
@@ -107,11 +111,12 @@ class ApiSalesController extends Controller
                 'to' => $sales->lastPage(),
             ],
             'sales' => $sales,
-            // 'sales_data' => [
-            //     'products_sold' => $sales_data->count(),
-            //     'products_qty_sold' => $sales_data->sum('sales.qty'),
-            //     'sold_price' =>  number_format($sales_data->sum('sales.price'), 2, '.', ','),
-            // ]
+            'sales_data' => [
+                'products_sold' => $sales_data->count(),
+                'products_qty_sold' => $sales_data->sum('sales_products.price'),
+                'sold_price' =>  number_format($sales_data->sum('sales.total'), 2, '.', ','),
+            ]
+            //'details' => [$sales_data]
         ];
     }
 
@@ -269,5 +274,20 @@ class ApiSalesController extends Controller
 
         $allSales = Sale::all();
         return response()->json($allSales, 200);
+    }
+
+    public function saleDetails(Request $request)
+    {
+        $request->validate([
+            'sale_id' => 'required'
+        ]);
+
+        $sale = Sale::find($request->sale_id);
+        //$details = DB::table('sales_products')->where('sale_id', '=', $request->sale_id)->get();
+
+        return response()->json([
+            'sale' => $sale,
+            'details' => $sale->details
+        ]);
     }
 }

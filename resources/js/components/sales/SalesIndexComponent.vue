@@ -103,7 +103,13 @@
                                   <td class="table-name">
                                     <div class="row">
                                       <div class="col-xl-11">
-                                        <a href="#">{{ sale.id }}</a>
+                                        <a
+                                          data-toggle="modal"
+                                          data-target="#sale-details"
+                                          @click="selectedSaleId = sale.id"
+                                          href="#"
+                                          >{{ sale.id }}</a
+                                        >
                                       </div>
                                     </div>
                                   </td>
@@ -200,6 +206,7 @@
         </div>
       </div>
     </div>
+    <sale-details :sale_id="selectedSaleId"></sale-details>
   </div>
 </template>
 
@@ -207,9 +214,15 @@
 import StoreDropdown from "../layouts/StoreDropdown.vue";
 import PaginationComponent from "../layouts/PaginationComponent.vue";
 import FilterDropdown from "../layouts/FilterDropdown.vue";
+import SaleDetails from "../sales/SaleDetails.vue";
 
 export default {
-  components: { PaginationComponent, StoreDropdown, FilterDropdown },
+  components: {
+    PaginationComponent,
+    StoreDropdown,
+    FilterDropdown,
+    SaleDetails,
+  },
 
   data() {
     return {
@@ -220,6 +233,7 @@ export default {
       store_id: null,
       pagination: {},
       selectedFilterName: "weekly",
+      selectedSaleId: 0,
     };
   },
 

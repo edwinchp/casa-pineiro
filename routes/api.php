@@ -45,6 +45,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('allProducts', 'ApiProductController@allProducts');
     // Store
     // Sales
+    Route::get('sales/details', 'ApiSalesController@saleDetails');
     Route::resource('sales', 'ApiSalesController');
     Route::get('allSales', 'ApiSalesController@allSales');
     // Testing

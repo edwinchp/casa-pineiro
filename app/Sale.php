@@ -19,4 +19,12 @@ class Sale extends Model
     {
         return $this->hasMany('App\Product');
     }
+
+    public function details(){
+        return $this->hasMany('App\SalesProducts');
+    }
+
+    public function scopeGetProductsSold($query){
+        return $query;
+    }
 }

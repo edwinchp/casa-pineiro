@@ -41,8 +41,8 @@ export default {
 
   data: () => ({
     user: {
-      email: "chipineiro@gmail.com",
-      password: "huevos123",
+      email: "",
+      password: "",
     },
     csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
   }),
