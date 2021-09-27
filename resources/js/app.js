@@ -38,6 +38,7 @@ Vue.component('basket-index', require('./components/sales/basket/BasketIndex.vue
 Vue.component('supplier-index', require('./components/supplier/SupplierIndex.vue').default);
 Vue.component('supplier-create', require('./components/supplier/SupplierCreate.vue').default);
 Vue.component('supplier-edit', require('./components/supplier/SupplierEdit.vue').default);
+Vue.component('location-index', require('./components/location/LocationIndex.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

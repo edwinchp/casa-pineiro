@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('products', 'ProductController')->middleware('checkProduct');
     Route::resource('customer', 'CustomerController');
     Route::resource('supplier', 'SupplierController');
+    Route::get('/location', function () {return view('location.index');});
     //Route::get('/products/{id}/edit', 'ProductController@edit')->middleware('checkProduct');
 });
 
