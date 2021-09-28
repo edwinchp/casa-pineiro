@@ -1,6 +1,6 @@
 <template>
   <div class="col-lg-4 col-md-6 col-sm-12">
-    <div class="card" style="width: 15rem">
+    <div class="card " style="width: 15rem">
       <div class="anaquel" id="anaquel">
         <img class="card-img-top rounded" src="/images/anaquel2.jpg" alt="" />
       </div>
