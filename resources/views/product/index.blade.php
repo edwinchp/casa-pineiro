@@ -1,5 +1,5 @@
 @extends('main')
-
+<title>Productos</title>
 @section('content')
 
 <div id="product-index">

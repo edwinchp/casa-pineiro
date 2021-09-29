@@ -1,5 +1,5 @@
 @extends('main')
-
+<title>Editar Cliente</title>
 @section('content')
 
 @if (count($errors) > 0)

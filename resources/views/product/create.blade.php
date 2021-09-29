@@ -1,5 +1,5 @@
 @extends('main')
-
+<title>Crear Producto</title>
 @section('content')
 
 @if (count($errors) > 0)

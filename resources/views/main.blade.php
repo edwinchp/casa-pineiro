@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Blank</title>
+  <title>Casa Pineiro</title>
 
   @include('layouts.links')
 
@@ -46,7 +46,7 @@
         <footer class="sticky-footer bg-white">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
-              <span>Copyright &copy; Your Website 2020</span>
+              <span>Copyright &copy; Edwin Chi, Mildred Manrique</span>
             </div>
           </div>
         </footer>
