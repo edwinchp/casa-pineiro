@@ -90,7 +90,7 @@
                                   <!-- <th>Cantidad</th> -->
                                   <!-- <th>Precio Unit</th> -->
                                   <th>Precio Total</th>
-                                  <th>Cliente</th>
+                                  <!-- <th>Cliente</th> -->
                                   <th>Recibido</th>
                                   <th>Cambio</th>
                                   <th>Vendedor</th>
@@ -124,7 +124,7 @@
                                     </div>
                                   </td>
 
-                                  <td class="table-number">
+                                  <!-- <td class="table-number">
                                     <div class="row">
                                       <div class="col-xl-11">
                                         <div class="">
@@ -132,7 +132,7 @@
                                         </div>
                                       </div>
                                     </div>
-                                  </td>
+                                  </td> -->
 
                                   <td class="table-number">
                                     <div class="row">

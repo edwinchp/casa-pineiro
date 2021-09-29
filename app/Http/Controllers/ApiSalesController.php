@@ -41,45 +41,18 @@ class ApiSalesController extends Controller
 
         $user_input = $request->user_input;
 
-        $sales = DB::table('sales')
-            // ->join('products', function ($join) use ($user_input) {
-            //     $products = $join->on('sales.product_id', '=', 'products.id');
-
-            //     // In case user is using the search box
-            //     if ($user_input) {
-            //         $products->where(
-            //             function ($query) use ($user_input) {
-            //                 $query->where('products.name', 'like', '%' . $user_input . '%')
-            //                     ->orWhere('products.bar_code', 'like', '%' . $user_input . '%');
-            //             }
-
-            //         );
-            //     }
-            // })
-            ->join('users', 'sales.user_id', '=', 'users.id')
-            ->leftJoin('customers', 'sales.customer_id', '=', 'customers.id')
-            ->where($conditions)
-            ->select(
-                'sales.id',
-                'sales.total',
-                //'sales.price',
-                'sales.customer_id',
-                'sales.received',
-                'sales.change',
-                //'sales.user_id',
-                'sales.created_at',
-                //'products.id as product_id',
-                //'products.name',
-                //'products.bar_code',
-                //'products.brand',
-                'users.name as user_name',
-                'customers.name as customer_name',
-                'sales.customer_id',
-            )->orderBy('sales.created_at', 'desc')->paginate(8);
+        $sales = Sale::getSalesIndex($conditions);
 
         $sales_data = DB::table('sales_products')
             ->join('sales', 'sales.id', '=', 'sales_products.sale_id')
             ->where($conditions);
+
+        // if user uses the searchbox
+        if ($user_input) {
+            $sales = Sale::getSalesBySearchBox($conditions, $user_input);
+            $sales_data = Sale::getSalesDataBySearchBox($conditions, $user_input);
+        }
+
 
         setlocale(LC_MONETARY, 'es_MX.UTF-8');
 
