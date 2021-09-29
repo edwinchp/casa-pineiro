@@ -40,42 +40,42 @@
                       rows="5"
                     ></textarea>
                   </div>
-                    <div class="dropdown-inverse dropdown">
-                  <button
-                    class="btn btn-light border border-dark dropdown-toggle"
-                    type="button"
-                    id="dropdown-7"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Tienda
-                  </button>
-                  <div
-                    class="dropdown-menu"
-                    aria-labelledby="dropdown-7"
-                    data-dropdown-in="fadeIn"
-                    data-dropdown-out="fadeOut"
-                    x-placement="bottom-start"
-                    style="
-                      position: absolute;
-                      transform: translate3d(0px, 40px, 0px);
-                      top: 0px;
-                      left: 0px;
-                      will-change: transform;
-                    "
-                  >
-                    <a class="dropdown-item waves-light waves-effect" href="#"
-                      >Tendejón Evelyn</a
+                  <div class="dropdown-inverse dropdown">
+                    <button
+                      class="btn btn-light border border-dark dropdown-toggle"
+                      type="button"
+                      id="dropdown-7"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
                     >
-                    <a class="dropdown-item waves-light waves-effect" href="#"
-                      >Ferretería cables</a
+                      Tienda
+                    </button>
+                    <div
+                      class="dropdown-menu"
+                      aria-labelledby="dropdown-7"
+                      data-dropdown-in="fadeIn"
+                      data-dropdown-out="fadeOut"
+                      x-placement="bottom-start"
+                      style="
+                        position: absolute;
+                        transform: translate3d(0px, 40px, 0px);
+                        top: 0px;
+                        left: 0px;
+                        will-change: transform;
+                      "
                     >
-                    <a class="dropdown-item waves-light waves-effect" href="#"
-                      >Dunosusa</a
-                    >
+                      <a class="dropdown-item waves-light waves-effect" href="#"
+                        >Tendejón Evelyn</a
+                      >
+                      <a class="dropdown-item waves-light waves-effect" href="#"
+                        >Ferretería cables</a
+                      >
+                      <a class="dropdown-item waves-light waves-effect" href="#"
+                        >Dunosusa</a
+                      >
+                    </div>
                   </div>
-                </div>
                 </div>
               </div>
             </div>
@@ -83,7 +83,6 @@
 
           <div class="options ml-3">
             <div class="form-row pt-3">
-              
               <div class="p-1">
                 <button class="btn btn-success">Guardar</button>
               </div>

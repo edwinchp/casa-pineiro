@@ -118,57 +118,74 @@
                                     v-model="findProductInput"
                                     @keyup="seachProducts"
                                   />
-
-                                  <table
-                                    v-if="
-                                      searchProductIsActive &&
-                                      productsFound.length > 0
-                                    "
-                                    class="
-                                      table
-                                      border border-green
-                                      table-hover
-                                    "
-                                  >
-                                    <thead class="thead-green">
-                                      <tr>
-                                        <th scope="col">Producto</th>
-                                        <th scope="col">Precio</th>
-                                        <th></th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr
-                                        v-for="product in productsFound"
-                                        :key="product.id"
-                                      >
-                                        <td>
-                                          {{ product.name }}
-                                        </td>
-                                        <td>${{ product.price }}</td>
-                                        <td>
-                                          <button
-                                            @click="addToBasket(product)"
-                                            type="button"
-                                            class="btn btn-outline-dark"
+                                  <div class="container">
+                                    <div class="row">
+                                      <div class="col-12">
+                                        <div class="table-responsive">
+                                          <table
+                                            v-if="
+                                              searchProductIsActive &&
+                                              productsFound.length > 0
+                                            "
+                                            class="table users table-hover"
                                           >
-                                            <i
-                                              class="fa fa-cart-plus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
+                                            <thead class="thead-green">
+                                              <tr id="tablita">
+                                                <th scope="col">Producto</th>
+                                                <th scope="col">Precio</th>
+                                                <th></th>
+                                              </tr>
+                                            </thead>
+
+                                            <tbody>
+                                              <tr
+                                                v-for="product in productsFound"
+                                                :key="product.id"
+                                              >
+                                                <td
+                                                  data-toggle="tooltip"
+                                                  data-placement="bottom"
+                                                  :title="product.name"
+                                                >
+                                                  {{
+                                                    shortProductName(
+                                                      product.name
+                                                    )
+                                                  }}
+                                                </td>
+
+                                                <td>${{ product.price }}</td>
+
+                                                <td>
+                                                  <button
+                                                    @click="
+                                                      addToBasket(product)
+                                                    "
+                                                    type="button"
+                                                    class="btn btn-outline-dark"
+                                                  >
+                                                    <i
+                                                      class="fa fa-cart-plus"
+                                                      aria-hidden="true"
+                                                    ></i>
+                                                  </button>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                            <div class="form-group row">
+
+                            <!--<div class="form-group row">
                               <div class="col-sm-12">
                                 <div class="col-lg-12 col-xl-12">
                                   <div class="sub-title">Método de pago</div>
-                                  <!-- Nav tabs -->
+                                   Nav tabs 
                                   <ul
                                     class="
                                       nav nav-tabs
@@ -223,7 +240,7 @@
                                       <div class="slide"></div>
                                     </li>
                                   </ul>
-                                  <!-- Tab panes -->
+                                  <! Tab panes 
                                   <div
                                     class="
                                       tab-content
@@ -262,7 +279,7 @@
                                       id="messages5"
                                       role="tabpanel"
                                     >
-                                      <!-- aria-expanded="true" -->
+                                      <! aria-expanded="true" 
                                       <div class="form-group">
                                         <div class="col-sm-12">
                                           <div class="input-group">
@@ -296,7 +313,7 @@
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            </div>-->
                           </form>
                         </div>
                         <!--END LEFT COLUMN-->
@@ -398,17 +415,53 @@
                               </div>
                             </div>
                           </div>
+                          <div class="d-flex justify-content-end">
+                            <div
+                              class="sell-summary pt-5"
+                              v-if="basket.length > 0"
+                            >
+                              <div class="d-flex justify-content-end">
+                                <div class="input-group mb-3 mr-3">
+                                  <div class="input-group-prepend">
+                                    <h6 class="mr-4 mt-2">
+                                      <strong>Efectivo: </strong>
+                                    </h6>
+                                    <span class="input-group-text">$</span>
+                                  </div>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    aria-label="Amount (to the nearest dollar)"
+                                  />
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end">
+                                <div class="input-group mb-3 mr-3">
+                                  <div class="input-group-prepend">
+                                    <h6 class="mr-4 mt-2">
+                                      <strong>Cambio: </strong>
+                                    </h6>
+                                    <span class="input-group-text">$</span>
+                                  </div>
+                                  <input
+                                    disabled
+                                    type="text"
+                                    class="form-control"
+                                    aria-label="Amount (to the nearest dollar)"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
 
-                          <div
-                            class="sell-summary pt-5"
-                            v-if="basket.length > 0"
-                          >
-                            <div class="row">
-                              <h3>
+                          <div class="sell-summary" v-if="basket.length > 0">
+                            <div class="row mr-1">
+                              <h3 class="text-right">
                                 Total: <strong>${{ getTotal }}</strong>
                               </h3>
                             </div>
-                            <div class="row pr-3">
+
+                            <div class="row mr-3">
                               <pay-button
                                 :basket="basket"
                                 :customer_id="666"
@@ -623,5 +676,6 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>
+
