@@ -184,7 +184,7 @@ export default {
 
 @media (max-width: 600px) {
   #sabrita{
-    margin-left:80px;
+    margin-left:60px;
   }
 }
 </style>

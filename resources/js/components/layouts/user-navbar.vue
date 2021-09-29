@@ -186,7 +186,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <div class="col-md-6">
+            <div class="col-md-6" v-show="false">
               <span>Cliente</span>
               <select name="select" class="form-control">
                 <option @click="customer_id = null" value="G">Genérico</option>
@@ -199,24 +199,78 @@
                 </option>
               </select>
             </div>
-
-            <button
-              class="btn btn-secondary"
-              type="button"
-              data-dismiss="modal"
-            >
-              Cancelar
-            </button>
-            <form action="" @submit="checkoutCart(miniCart)">
-              <button
-                @click.prevent="checkoutCart(miniCart)"
-                type="submit"
-                data-dismiss="modal"
-                class="btn btn-success"
-              >
-                <span class="text">Pagar ${{ getTotalPriceMiniCart }}</span>
-              </button>
-            </form>
+            <div class="d-flex justify-content-end">
+              <div class="sell-summary pt-">
+                <div class="d-flex justify-content-end">
+                  <div class="input-group mb-3 mr-3">
+                    <div class="input-group-prepend">
+                      <h6 class="mr-4 mt-2"><strong>Efectivo: </strong></h6>
+                      <span class="input-group-text">$</span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      aria-label="Amount (to the nearest dollar)"
+                    />
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <div class="input-group mb-3 mr-3">
+                    <div class="input-group-prepend">
+                      <h6 class="mr-4 mt-2"><strong>Cambio: </strong></h6>
+                      <span class="input-group-text">$</span>
+                    </div>
+                    <input
+                      disabled
+                      type="text"
+                      class="form-control"
+                      aria-label="Amount (to the nearest dollar)"
+                    />
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <div
+                    class="btn-toolbar mr-2"
+                    role="toolbar"
+                    aria-label="Toolbar with button groups"
+                  >
+                    <div
+                      class="btn-group mr-2"
+                      role="group"
+                      aria-label="First group"
+                    >
+                      <form action="" @submit="checkoutCart(miniCart)">
+                        <button
+                          @click.prevent="checkoutCart(miniCart)"
+                          type="submit"
+                          data-dismiss="modal"
+                          class="btn btn-success"
+                        >
+                          <span class="text"
+                            ><strong
+                              >Pagar ${{ getTotalPriceMiniCart }}</strong
+                            ></span
+                          >
+                        </button>
+                      </form>
+                    </div>
+                    <div
+                      class="btn-group mr-2"
+                      role="group"
+                      aria-label="Second group"
+                    >
+                      <button
+                        class="btn btn-secondary"
+                        type="buuton"
+                        data-dismiss="modal"
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

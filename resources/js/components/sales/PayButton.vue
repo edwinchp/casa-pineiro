@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn-success" @click="checkout">Pagar</button>
+  <button class="btn btn-success" @click="checkout"><h4><strong>Pagar</strong></h4></button>
 </template>
 
 <script>
