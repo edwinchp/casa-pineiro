@@ -432,6 +432,7 @@
                                     type="text"
                                     class="form-control"
                                     aria-label="Amount (to the nearest dollar)"
+                                    v-model="received"
                                   />
                                 </div>
                               </div>
@@ -448,6 +449,7 @@
                                     type="text"
                                     class="form-control"
                                     aria-label="Amount (to the nearest dollar)"
+                                    :value="getChange"
                                   />
                                 </div>
                               </div>
@@ -464,8 +466,10 @@
                             <div class="row mr-3">
                               <pay-button
                                 :basket="basket"
-                                :customer_id="666"
                                 :total="getTotal"
+                                :received="getReceived"
+                                :change="getChange"
+                                :allowPayment="allowPayment"
                                 @paymentSuccess="basket = []"
                               ></pay-button>
                             </div>
@@ -504,6 +508,9 @@ export default {
       total: 0,
       findProductInput: "",
       productsFound: [],
+      received: "",
+      allowPayment: false,
+      change: "",
     };
   },
 
@@ -653,6 +660,20 @@ export default {
 
     searchProductIsActive: function () {
       return this.findProductInput.length > 2;
+    },
+
+    getReceived() {
+      return this.received;
+    },
+
+    getChange() {
+      if (parseFloat(this.getReceived) >= parseFloat(this.getTotal)) {
+        this.change = this.getReceived - this.getTotal;
+        this.allowPayment = true;
+        return this.change;
+      } else {
+        return "";
+      }
     },
   },
 

@@ -210,7 +210,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      aria-label="Amount (to the nearest dollar)"
+                      v-model="received"
                     />
                   </div>
                 </div>
@@ -224,8 +224,17 @@
                       disabled
                       type="text"
                       class="form-control"
-                      aria-label="Amount (to the nearest dollar)"
+                      :value="getChange"
                     />
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <div class="input-group mb-3 mr-3">
+                    <span class="text"
+                      ><strong
+                        >Total: ${{ getTotalPriceMiniCart }}</strong
+                      ></span
+                    >
                   </div>
                 </div>
                 <div class="d-flex justify-content-end">
@@ -239,7 +248,7 @@
                       role="group"
                       aria-label="First group"
                     >
-                      <form action="" @submit="checkoutCart(miniCart)">
+                      <!-- <form action="" @submit="checkoutCart(miniCart)">
                         <button
                           @click.prevent="checkoutCart(miniCart)"
                           type="submit"
@@ -252,7 +261,17 @@
                             ></span
                           >
                         </button>
-                      </form>
+                      </form> -->
+
+                      <pay-button
+                        :basket="miniCart"
+                        :total="getTotalPriceMiniCart"
+                        :received="getReceived"
+                        :change="getChange"
+                        :allowPayment="allowPayment"
+                        @paymentSuccess="paymentSuccess"
+                      >
+                      </pay-button>
                     </div>
                     <div
                       class="btn-group mr-2"
@@ -260,6 +279,7 @@
                       aria-label="Second group"
                     >
                       <button
+                        id="closeModal"
                         class="btn btn-secondary"
                         type="buuton"
                         data-dismiss="modal"
@@ -279,7 +299,10 @@
 </template>
 
 <script>
+import PayButton from "../sales/PayButton.vue";
 export default {
+  components: { PayButton },
+
   data() {
     return {
       miniCart: [],
@@ -288,6 +311,10 @@ export default {
       showContent: false,
       windowWidth: window.innerWidth,
       tableClasses: "",
+
+      received: "",
+      allowPayment: false,
+      change: "",
     };
   },
 
@@ -309,6 +336,23 @@ export default {
         total = total + this.miniCart[i].qty * this.miniCart[i].price;
       }
       return parseFloat(total).toFixed(2);
+    },
+
+    getReceived() {
+      return this.received;
+    },
+
+    getChange() {
+      if (
+        parseFloat(this.getReceived) >= parseFloat(this.getTotalPriceMiniCart)
+      ) {
+        this.change =
+          parseFloat(this.getReceived) - parseFloat(this.getTotalPriceMiniCart);
+        this.allowPayment = true;
+        return this.change;
+      } else {
+        return "";
+      }
     },
   },
 
@@ -400,6 +444,12 @@ export default {
       } else {
         this.tableClasses = "";
       }
+    },
+
+    paymentSuccess() {
+      this.miniCart = [];
+      document.getElementById("closeModal").click();
+      location.reload();
     },
   },
 

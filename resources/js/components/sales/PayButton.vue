@@ -1,5 +1,7 @@
 <template>
-  <button class="btn btn-success" @click="checkout"><h4><strong>Pagar</strong></h4></button>
+  <button class="btn btn-success" @click="checkout" :disabled="!allowPayment">
+    <h4><strong>Pagar</strong></h4>
+  </button>
 </template>
 
 <script>
@@ -15,24 +17,22 @@ export default {
       default: 0,
     },
 
-    customer_id: {
-      //type: String,
-      required: true,
-    },
     total: {
       required: true,
     },
 
     received: {
       required: true,
-      default: 200,
     },
-  },
 
-  data() {
-    return {
-      basketProducts: this.basket,
-    };
+    change: {
+      required: true,
+    },
+
+    allowPayment: {
+      required: true,
+      default: false,
+    },
   },
 
   methods: {
@@ -43,7 +43,7 @@ export default {
         products: this.basket,
         total: this.total,
         received: this.received,
-        change: this.received - this.total,
+        change: this.change,
       };
 
       axios
@@ -60,9 +60,6 @@ export default {
           alert("No fue posible realizar el pago. Intente nuevamente");
           location.reload();
         });
-      //});
-      //this.miniCart.splice(0, this.miniCart.length);
-      // get the total of items of this.miniCart
     },
   }, // end methods
 };
