@@ -1,7 +1,7 @@
 <template>
-  <div class="dropdown-inverse dropdown open">
+  <div class="dropdown-inverse dropdown">
     <button
-      class="btn btn-inverse dropdown-toggle waves-effect waves-light"
+      class="btn btn-primary dropdown-toggle"
       type="button"
       id="dropdown-7"
       data-toggle="dropdown"
@@ -29,6 +29,7 @@
         :key="index.name"
         @click="selectFilter(filter)"
         class="dropdown-item waves-light waves-effect"
+        href="#"
       >
         {{ filter.description }}</a
       >
@@ -85,5 +86,5 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 </style>

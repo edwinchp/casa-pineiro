@@ -10,36 +10,35 @@
                 <div class="col-sm-12">
                   <div class="col-sm-12" style="">
                     <div class="card fb-card">
-                      <div class="card-header color-card">
-                        <i class="icofont icofont-food-basket"></i>
+                      <div class="card-header" id="fondo">
+                        <div class="float-left" id="carrito">
+                          <i class="icofont icofont-money"></i>
+                        </div>
+
                         <div class="d-inline-block">
                           <h2>Ventas</h2>
 
-                          <div class="section-header-buttons pr-5">
-                            <a
-                              href="sales/basket"
-                              class="btn btn-inverse btn-success-a"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              data-original-title="Nuevo producto"
-                              >Nuevo</a
-                            >
+                          <button
+                            class="btn btn-primary"
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            data-original-title="Nuevo producto"
+                          >
+                            <a href="sales/basket" class="a-primary">Nuevo</a>
+                          </button>
 
-                            <store-dropdown
-                              @storeIdChanged="selectedStoreId"
-                            ></store-dropdown>
+                          <store-dropdown
+                            @storeIdChanged="selectedStoreId"
+                          ></store-dropdown>
 
-                            <filter-dropdown
-                              @filterChanged="selectedFilter"
-                            ></filter-dropdown>
+                          <filter-dropdown
+                            @filterChanged="selectedFilter"
+                          ></filter-dropdown>
 
-                            <button v-show="false" class="btn btn-inverse">
-                              <i
-                                class="icofont icofont-download icofont-alt"
-                              ></i
-                              >Descargar
-                            </button>
-                          </div>
+                          <button v-show="false" class="btn btn-inverse">
+                            <i class="icofont icofont-download icofont-alt"></i
+                            >Descargar
+                          </button>
                         </div>
                       </div>
                       <div class="card-block text-center">
@@ -390,5 +389,35 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
+#carrito {
+  margin-top: 20px;
+}
+#carrito i {
+  background-color: 4680ff;
+  font-size: 35px;
+}
+#fondo {
+  background-image: linear-gradient(
+    105deg,
+    #d2c9ff 0,
+    #bcc1fd 25%,
+    #9ab8ff 50%,
+    #7dabf1 75%,
+    #4370d3 100%
+  );
+
+  color: black;
+}
+
+.a-primary {
+  color: white;
+  text-decoration: none;
+}
+.a-primary:hover {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
 </style>
+

@@ -1,7 +1,7 @@
 <template>
   <div v-if="stores.length > 0" class="dropdown-inverse dropdown open">
     <button
-      class="btn btn-inverse dropdown-toggle waves-effect waves-light"
+      class="btn btn-primary dropdown-toggle waves-effect waves-light"
       type="button"
       id="dropdown-7"
       data-toggle="dropdown"
@@ -29,6 +29,7 @@
         :key="index"
         @click="selectStore(store)"
         class="dropdown-item waves-light waves-effect"
+        href="#"
       >
         {{ store.name }}</a
       >
