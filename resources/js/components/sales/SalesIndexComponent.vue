@@ -182,6 +182,7 @@
                                         data-toggle="tooltip"
                                         data-placement="bottom"
                                         data-original-title="Editar"
+                                        @click="deleteSale(sale.id)"
                                         ><i class="ti-trash"></i
                                       ></a>
                                     </div>
@@ -355,6 +356,29 @@ export default {
 
     selectedFilter(event) {
       this.selectedFilterName = event;
+    },
+
+    deleteSale(id) {
+      this.$fire({
+        title: "¿Estás seguro?",
+        text: "La venta número " + id + " se borrará definitivamente.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, borrar!",
+        cancelButtonText: "Cancelar",
+        focusCancel: true,
+      }).then((result) => {
+        if (result.value) {
+          this.$fire({
+            title: "Listo!",
+            text: "Eliminado con éxito",
+            type: "success",
+            timer: 2500,
+          });
+        }
+      });
     },
   },
 

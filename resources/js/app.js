@@ -8,6 +8,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import store from "./store"
+import VueSimpleAlert from "vue-simple-alert";
+Vue.use(VueSimpleAlert);
 //Vue.use(require('vue-resource'));
 
 /**
