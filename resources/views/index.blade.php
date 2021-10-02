@@ -14,8 +14,8 @@
             <div class="card widget-card-1">
                 <div class="card-block-small">
                     <i class="icofont icofont-money icofont-4x bg-c-blue card1-icon"></i>
-                    <span class="text-c-blue f-w-600">Ventas (192)</span>
-                    <h4>$3500</h4>
+                    <span class="text-c-blue f-w-600">Ventas ({{$salesCount}})</span>
+                    <h4>${{$sales}}</h4>
                     <div class="pt-2">
                         <span class="f-left m-t-10 text-muted">
                             <a href="{{route('sales.index')}}" class="text-c-blue"><i class="text-c-blue f-16 icofont icofont-calendar m-r-10"></i>Esta
@@ -55,7 +55,7 @@
                 <div class="card-block-small">
                     <i class="icofont icofont-food-basket bg-c-yellow card1-icon"></i>
                     <span class="text-c-yellow f-w-600">Productos</span>
-                    <h4>84,568</h4>
+                    <h4>{{$products}}</h4>
                     <div class="pt-2">
                         <span class="f-left m-t-10 text-muted">
                             <a href="{{route('products.index')}}" class="text-c-yellow"><i class="text-c-yellow f-16 icofont icofont-external-link m-r-10"></i>Ver

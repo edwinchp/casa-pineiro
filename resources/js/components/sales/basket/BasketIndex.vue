@@ -670,7 +670,7 @@ export default {
       if (parseFloat(this.getReceived) >= parseFloat(this.getTotal)) {
         this.change = this.getReceived - this.getTotal;
         this.allowPayment = true;
-        return this.change;
+        return parseFloat(this.change).toFixed(2);
       } else {
         return "";
       }
