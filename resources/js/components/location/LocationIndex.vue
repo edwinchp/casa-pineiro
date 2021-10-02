@@ -1,20 +1,20 @@
 <template>
   <div class="col-sm-12" style="">
     <div class="card fb-card">
-      <div class="card-header color-card" id="cont">
+      <div class="card-header" id="fondo">
         <div class="float-left" id="carrito">
           <i class="icofont icofont-location-pin"></i>
         </div>
         <div class="d-inline-block">
           <h2>Ubicación</h2>
 
-          <button type="button" class="btn btn-inverse btn-success-a">
+          <button type="button" class="btn btn-danger btn-success-a">
             Nuevo
           </button>
 
           <div class="dropdown-inverse dropdown">
             <button
-              class="btn btn-light border border-dark dropdown-toggle"
+              class="btn btn-danger btn-success-a dropdown-toggle"
               type="button"
               id="dropdown-7"
               data-toggle="dropdown"
@@ -88,10 +88,22 @@ export default {
   margin-top: 20px;
 }
 #carrito i {
-  background-color: black;
+  background-color: #fc6180;
   font-size: 35px;
 }
 .card {
   color: black;
+}
+#fondo {
+  background-image: radial-gradient(
+    circle at 25.87% 43.53%,
+    #f6c7bc 0,
+    #ffbdb9 16.67%,
+    #f8bbc0 33.33%,
+    #fdbecb 50%,
+    #e4b4c4 66.67%,
+    #daafc3 83.33%,
+    #d8adc8 100%
+  );
 }
 </style>

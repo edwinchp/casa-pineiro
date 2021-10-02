@@ -110,7 +110,9 @@
               <div class="form-row">
                 <div class="form-group col-md-4">
                   <!-- <label for="delivery_option">Tienda</label> -->
-                  <store-dropdown @storeIdChanged="selectedStoreId = $event"></store-dropdown>
+                  <store-dropdown
+                    @storeIdChanged="selectedStoreId = $event"
+                  ></store-dropdown>
 
                   <!-- <div class="input-group">
                     <div class="input-group-prepend">
@@ -136,45 +138,44 @@
                     <div class="invalid-feedback">
                       {{ inputFields.store.feedback }}
                     </div> -->
-                  </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div class="col-md-12">
-              <div class="form-row">
-                <div class="form-group pl-1">
-                  <label for="description">Descripción</label>
-                  <textarea
-                    name="description"
-                    id=""
-                    cols="60"
-                    rows="5"
-                    class="form-control"
-                    v-model="product.description"
-                  >
-                  </textarea>
-                </div>
+          <div class="col-md-12">
+            <div class="form-row">
+              <div class="form-group pl-1">
+                <label for="description">Descripción</label>
+                <textarea
+                  name="description"
+                  id=""
+                  cols="60"
+                  rows="5"
+                  class="form-control"
+                  v-model="product.description"
+                >
+                </textarea>
               </div>
             </div>
-            <div class="options">
-              <div class="form-row pt-3">
-                <div class="p-1">
-                  <button class="btn btn-success" @click="saveProduct">
-                    Guardar
-                  </button>
-                </div>
+          </div>
+          <div class="options">
+            <div class="form-row pt-3">
+              <div class="p-1">
+                <button class="btn btn-success" @click="saveProduct">
+                  Guardar
+                </button>
+              </div>
 
-                <div class="p-1">
-                  <a href="/" class="btn btn-secondary">Cancelar</a>
-                </div>
+              <div class="p-1">
+                <a href="/" class="btn btn-secondary">Cancelar</a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
- 
+  </div>
 </template>
 
 <script>
@@ -395,5 +396,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.btn-primary {
+  background-color: green;
+  border-color: #4680ff;
+}
 </style>

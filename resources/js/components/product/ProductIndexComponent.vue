@@ -1,23 +1,25 @@
 <template>
   <div class="col-sm-12" style="">
     <div class="card fb-card">
-      <div class="card-header color-card">
-        <i class="icofont icofont-food-basket"></i>
+      <div class="card-header" id="fondo">
+        <div class="float-left" id="carrito">
+          <i class="icofont icofont-food-basket"></i>
+        </div>
         <div class="d-inline-block">
           <h2>Productos</h2>
 
-          <a
-            href="products/create"
-            class="btn btn-inverse btn-success-a"
+          <button
+            class="btn btn-success"
             data-toggle="tooltip"
             data-placement="bottom"
             data-original-title="Nuevo producto"
-            >Nuevo</a
           >
+            <a href="products/create" class="a-primary">Nuevo</a>
+          </button>
 
           <div v-if="stores.length > 0" class="dropdown-inverse dropdown open">
             <button
-              class="btn btn-inverse dropdown-toggle waves-effect waves-light"
+              class="btn btn-success dropdown-toggle waves-effect waves-light"
               type="button"
               id="dropdown-7"
               data-toggle="dropdown"
@@ -45,6 +47,7 @@
                 :key="index"
                 @click="selectStore(store)"
                 class="dropdown-item waves-light waves-effect"
+                href=""
               >
                 {{ store.name }}</a
               >
@@ -378,5 +381,39 @@ export default {
 <style scoped>
 .table-products-scope {
   margin-bottom: 50px;
+}
+
+#carrito {
+  margin-top: 20px;
+}
+#carrito i {
+  background-color: #93be52;
+  font-size: 35px;
+}
+.card {
+  color: black;
+}
+#fondo {
+  background-image: radial-gradient(
+    circle at -20.44% 43.84%,
+    #d9f8c5 0,
+    #d2f6c1 12.5%,
+    #def8ce 25%,
+    #d1f6e3 37.5%,
+    #d2ffe1 50%,
+    #d1fddd 62.5%,
+    #b7f6c0 75%,
+    #b7f6b9 87.5%,
+    #aef8c4 100%
+  );
+}
+.a-primary {
+  color: white;
+  text-decoration: none;
+}
+.a-primary:hover {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
 }
 </style>

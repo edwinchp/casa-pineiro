@@ -413,7 +413,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 #carrito {
   margin-top: 20px;
 }
