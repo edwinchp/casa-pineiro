@@ -52,6 +52,12 @@ Route::middleware('auth:api')->group(function () {
     Route::get('testing-products', 'ApiProductController@testingProducts');
     Route::post('/logout', 'ApiUserController@logout');
     Route::get('/current-user', 'ApiUserController@currentUser');
+    Route::get('/testing/string', 'TestingController@string');
+    Route::get('/testing/integer', 'TestingController@integer');
+    Route::get('/testing/array', 'TestingController@array');
+    Route::get('/testing/object', 'TestingController@object');
+    Route::get('/testing/request', 'TestingController@request');
+    Route::get('/testing/request-with-body', 'TestingController@requestBody');
 
     // Picture
     Route::resource('/picture', 'PictureController');
