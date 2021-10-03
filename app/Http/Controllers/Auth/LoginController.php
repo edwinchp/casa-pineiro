@@ -40,7 +40,8 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         //return "huevos";
         $login = $request->validate([
             'email' => 'required|string',
@@ -53,8 +54,18 @@ class LoginController extends Controller
 
         $accessToken = Auth::user()->createToken('authToken')->accessToken;
 
+        $params = [
+            'accessToken' => $accessToken,
+            'sales' => null,
+            'salesCount' => null,
+            'products' => null
+        ];
+
         //return response(['user' => Auth::user(), 'access_token' => $accessToken]);
-        return view('index', ['accessToken' => $accessToken]);
-        //return redirect()->route('products.index', ['accessToken' => $accessToken]);
+        return view(
+            'index',
+            $params
+        );
+        //return redirect()->route('/', $params);
     }
 }

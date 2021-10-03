@@ -43,6 +43,7 @@ Vue.component('supplier-edit', require('./components/supplier/SupplierEdit.vue')
 Vue.component('location-index', require('./components/location/LocationIndex.vue').default);
 Vue.component('location-edit', require('./components/location/LocationEdit.vue').default);
 Vue.component('location-create', require('./components/location/LocationCreate.vue').default);
+Vue.component('dashboard-index', require('./components/dashboard/DashboardIndex.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

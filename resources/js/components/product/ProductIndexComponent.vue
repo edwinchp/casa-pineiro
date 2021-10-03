@@ -47,7 +47,7 @@
                 :key="index"
                 @click="selectStore(store)"
                 class="dropdown-item waves-light waves-effect"
-                href=""
+                href="#"
               >
                 {{ store.name }}</a
               >

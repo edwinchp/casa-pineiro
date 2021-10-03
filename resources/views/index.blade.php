@@ -8,6 +8,8 @@
 </div>
 @endif
 
+<dashboard-index :access-token='@json($accessToken)'></dashboard-index>
+
 <div class="page-body">
     <div class="row">
         <div class="col-md-4 col-xl-4 col-xl-offset-6">
@@ -33,8 +35,10 @@
         <div class="col-md-4 col-xl-4 location-style">
             <div class="card widget-card-1">
                 <div class="card-block-small">
-                <i class="icofont icofont-location-pin bg-danger card1-icon"></i>
-                    <span class="text-danger f-w-600"><h4>Ubicación</h4></span>
+                    <i class="icofont icofont-location-pin bg-danger card1-icon"></i>
+                    <span class="text-danger f-w-600">
+                        <h4>Ubicación</h4>
+                    </span>
                     <h4>$553</h4>
                     <div class="pt-2">
                         <span class="f-left m-t-10 text-muted">
@@ -54,7 +58,9 @@
             <div class="card widget-card-1">
                 <div class="card-block-small">
                     <i class="icofont icofont-food-basket bg-c-green card1-icon"></i>
-                    <span class="text-c-green f-w-600"><h4>Productos</h4></span>
+                    <span class="text-c-green f-w-600">
+                        <h4>Productos</h4>
+                    </span>
                     <h4>{{$products}}</h4>
                     <div class="pt-2">
                         <span class="f-left m-t-10 text-muted">
@@ -72,9 +78,5 @@
 
     </div>
 </div>
-<style scoped>
-    
-    
-</style>
 
 @endsection
