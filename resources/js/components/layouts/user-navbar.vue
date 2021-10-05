@@ -270,6 +270,7 @@
                         :change="getChange"
                         :allowPayment="allowPayment"
                         @paymentSuccess="paymentSuccess"
+                        :textSize="16"
                       >
                       </pay-button>
                     </div>

@@ -8,8 +8,12 @@
         <div class="d-inline-block">
           <h2>Ubicación</h2>
 
-          <button type="button" class="btn btn-danger btn-success-a">
-            Nuevo
+          <button
+            class="btn btn-danger btn-success-a"
+            data-toggle="tooltip"
+            data-placement="bottom"
+          >
+            <a href="location/create" class="a-primary"> Nuevo</a>
           </button>
 
           <div class="dropdown-inverse dropdown">
@@ -105,5 +109,14 @@ export default {
     #daafc3 83.33%,
     #d8adc8 100%
   );
+}
+.a-primary {
+  color: white;
+  text-decoration: none;
+}
+.a-primary:hover {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
 }
 </style>
