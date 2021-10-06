@@ -131,8 +131,8 @@ class ApiSalesController extends Controller
 
         $sale = Sale::create([
             'store_id' => $request->store_id,
-            'status' => 0,
-            'is_paid' => 0,
+            'status' => 1,
+            'is_paid' => 1,
             'total' => $request->total,
             'received' => $request->received,
             'change' => $request->change,
@@ -140,6 +140,8 @@ class ApiSalesController extends Controller
         ]);
 
         foreach ($request["products"] as $product) {
+            $this->reduceProductQty($product['product_id'], $product['qty']);
+
             DB::table('sales_products')->insert(
                 [
                     'sale_id' => $sale->id,
@@ -201,23 +203,23 @@ class ApiSalesController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $sale = Sale::findOrFail($id);
-        if ($request->restore_qty) {
-            $product = Product::find($sale->product_id);
-            $product->qty = $product->qty + $sale->qty;
-            $product->save();
-            $sale->delete();
-            return response()->json([
-                'comments' => 'Sale deleted. Quantity restored to product.',
-                'sale qty' => $sale->qty,
-                'product qty' => $product->qty,
-            ]);
-        }
+        // if ($request->restore_qty) {
+        //     $product = Product::find($sale->product_id);
+        //     $product->qty = $product->qty + $sale->qty;
+        //     $product->save();
+        //     $sale->delete();
+        //     return response()->json([
+        //         'comments' => 'Sale deleted. Quantity restored to product.',
+        //         'sale qty' => $sale->qty,
+        //         'product qty' => $product->qty,
+        //     ]);
+        // }
 
-        $sale->delete();
+        Sale::findOrFail($id)->delete();
+        SalesProducts::where('sale_id', '=', $id)->delete();
+
         return response()->json([
             'comments' => 'Sale deleted.',
-            'sale' => $sale,
         ]);
     }
 
@@ -245,5 +247,22 @@ class ApiSalesController extends Controller
             'sale' => $sale,
             'details' => $sale->details
         ]);
+    }
+
+    protected function reduceProductQty($product_id, $product_qty)
+    {
+        $product = Product::find($product_id);
+        $newQty = $product->qty - $product_qty;
+        if ($newQty >= 0) {
+            $product->qty = $newQty;
+            $product->save();
+        }
+        // } else {
+        //     return response()->json([
+        //         'message' => 'There are not enough products. Validate quantities.',
+        //         'request' => $request->all(),
+        //         'product' => $product
+        //     ], 400);
+        // }
     }
 }

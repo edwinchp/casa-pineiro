@@ -50,9 +50,13 @@ export default {
         .post("/api/sales", formData)
         .then((response) => {
           if (response.status == 200 || response.status == 201) {
-            console.log("Pago exitoso");
-            console.log(response);
             this.$emit("paymentSuccess");
+            this.$fire({
+              title: "¡Listo!",
+              text: "Pago exitoso",
+              type: "success",
+              timer: 2500,
+            });
           }
         })
         .catch((error) => {

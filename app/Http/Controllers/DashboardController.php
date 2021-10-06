@@ -17,9 +17,11 @@ class DashboardController extends Controller
             array_push($stores, $store->id);
         }
 
+        $conditions = ['created_at', '>=', CarbonImmutable::now()->locale('es_mx')->startOfWeek()];
+
         $products = Product::whereIn('store_id', $stores)->get();
-        $sales = Sale::whereIn('store_id', $stores)->where('created_at', '>=', CarbonImmutable::now()->locale('es_mx')->startOfWeek())->get();
-        $salesCount = Sale::whereIn('store_id', $stores)->get();
+        $sales = Sale::whereIn('store_id', $stores)->where([$conditions])->get();
+        $salesCount = Sale::whereIn('store_id', $stores)->where([$conditions])->get();
 
         setlocale(LC_MONETARY, 'es_MX.UTF-8');
 
