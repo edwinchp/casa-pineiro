@@ -8,6 +8,7 @@
           <th v-show="this.editingProduct">Nuevos</th>
           <!-- <th>Precio de compra</th> -->
           <th>Precio de venta</th>
+          <th>Ubicación</th>
           <th>Imagen</th>
           <th>Opciones</th>
         </tr>
@@ -239,6 +240,23 @@
             <div class="row">
               <div class="col-xl-11">
                 <strong>${{ product.price }}</strong>
+              </div>
+            </div>
+          </td>
+
+          <td class="table-name">
+            <div class="row">
+              <div class="col-xl-11">
+                <!-- <a :href="'products/' + product.id + '/edit'">
+                  {{ shortProductName(product.name) }}
+                </a> -->
+                <a
+                  data-toggle="modal"
+                  data-target="#product-details"
+                  @click="selectedProduct = product"
+                >
+                  Anaquel 1
+                </a>
               </div>
             </div>
           </td>

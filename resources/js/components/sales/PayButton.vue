@@ -1,6 +1,12 @@
 <template>
-  <button class="btn btn-success" @click="checkout" :disabled="!allowPayment">
-    <h4><strong>Pagar</strong></h4>
+  <button
+    class="btn btn-success"
+    @click="checkout"
+    :disabled="!allowPayment"
+    id="pagar"
+    :style="getTextSize"
+  >
+    <strong>Pagar</strong>
   </button>
 </template>
 
@@ -32,6 +38,11 @@ export default {
     allowPayment: {
       required: true,
       default: false,
+    },
+
+    textSize: {
+      required: false,
+      default: 25,
     },
   },
 
@@ -66,8 +77,17 @@ export default {
         });
     },
   }, // end methods
+
+  computed: {
+    getTextSize() {
+      return "font-size: " + this.textSize;
+    },
+  },
 };
 </script>
 
-<style>
+<style scoped>
+#pagar {
+  font-size: 16px;
+}
 </style>
