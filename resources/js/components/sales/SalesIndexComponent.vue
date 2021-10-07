@@ -62,7 +62,7 @@
                     <!--CARD-->
                     <div class="card pt-3">
                       <!--SEARCH BOX-->
-                      <div class="card pt-3 table-products-scope">
+                      <div class="table-products-scope">
                         <div class="section-header pl-3">
                           <div class="col-xl-6">
                             <div class="input-group search-box">
