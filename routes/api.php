@@ -48,6 +48,10 @@ Route::middleware('auth:api')->group(function () {
     Route::get('sales/details', 'ApiSalesController@saleDetails');
     Route::resource('sales', 'ApiSalesController');
     Route::get('allSales', 'ApiSalesController@allSales');
+
+    // Location
+    Route::resource('location', 'ApiLocationController');
+
     // Testing
     Route::get('testing-products', 'ApiProductController@testingProducts');
     Route::post('/logout', 'ApiUserController@logout');

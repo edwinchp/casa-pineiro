@@ -17,4 +17,9 @@ class Store extends Model
     {
         return $this->hasMany('App\Customer');
     }
+
+    public function locations()
+    {
+        return $this->hasMany('App\Location');
+    }
 }
