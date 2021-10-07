@@ -96,7 +96,6 @@ class ApiSalesController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            //'product_id' => 'required',
             'store_id' => 'required',
             'total' => 'required',
             'received' => 'required',
@@ -109,37 +108,34 @@ class ApiSalesController extends Controller
             return response()->json($errors->all(), 400);
         }
 
-        // $product = Product::find($request->product_id);
-        // $newQty = $product->qty - $request->qty;
 
-        // if ($newQty >= 0) {
-        //     $product->qty = $newQty;
-        //     $product->save();
+        // Validate if there are enough products before create sale
+        foreach ($request['products'] as $product) {
+            $new_qty = $this->getNewQty($product['product_id'], $product['qty']);
 
-        //     // $sale =  Sale::create($request->all());
-        //     // $sale->user_id = auth()->user()->id;
-        //     // $sale->save();
-        //     // return $sale;
-
-        // } else {
-        //     return response()->json([
-        //         'message' => 'There are not enough products. Validate quantities.',
-        //         'request' => $request->all(),
-        //         'product' => $product
-        //     ], 400);
-        // }
+            if ($new_qty < 0) {
+                return response()->json([
+                    'message' => 'There are not enough products. Validate quantities.',
+                    'new_qty' => $new_qty,
+                    'product' => $product
+                ], 400);
+            }
+        }
 
         $sale = Sale::create([
             'store_id' => $request->store_id,
-            'status' => 0,
-            'is_paid' => 0,
+            'status' => 1,
+            'is_paid' => 1,
             'total' => $request->total,
             'received' => $request->received,
             'change' => $request->change,
             'user_id' => auth()->user()->id,
         ]);
 
+        // Create sale details
         foreach ($request["products"] as $product) {
+            $this->reduceProductQty($product['product_id'], $product['qty']);
+
             DB::table('sales_products')->insert(
                 [
                     'sale_id' => $sale->id,
@@ -154,7 +150,6 @@ class ApiSalesController extends Controller
                 ]
             );
         }
-        //return $product;
 
         return response()->json($request);
     }
@@ -201,23 +196,23 @@ class ApiSalesController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $sale = Sale::findOrFail($id);
-        if ($request->restore_qty) {
-            $product = Product::find($sale->product_id);
-            $product->qty = $product->qty + $sale->qty;
-            $product->save();
-            $sale->delete();
-            return response()->json([
-                'comments' => 'Sale deleted. Quantity restored to product.',
-                'sale qty' => $sale->qty,
-                'product qty' => $product->qty,
-            ]);
-        }
+        // if ($request->restore_qty) {
+        //     $product = Product::find($sale->product_id);
+        //     $product->qty = $product->qty + $sale->qty;
+        //     $product->save();
+        //     $sale->delete();
+        //     return response()->json([
+        //         'comments' => 'Sale deleted. Quantity restored to product.',
+        //         'sale qty' => $sale->qty,
+        //         'product qty' => $product->qty,
+        //     ]);
+        // }
 
-        $sale->delete();
+        Sale::findOrFail($id)->delete();
+        SalesProducts::where('sale_id', '=', $id)->delete();
+
         return response()->json([
             'comments' => 'Sale deleted.',
-            'sale' => $sale,
         ]);
     }
 
@@ -245,5 +240,31 @@ class ApiSalesController extends Controller
             'sale' => $sale,
             'details' => $sale->details
         ]);
+    }
+
+    protected function reduceProductQty($product_id, $product_qty)
+    {
+        $product = Product::find($product_id);
+        $newQty = $product->qty - $product_qty;
+        if ($newQty >= 0) {
+            $product->qty = $newQty;
+            $product->save();
+        } else {
+            return response()->json([
+                'message' => 'There are not enough products. Validate quantities.',
+                'newQty' => $newQty,
+                'product' => $product
+            ], 400);
+        }
+    }
+
+    /**
+     * Returns product qty if sale is applied
+     */
+    protected function getNewQty($product_id, $sale_qty)
+    {
+        $product = Product::find($product_id);
+
+        return $product->qty - $sale_qty;
     }
 }

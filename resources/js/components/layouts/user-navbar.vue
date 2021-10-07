@@ -450,7 +450,9 @@ export default {
     paymentSuccess() {
       this.miniCart = [];
       document.getElementById("closeModal").click();
-      location.reload();
+      setTimeout(() => {
+        location.reload();
+      }, 2500);
     },
   },
 

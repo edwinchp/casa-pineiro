@@ -16,8 +16,11 @@
             <div class="card widget-card-1">
                 <div class="card-block-small">
                     <i class="icofont icofont-money icofont-4x bg-c-blue card1-icon"></i>
-                    <span class="text-c-blue f-w-600">Ventas ({{$salesCount}})</span>
+                    <span class="text-c-blue f-w-600">
+                        <h4>Ventas ({{$salesCount}})</h4>
+                    </span>
                     <h4>${{$sales}}</h4>
+                    </span>
                     <div class="pt-2">
                         <span class="f-left m-t-10 text-muted">
                             <a href="{{route('sales.index')}}" class="text-c-blue"><i class="text-c-blue f-16 icofont icofont-calendar m-r-10"></i>Esta
