@@ -392,8 +392,9 @@ export default {
       }
 
       // Alert the user that he/she la está cagando.
-      if (product.qty < 1) {
-        alert("No hay más productos.");
+      // trigger warning when there are no products
+      if (product.qty == 0) {
+        this.fireWarning("Sin productos");
       }
 
       console.log("-------------------------------");
@@ -425,6 +426,15 @@ export default {
         //this.receivedProducts = this.products;
       }
       //console.log('Picture: ' + this.products[5].picture.path);
+    },
+
+    fireWarning(message) {
+      this.$fire({
+        title: "Advertencia",
+        text: message,
+        type: "warning",
+        timer: 3000,
+      });
     },
   },
 

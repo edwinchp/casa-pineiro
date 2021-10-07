@@ -361,7 +361,7 @@
                                         </td>
                                         <td class="table-input">
                                           <input
-                                            type="number"
+                                            type="text"
                                             class="form-control form-control-sm"
                                             placeholder="Cantidad"
                                             :value="product.qty"
@@ -470,7 +470,7 @@
                                 :received="getReceived"
                                 :change="getChange"
                                 :allowPayment="allowPayment"
-                                @paymentSuccess="basket = []"
+                                @paymentSuccess="paymentSuccess"
                               ></pay-button>
                             </div>
                           </div>
@@ -562,6 +562,11 @@ export default {
         return;
       }
 
+      // trigger warning when there are no products
+      if (product.qty == 0) {
+        this.fireWarning("Sin productos");
+      }
+
       let productInBacket = {};
       let duplicate = false;
 
@@ -594,7 +599,7 @@ export default {
       }
 
       if (productInBacket.qty == product.qty) {
-        alert("No hay más productos.");
+        this.fireWarning("Sin productos");
       }
 
       this.barcode = null;
@@ -642,6 +647,24 @@ export default {
       // if (this.miniCart.length < 1) {
       //   location.reload();
       // }
+    },
+
+    paymentSuccess() {
+      this.basket = [];
+      this.received = "";
+      this.allowPayment = false;
+      this.change = "";
+      this.productsFound = [];
+      this.findProductInput = "";
+    },
+
+    fireWarning(message) {
+      this.$fire({
+        title: "Advertencia",
+        text: message,
+        type: "warning",
+        timer: 2500,
+      });
     },
   }, // end methods
 

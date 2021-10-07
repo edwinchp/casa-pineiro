@@ -96,7 +96,6 @@ class ApiSalesController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            //'product_id' => 'required',
             'store_id' => 'required',
             'total' => 'required',
             'received' => 'required',
@@ -109,25 +108,19 @@ class ApiSalesController extends Controller
             return response()->json($errors->all(), 400);
         }
 
-        // $product = Product::find($request->product_id);
-        // $newQty = $product->qty - $request->qty;
 
-        // if ($newQty >= 0) {
-        //     $product->qty = $newQty;
-        //     $product->save();
+        // Validate if there are enough products before create sale
+        foreach ($request['products'] as $product) {
+            $new_qty = $this->getNewQty($product['product_id'], $product['qty']);
 
-        //     // $sale =  Sale::create($request->all());
-        //     // $sale->user_id = auth()->user()->id;
-        //     // $sale->save();
-        //     // return $sale;
-
-        // } else {
-        //     return response()->json([
-        //         'message' => 'There are not enough products. Validate quantities.',
-        //         'request' => $request->all(),
-        //         'product' => $product
-        //     ], 400);
-        // }
+            if ($new_qty < 0) {
+                return response()->json([
+                    'message' => 'There are not enough products. Validate quantities.',
+                    'new_qty' => $new_qty,
+                    'product' => $product
+                ], 400);
+            }
+        }
 
         $sale = Sale::create([
             'store_id' => $request->store_id,
@@ -139,6 +132,7 @@ class ApiSalesController extends Controller
             'user_id' => auth()->user()->id,
         ]);
 
+        // Create sale details
         foreach ($request["products"] as $product) {
             $this->reduceProductQty($product['product_id'], $product['qty']);
 
@@ -156,7 +150,6 @@ class ApiSalesController extends Controller
                 ]
             );
         }
-        //return $product;
 
         return response()->json($request);
     }
@@ -256,13 +249,22 @@ class ApiSalesController extends Controller
         if ($newQty >= 0) {
             $product->qty = $newQty;
             $product->save();
+        } else {
+            return response()->json([
+                'message' => 'There are not enough products. Validate quantities.',
+                'newQty' => $newQty,
+                'product' => $product
+            ], 400);
         }
-        // } else {
-        //     return response()->json([
-        //         'message' => 'There are not enough products. Validate quantities.',
-        //         'request' => $request->all(),
-        //         'product' => $product
-        //     ], 400);
-        // }
+    }
+
+    /**
+     * Returns product qty if sale is applied
+     */
+    protected function getNewQty($product_id, $sale_qty)
+    {
+        $product = Product::find($product_id);
+
+        return $product->qty - $sale_qty;
     }
 }
