@@ -29,6 +29,7 @@
                       class="form-control"
                       name="bar_code"
                       autocomplete="off"
+                      v-model="location.name"
                     />
                   </div>
 
@@ -38,44 +39,13 @@
                       class="form-control"
                       id="exampleFormControlTextarea1"
                       rows="5"
+                      v-model="location.description"
                     ></textarea>
                   </div>
-                  <div class="dropdown-inverse dropdown">
-                    <button
-                      class="btn btn-light border border-dark dropdown-toggle"
-                      type="button"
-                      id="dropdown-7"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Tienda
-                    </button>
-                    <div
-                      class="dropdown-menu"
-                      aria-labelledby="dropdown-7"
-                      data-dropdown-in="fadeIn"
-                      data-dropdown-out="fadeOut"
-                      x-placement="bottom-start"
-                      style="
-                        position: absolute;
-                        transform: translate3d(0px, 40px, 0px);
-                        top: 0px;
-                        left: 0px;
-                        will-change: transform;
-                      "
-                    >
-                      <a class="dropdown-item waves-light waves-effect" href="#"
-                        >Tendejón Evelyn</a
-                      >
-                      <a class="dropdown-item waves-light waves-effect" href="#"
-                        >Ferretería cables</a
-                      >
-                      <a class="dropdown-item waves-light waves-effect" href="#"
-                        >Dunosusa</a
-                      >
-                    </div>
-                  </div>
+
+                  <store-dropdown
+                    @storeIdChanged="storeIdChanged"
+                  ></store-dropdown>
                 </div>
               </div>
             </div>
@@ -84,7 +54,9 @@
           <div class="options ml-3">
             <div class="form-row pt-3">
               <div class="p-1">
-                <button class="btn btn-success">Guardar</button>
+                <button class="btn btn-success" @click="createLocation">
+                  Guardar
+                </button>
               </div>
 
               <div class="p-1">
@@ -99,7 +71,35 @@
 </template>
 
 <script>
-export default {};
+import StoreDropdown from "../layouts/StoreDropdown.vue";
+export default {
+  components: { StoreDropdown },
+
+  data() {
+    return {
+      location: {
+        name: "",
+        store_id: "",
+        description: "",
+      },
+
+      successTimeout: "",
+    };
+  },
+
+  methods: {
+    createLocation() {
+      axios.post("/api/location", this.location).then((resp) => {
+        if (resp.status == 201) {
+          location.replace("/location/" + resp.data.id + "/edit");
+        }
+      });
+    },
+    storeIdChanged($event) {
+      this.location.store_id = $event;
+    },
+  },
+};
 </script>
 
 <style>

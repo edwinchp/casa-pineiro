@@ -17,6 +17,15 @@ class ApiLocationController extends Controller
      */
     public function index(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'store_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json($errors->all(), 400);
+        }
+
         return Store::find($request->store_id)->locations;
     }
 

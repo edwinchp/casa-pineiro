@@ -65,12 +65,11 @@
           </div>-->
         <div class="container-fluid mt-3">
           <div class="row ml-5 pl-3">
-            <location-card></location-card>
-            <location-card></location-card>
-            <location-card></location-card>
-            <location-card></location-card>
-            <location-card></location-card>
-            <location-card></location-card>
+            <location-card
+              v-for="location in locations"
+              :key="location.id"
+              :location="location"
+            ></location-card>
           </div>
         </div>
       </div>
@@ -83,6 +82,28 @@ import LocationCard from "./LocationCard.vue";
 export default {
   components: {
     LocationCard,
+  },
+
+  data() {
+    return {
+      locations: [],
+    };
+  },
+
+  methods: {
+    async getLocations() {
+      const params = {
+        params: {
+          store_id: 1,
+        },
+      };
+      const request = await axios.get("/api/location", params);
+      this.locations = request.data;
+    },
+  },
+
+  created() {
+    this.getLocations();
   },
 };
 </script>

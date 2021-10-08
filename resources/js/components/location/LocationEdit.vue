@@ -3,7 +3,7 @@
     <div class="col-md-12 col-xl-12">
       <div class="card">
         <div class="card-header">
-          <h4>Editar ubicación</h4>
+          <h4>{{ locationData.name }}</h4>
           <div class="card-header-left"></div>
         </div>
         <div class="card-block">
@@ -29,6 +29,7 @@
                       class="form-control"
                       name="bar_code"
                       autocomplete="off"
+                      v-model="locationData.name"
                     />
                   </div>
 
@@ -38,44 +39,14 @@
                       class="form-control"
                       id="exampleFormControlTextarea1"
                       rows="5"
+                      v-model="locationData.description"
                     ></textarea>
                   </div>
-                  <div class="dropdown-inverse dropdown">
-                    <button
-                      class="btn btn-light border border-dark dropdown-toggle"
-                      type="button"
-                      id="dropdown-7"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Tienda
-                    </button>
-                    <div
-                      class="dropdown-menu"
-                      aria-labelledby="dropdown-7"
-                      data-dropdown-in="fadeIn"
-                      data-dropdown-out="fadeOut"
-                      x-placement="bottom-start"
-                      style="
-                        position: absolute;
-                        transform: translate3d(0px, 40px, 0px);
-                        top: 0px;
-                        left: 0px;
-                        will-change: transform;
-                      "
-                    >
-                      <a class="dropdown-item waves-light waves-effect" href="#"
-                        >Tendejón Evelyn</a
-                      >
-                      <a class="dropdown-item waves-light waves-effect" href="#"
-                        >Ferretería cables</a
-                      >
-                      <a class="dropdown-item waves-light waves-effect" href="#"
-                        >Dunosusa</a
-                      >
-                    </div>
-                  </div>
+
+                  <store-input-dropdown
+                    @storeIdChanged="storeIdChanged"
+                    :currentStoreId="locationData.store_id"
+                  ></store-input-dropdown>
                 </div>
               </div>
 
@@ -95,11 +66,13 @@
           <div class="options ml-3">
             <div class="form-row pt-3">
               <div class="p-1">
-                <button class="btn btn-success">Guardar</button>
+                <button class="btn btn-success" @click="saveLocation">
+                  Guardar
+                </button>
               </div>
 
               <div class="p-1">
-                <button class="btn btn-secondary">Atrás</button>
+                <a class="m-1 btn btn-secondary" href="/location">Atrás</a>
               </div>
 
               <div class="p-1">
@@ -119,8 +92,49 @@
 
 
 <script>
+import StoreInputDropdown from "../layouts/StoreInputDropdown.vue";
+
 export default {
-  props: ["supplier_id"],
+  props: ["location"],
+
+  components: { StoreInputDropdown },
+
+  data() {
+    return {
+      locationData: this.location,
+      selectedStoreId: this.location.id,
+    };
+  },
+
+  methods: {
+    saveLocation() {
+      axios
+        .put("/api/location/" + this.locationData.id, this.locationData)
+        .then((resp) => {
+          if (resp.status == 200) {
+            this.$fire({
+              title: "¡Listo!",
+              text: "Actualizado con éxito",
+              type: "success",
+              timer: 2000,
+            });
+          }
+        })
+        .catch((error) => {
+          this.$fire({
+            title: "Upps!",
+            text: "Error al guardar, intente nuevamente",
+            type: "error",
+            timer: 5000,
+          });
+        });
+    },
+
+    storeIdChanged(event) {
+      this.locationData.store_id = event;
+      this.selectedStoreId = event;
+    },
+  },
 };
 </script>
 
