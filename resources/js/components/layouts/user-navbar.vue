@@ -47,8 +47,8 @@
               aria-labelledby="navbarDropdown"
             >
               <a class="dropdown-item" href="/sales">Ventas</a>
+              <a class="dropdown-item" href="/location">Ubicación</a>
               <a class="dropdown-item" href="/products">Productos</a>
-              <a class="dropdown-item" href="/customers">Clientes</a>
               <div class="dropdown-divider"></div>
               <a
                 class="dropdown-item"
@@ -78,7 +78,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">¿Cerrar sesión?</h5>
             <button
               class="close"
               type="button"
@@ -89,7 +89,7 @@
             </button>
           </div>
           <div class="modal-body">
-            Select "Logout" below if you are ready to end your current session.
+            Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.
           </div>
           <div class="modal-footer">
             <button
@@ -97,7 +97,7 @@
               type="button"
               data-dismiss="modal"
             >
-              Cancel
+              Cancelar
             </button>
             <button class="btn btn-primary" href="" @click="logout">
               Cerrar sesión

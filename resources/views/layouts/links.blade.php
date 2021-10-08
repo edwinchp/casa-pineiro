@@ -24,3 +24,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('custom-template/assets/css/style.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('custom-template/assets/css/custom.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('custom-template/assets/css/jquery.mCustomScrollbar.css')}}">
+
+<link rel="preconnect" href="{{URL::to('https://fonts.googleapis.com')}}">
+<link rel="preconnect" href="{{URL::to('https://fonts.gstatic.com')}}" crossorigin>
+<link href="{{URL::to('https://fonts.googleapis.com/css2?family=Yaldevi:wght@200&display=swap')}}" rel="stylesheet">
+<link rel="stylesheet" href="{{URL::to('css/estilos.css')}}">

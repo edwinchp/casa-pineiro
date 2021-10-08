@@ -53,3 +53,8 @@ Route::get('productss', function () {
     $user = Auth::user();
     return ['AuthUser' => $user];
 });
+
+Route::get('/login2', function () {
+   
+    return view('auth.login2');
+});
