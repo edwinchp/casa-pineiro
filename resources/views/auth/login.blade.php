@@ -1,72 +1,129 @@
-@extends('main')
-<title>Iniciar sesión</title>
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-                <div class="card-body">
-                <form method="POST" action="{{ route('login') }}">
-                        @csrf
+<!DOCTYPE html>
+<html lang="en">
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+<head>
+   
+    <title>Iniciar sesión</title>
+    @include('layouts.links')
+   
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="CodedThemes">
+    <meta name="keywords" content=" Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+    <meta name="author" content="CodedThemes">
+   
+</head>
 
-                            <div class="col-md-6">
-                                <input id="email" value = "chipineiro@gmail.com" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+<body class="fix-menu"> 
+<div class="loading"></div>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" value="huevos123" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
+        <!-- Container-fluid starts -->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="overlay">
+                    <h1 class="deepshadow mt-4">CASA PINEIRO</h1>
+                    </div>
+                    <!-- Authentication card start -->
+                    <div class="login-card card-block auth-body mr-auto ml-auto">
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf            
+                            <div class="auth-box">
+                                <div class="row m-b-20">
+                                    <div class="col-md-12">
+                                        <h3 class="text-left txt-primary">Iniciar sesión</h3>
+                                    </div>
+                                   
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+                                <hr/>
+                                <div class="input-group">
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Correo electrónico">
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                     @enderror
+                                </div>
+                                <div class="input-group">
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Contraseña">
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                             
+                                <div class="row m-t-30">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Iniciar sesión</button>
+                                    </div>
+                                </div>
+                                <hr/>
+                            </div>  
+                        </form>
+                        <!-- end of form -->
+                    </div>
+                    <!-- Authentication card end -->
                 </div>
+                <!-- end of col-sm-12 -->
             </div>
+            <!-- end of row -->
         </div>
-    </div>
-</div>
-@endsection
+        <!-- end of container-fluid -->
+       
+  
+  
+    <!-- Required Jquery -->
+
+
+
+
+  
+
+</body>
+<style>
+
+.loading {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('images/carga4.gif') 50% 50% no-repeat rgb(249,249,249);
+    opacity: 1;
+  
+  
+}
+
+.overlay .deepshadow{
+  font-family: "Avant Garde", 'Avantgarde', "Century Gothic", 'CenturyGothic', "AppleGothic", sans-serif;
+  font-size: 50px;
+  text-align: center;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;  
+}
+
+.deepshadow{
+   color: #fff;   
+   letter-spacing: .2em;
+   text-shadow: 
+     5px 5px 1px #000, 
+     7px 7px 0px rgba(0, 0, 0, 0.9);
+}
+
+body, html {
+    height: 100%;
+    background-repeat: no-repeat;
+    background: url(/images/fondo12.jpg) no-repeat center center fixed;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+}
+
+
+</style>
+
+@include('layouts.scripts')
+
+</html>

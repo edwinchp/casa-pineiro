@@ -45,6 +45,11 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{URL::to('https://code.jquery.com/jquery-3.6.0.min.js')}}" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
+<script type="text/javascript">
+$(window).on('load', function () {
+    $('.loading').fadeOut(2000);
+  });
+</script>
 
 <!-- From Custom Template-->
 <!-- <script type="text/javascript" src="{{asset('custom-template/assets/pages/dashboard/custom-dashboard.js')}}"></script> -->
