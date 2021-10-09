@@ -4,9 +4,11 @@
       <div class="anaquel" id="anaquel">
         <img
           class="card-img-top rounded"
-          src="/images/anaquel2.jpg"
-          alt="no image"
+          v-if="location.primary_picture != null"
+          :src="location.primary_picture"
+          alt="Sin imagen"
         />
+        <i v-else class="fas fa-boxes"></i>
       </div>
 
       <div class="card-body">
@@ -44,5 +46,14 @@ export default {
 
 .card {
   background-color: #f7f7f7;
+}
+
+.fa-boxes {
+  font-size: 128px;
+  padding: 0px;
+  margin-right: 10px;
+  margin-bottom: 95px;
+  margin-top: 25px;
+  color: rgb(243, 186, 159);
 }
 </style>

@@ -167,10 +167,7 @@ export default {
   components: {
     ManagePictures,
   },
-  props: {
-    foreign_key: String,
-    type: String,
-  },
+  props: ["foreign_key", "type"],
   data() {
     return {
       pictures: [],

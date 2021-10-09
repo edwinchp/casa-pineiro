@@ -26,7 +26,10 @@ class ApiLocationController extends Controller
             return response()->json($errors->all(), 400);
         }
 
-        return Store::find($request->store_id)->locations;
+        $locations = Store::find($request->store_id)->locations;
+
+        $locations2 = $this->setPrimaryPicture($locations);
+        return $locations2;
     }
 
     /**
@@ -131,5 +134,23 @@ class ApiLocationController extends Controller
         $location->delete();
 
         return response()->json(['message' => 'Location deleted', 'location' => $location], 200);
+    }
+
+
+    public function setPrimaryPicture($locations)
+    {
+        $locationsArray = [];
+
+        foreach ($locations as $location) {
+            $first = $location->pictures()->get()->first();
+            if ($first) {
+                $primaryPicture = $first->path ? '/images/products/' . $first->path : $first->link;
+                $location['primary_picture'] = $primaryPicture;
+            } else {
+                $location['primary_picture'] = null;
+            }
+            array_push($locationsArray, $location);
+        }
+        return $locationsArray;
     }
 }

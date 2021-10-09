@@ -8,13 +8,7 @@
         <div class="d-inline-block">
           <h2>Ubicación</h2>
 
-          <button
-            class="btn btn-danger btn-success-a"
-            data-toggle="tooltip"
-            data-placement="bottom"
-          >
-            <a href="location/create" class="a-primary"> Nuevo</a>
-          </button>
+            <a class="btn btn-danger btn-success-a a-primary mb-1" href="location/create"> Nuevo</a>
 
           <div class="dropdown-inverse dropdown">
             <button
@@ -52,6 +46,8 @@
               >
             </div>
           </div>
+
+          <store-dropdown @storeIdChanged="storeIdChanged" dropdown-type="danger"></store-dropdown>
         </div>
       </div>
     </div>
@@ -79,14 +75,17 @@
 
 <script>
 import LocationCard from "./LocationCard.vue";
+import StoreDropdown from "../layouts/StoreDropdown.vue"
 export default {
   components: {
     LocationCard,
+    StoreDropdown
   },
 
   data() {
     return {
       locations: [],
+      selectedStoreId: ""
     };
   },
 
@@ -94,13 +93,21 @@ export default {
     async getLocations() {
       const params = {
         params: {
-          store_id: 1,
+          store_id: this.selectedStoreId,
         },
       };
       const request = await axios.get("/api/location", params);
       this.locations = request.data;
     },
+
+
+    storeIdChanged(event){
+    this.selectedStoreId = event
+    this.getLocations()
   },
+  },
+
+  
 
   created() {
     this.getLocations();

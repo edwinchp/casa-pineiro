@@ -1,7 +1,12 @@
 <template>
-  <div v-if="stores.length > 0" class="dropdown-inverse dropdown open">
+  <div
+    v-if="stores.length > 1"
+    class="dropdown open"
+    :class="getDropdownType.dropdown"
+  >
     <button
-      class="btn btn-primary dropdown-toggle waves-effect waves-light"
+      class="btn dropdown-toggle waves-effect waves-light"
+      :class="getDropdownType.btn"
       type="button"
       id="dropdown-7"
       data-toggle="dropdown"
@@ -41,11 +46,33 @@
 export default {
   emits: ["storeIdChanged"],
 
+  props: {
+    dropdownType: {
+      required: false,
+      type: String,
+      default: "primary",
+    },
+  },
+
   data() {
     return {
       stores: [],
       selectedStoreId: null,
       selectedStoreName: null,
+      dropdownStyle: {
+        primary: {
+          dropdown: "dropdown-primary",
+          btn: "btn-primary",
+        },
+        danger: {
+          dropdown: "dropdown-danger",
+          btn: "btn-danger",
+        },
+        success: {
+          dropdown: "dropdown-success",
+          btn: "btn-success",
+        },
+      },
     };
   },
 
@@ -63,6 +90,12 @@ export default {
       this.selectedStoreId = store.id;
       this.selectedStoreName = store.name;
       this.$emit("storeIdChanged", this.selectedStoreId);
+    },
+  },
+
+  computed: {
+    getDropdownType() {
+      return this.dropdownStyle[this.dropdownType];
     },
   },
 

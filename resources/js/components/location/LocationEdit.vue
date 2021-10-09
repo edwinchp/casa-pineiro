@@ -51,14 +51,15 @@
               </div>
 
               <div class="col-lg-6 col-sm-12">
-                <div class="anaquel" id="anaquel">
+                <!-- <div class="anaquel" id="anaquel">
                   <img
                     class="card-img-top rounded"
                     src="/images/vidriera.jpg"
                     alt=""
                     width="20px"
                   />
-                </div>
+                </div> -->
+                <carousel :foreign_key="location.id" type="L"></carousel>
               </div>
             </div>
           </div>
@@ -80,7 +81,10 @@
               </div>
 
               <div class="p-1">
-                <button class="btn btn-primary">Imágenes</button>
+                <upload-picture
+                  :foreign_key="location.id"
+                  type="L"
+                ></upload-picture>
               </div>
             </div>
           </div>
@@ -93,11 +97,13 @@
 
 <script>
 import StoreInputDropdown from "../layouts/StoreInputDropdown.vue";
+import UploadPicture from "../layouts/UploadPicture.vue";
+import Carousel from "../layouts/Carousel.vue";
 
 export default {
   props: ["location"],
 
-  components: { StoreInputDropdown },
+  components: { StoreInputDropdown, UploadPicture, Carousel },
 
   data() {
     return {

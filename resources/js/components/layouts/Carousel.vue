@@ -203,12 +203,7 @@
 
 <script>
 export default {
-  props: {
-    foreign_key: String,
-    type: String,
-  },
-
-  //props: ["pictures", "foreign_key"],
+  props: ["foreign_key", "type"],
 
   data() {
     return {
