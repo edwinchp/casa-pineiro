@@ -206,7 +206,7 @@ class ApiProductController extends Controller
         $productsArray = [];
 
         foreach ($products as $product) {
-            $first = $product->pictures()->get()->first();
+            $first = $product->pictures()->where('type', 'P')->get()->first();
             if ($first) {
                 $primaryPicture = $first->path ? '/images/products/' . $first->path : $first->link;
                 $product['primary_picture'] = $primaryPicture;

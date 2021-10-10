@@ -8,46 +8,17 @@
         <div class="d-inline-block">
           <h2>Ubicación</h2>
 
-            <a class="btn btn-danger btn-success-a a-primary mb-1" href="location/create"> Nuevo</a>
+          <a
+            class="btn btn-danger btn-success-a a-primary mb-1"
+            href="location/create"
+          >
+            Nuevo</a
+          >
 
-          <div class="dropdown-inverse dropdown">
-            <button
-              class="btn btn-danger btn-success-a dropdown-toggle"
-              type="button"
-              id="dropdown-7"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Tienda
-            </button>
-            <div
-              class="dropdown-menu"
-              aria-labelledby="dropdown-7"
-              data-dropdown-in="fadeIn"
-              data-dropdown-out="fadeOut"
-              x-placement="bottom-start"
-              style="
-                position: absolute;
-                transform: translate3d(0px, 40px, 0px);
-                top: 0px;
-                left: 0px;
-                will-change: transform;
-              "
-            >
-              <a class="dropdown-item waves-light waves-effect" href="#"
-                >Tendejón Evelyn</a
-              >
-              <a class="dropdown-item waves-light waves-effect" href="#"
-                >Ferretería cables</a
-              >
-              <a class="dropdown-item waves-light waves-effect" href="#"
-                >Dunosusa</a
-              >
-            </div>
-          </div>
-
-          <store-dropdown @storeIdChanged="storeIdChanged" dropdown-type="danger"></store-dropdown>
+          <store-dropdown
+            @storeIdChanged="storeIdChanged"
+            dropdown-type="danger"
+          ></store-dropdown>
         </div>
       </div>
     </div>
@@ -75,17 +46,17 @@
 
 <script>
 import LocationCard from "./LocationCard.vue";
-import StoreDropdown from "../layouts/StoreDropdown.vue"
+import StoreDropdown from "../layouts/StoreDropdown.vue";
 export default {
   components: {
     LocationCard,
-    StoreDropdown
+    StoreDropdown,
   },
 
   data() {
     return {
       locations: [],
-      selectedStoreId: ""
+      selectedStoreId: "",
     };
   },
 
@@ -100,14 +71,11 @@ export default {
       this.locations = request.data;
     },
 
-
-    storeIdChanged(event){
-    this.selectedStoreId = event
-    this.getLocations()
+    storeIdChanged(event) {
+      this.selectedStoreId = event;
+      this.getLocations();
+    },
   },
-  },
-
-  
 
   created() {
     this.getLocations();

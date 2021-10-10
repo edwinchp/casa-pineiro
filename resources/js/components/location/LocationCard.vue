@@ -13,7 +13,13 @@
 
       <div class="card-body">
         <h4 class="card-title font-weight-bold">{{ location.name }}</h4>
-        <p class="card-text">15 productos</p>
+        <p v-if="location.products_stored > 1" class="card-text">
+          {{ location.products_stored }} productos
+        </p>
+        <p v-else-if="location.products_stored == 1" class="card-text">
+          {{ location.products_stored }} producto
+        </p>
+        <p v-else class="card-text">Sin productos</p>
 
         <div class="text-right">
           <button type="button" class="btn btn-link">

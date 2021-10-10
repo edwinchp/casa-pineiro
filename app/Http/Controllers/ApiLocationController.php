@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Location;
 use App\Store;
+use App\Product;
+use Illuminate\Support\Facades\DB;
 
 
 class ApiLocationController extends Controller
@@ -26,10 +28,13 @@ class ApiLocationController extends Controller
             return response()->json($errors->all(), 400);
         }
 
-        $locations = Store::find($request->store_id)->locations;
 
-        $locations2 = $this->setPrimaryPicture($locations);
-        return $locations2;
+        $locations = Location::where('store_id', '=', $request->store_id)->addSelect([
+            'products_stored' =>
+            Product::selectRaw('count(name)')->whereColumn('location_id', 'locations.id')
+        ])->get();
+        $locations_with_pictures = $this->setPrimaryPicture($locations);
+        return $locations_with_pictures;
     }
 
     /**
@@ -142,7 +147,7 @@ class ApiLocationController extends Controller
         $locationsArray = [];
 
         foreach ($locations as $location) {
-            $first = $location->pictures()->get()->first();
+            $first = $location->pictures()->where('type', 'L')->get()->first();
             if ($first) {
                 $primaryPicture = $first->path ? '/images/products/' . $first->path : $first->link;
                 $location['primary_picture'] = $primaryPicture;

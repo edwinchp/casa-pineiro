@@ -36,14 +36,13 @@
         </div>
 
         <div class="col-md-4 col-xl-4 location-style">
-            <div class="card widget-card-1">
+            <div class="card widget-card-1 ">
                 <div class="card-block-small">
                     <i class="icofont icofont-location-pin bg-danger card1-icon"></i>
                     <span class="text-danger f-w-600">
                         <h4>Ubicación</h4>
                     </span>
-                    <h4>$553</h4>
-                    <div class="pt-2">
+                    <div class="" style="padding-top: 43px;">
                         <span class="f-left m-t-10 text-muted">
                             <a href="location" class="text-danger"><i class="text-danger f-16 icofont icofont-external-link m-r-10"></i>Ver
                                 más</a>
