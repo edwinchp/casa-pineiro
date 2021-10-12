@@ -27,8 +27,13 @@
           :src="'/images/products/' + picture.path"
           :style="{ width: imgW + 'px', height: imgH + 'px !important' }"
         />
-        <img v-else class="d-block" :src="picture.link" 
-        :style="{ width: imgW + 'px', height: imgH + 'px !important' }"/>
+
+        <img
+          v-else
+          class="d-block w-100"
+          :src="picture.link"
+          :style="{ width: imgW + 'px', height: imgH + 'px !important' }"
+        />
 
         <div class="carousel-caption d-none d-md-block mb-3">
           <a
@@ -304,7 +309,7 @@ export default {
 <style scoped>
 .carousel-inner img {
   object-fit: cover;
-  }
+}
 
 .carousel {
   max-width: 300px;

@@ -86,14 +86,108 @@
                   <!-- END ROW 3 -->
 
                   <!-- ROW 4 -->
-                  <div class="form-row">
-                    <div class="form-group col-md-4">
+                  <div class="row">
+                    <div
+                      class="
+                        dropdown-inverse dropdown
+                        open
+                        col-lg-2 col-md-4 col-sm-12
+                        pt-3
+                      "
+                    >
+                      <button
+                        class="btn btn-light border border-dark dropdown-toggle"
+                        type="button"
+                        id="dropdown-7"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Proveedor
+                      </button>
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="dropdown-7"
+                        data-dropdown-in="fadeIn"
+                        data-dropdown-out="fadeOut"
+                        x-placement="bottom-start"
+                        style="
+                          position: absolute;
+                          transform: translate3d(0px, 40px, 0px);
+                          top: 0px;
+                          left: 0px;
+                          will-change: transform;
+                        "
+                      >
+                        <a
+                          class="dropdown-item waves-light waves-effect"
+                          href="#"
+                          >Gamesa</a
+                        >
+                        <a
+                          class="dropdown-item waves-light waves-effect"
+                          href="#"
+                          >Sabrita</a
+                        >
+                      </div>
+                    </div>
+
+                    <div
+                      class="
+                        dropdown-inverse dropdown
+                        open
+                        col-lg-2 col-md-4 col-sm-12
+                        pt-3
+                        py-3
+                      "
+                    >
+                      <button
+                        class="btn btn-light border border-dark dropdown-toggle"
+                        type="button"
+                        id="dropdown-7"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Ubicación
+                      </button>
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="dropdown-7"
+                        data-dropdown-in="fadeIn"
+                        data-dropdown-out="fadeOut"
+                        x-placement="bottom-start"
+                        style="
+                          position: absolute;
+                          transform: translate3d(0px, 40px, 0px);
+                          top: 0px;
+                          left: 0px;
+                          will-change: transform;
+                        "
+                      >
+                        <a
+                          class="dropdown-item waves-light waves-effect"
+                          href="#"
+                          >Vidriera</a
+                        >
+                        <a
+                          class="dropdown-item waves-light waves-effect"
+                          href="#"
+                          >Anaquel</a
+                        >
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-4 col-sm-12 pt-3">
                       <!-- <label for="delivery_option">Tienda</label> -->
+
                       <store-input-dropdown
                         @storeIdChanged="selectedStoreId = $event"
                         :currentStoreId="selectedStoreId"
                       ></store-input-dropdown>
-                      <!-- <div class="input-group">
+                    </div>
+                  </div>
+
+                  <!-- <div class="input-group">
                         <div class="input-group-prepend">
                           <span class="input-group-text"
                             ><i class="fas fa-store"></i
@@ -118,9 +212,9 @@
                           {{ inputFields.store.feedback }}
                         </div>
                       </div> -->
-                    </div>
+                </div>
 
-                    <div v-show="false" class="col-md-4">
+                <!-- <div v-show="false" class="col-md-4">
                       <label for="cp_offer_price">Precio de oferta</label>
                       <input-text
                         :inputText="product.offer_price"
@@ -146,10 +240,9 @@
                           autocomplete="off"
                         />
                       </div>
-                    </div>
-                  </div>
-                  <!-- END ROW 4 -->
-                </div>
+                    </div> -->
+
+                <!-- END ROW 4 -->
 
                 <!-- PICTURES -->
                 <div class="col-md-3 pl-4">

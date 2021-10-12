@@ -1,20 +1,25 @@
 <template>
   <div class="col-sm-12" style="">
     <div class="card fb-card">
-      <div class="card-header color-card">
+      <div class="card-header" id="fondo">
         <div class="float-left" id="carrito">
           <i class="icofont icofont-truck-alt"></i>
         </div>
         <div class="d-inline-block">
           <h2>Proveedor</h2>
 
-          <button type="button" class="btn btn-inverse btn-success-a">
-            Nuevo
+          <button
+            class="color-nuevo btn"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            data-original-title="Nuevo producto"
+          >
+            <a href="supplier/create" class="a-primary">Nuevo</a>
           </button>
 
           <div class="dropdown-inverse dropdown">
             <button
-              class="btn btn-light border border-dark dropdown-toggle"
+              class="color-nuevo btn border border-dark dropdown-toggle"
               type="button"
               id="dropdown-7"
               data-toggle="dropdown"
@@ -88,7 +93,36 @@ export default {
   margin-top: 20px;
 }
 #carrito i {
-  background-color: black;
+  background-color: rgba(187, 74, 8, 0.87);
   font-size: 35px;
+}
+#fondo {
+  background-image: radial-gradient(
+    circle at -14.8% 50%,
+    #fffff2 0,
+    #fffce4 16.67%,
+    #fff2d6 33.33%,
+    #ffe7c7 50%,
+    #fcdcb9 66.67%,
+    #fad1ad 83.33%,
+    #f9c7a2 100%
+  );
+}
+
+.color-nuevo {
+  background-color: rgba(187, 74, 8, 0.87);
+  border-color: black;
+  color: white;
+}
+
+.a-primary {
+  color: white;
+  text-decoration: none;
+}
+
+.a-primary:hover {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
 }
 </style>
