@@ -153,7 +153,12 @@
 
                 <!-- PICTURES -->
                 <div class="col-md-3 pl-4">
-                  <carousel :foreign_key="product_id" type="P"></carousel>
+                  <carousel
+                    :foreign_key="product_id"
+                    type="P"
+                    img-w="500"
+                    img-h="300"
+                  ></carousel>
                 </div>
                 <!-- END PICTURES -->
               </div>
@@ -183,17 +188,17 @@
               </div>
 
               <div class="p-1">
-                <a href="/products" class="btn btn-secondary">Atrás</a>
+                <a class="m-1 btn btn-secondary" href="/products">Atrás</a>
               </div>
 
               <div class="p-1">
-                <a
-                  href="#"
+                <button
                   class="btn btn-danger"
                   data-target="#confirmDeleteModal"
                   data-toggle="modal"
-                  >Eliminar</a
                 >
+                  Eliminar
+                </button>
               </div>
 
               <div class="p-1">

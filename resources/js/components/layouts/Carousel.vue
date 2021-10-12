@@ -1,211 +1,105 @@
 <template>
-  <div>
+  <div
+    v-if="pictures.length > 0"
+    id="carouselExampleIndicators"
+    class="carousel slide"
+    data-ride="carousel"
+  >
+    <ol class="carousel-indicators">
+      <li
+        v-for="picture in pictures"
+        :key="picture.no"
+        data-target="#carouselExampleIndicators"
+        :data-slide-to="picture.no"
+        :class="[isPictureActive(picture) ? 'active' : '']"
+      ></li>
+    </ol>
 
-    <div
-      v-if="pictures.length > 0"
-      id="carouselExampleIndicators"
-      class="carousel slide"
-      data-ride="carousel"
-    >
-      <ol class="carousel-indicators">
-        <li
-          v-for="picture in pictures"
-          :key="picture.no"
-          data-target="#carouselExampleIndicators"
-          :data-slide-to="picture.no"
-          :class="[isPictureActive(picture) ? 'active' : '']"
-        ></li>
-      </ol>
-      <div class="carousel-inner">
-        <div
-          v-for="picture in pictures"
-          :class="[isPictureActive(picture) ? 'active' : '', 'carousel-item']"
-          :key="picture.no"
-        >
-          <img
-            v-if="picture.link == null"
-            class="d-block w-100"
-            :src="'/images/products/' + picture.path"
-          />
-          <img v-else class="d-block" :src="picture.link" />
+    <div class="carousel-inner">
+      <div
+        v-for="picture in pictures"
+        :class="[isPictureActive(picture) ? 'active' : '', 'carousel-item']"
+        :key="picture.no"
+      >
+        <img
+          v-if="picture.link == null"
+          class="d-block w-100"
+          :src="'/images/products/' + picture.path"
+          :style="{ width: imgW + 'px', height: imgH + 'px !important' }"
+        />
+        <img v-else class="d-block" :src="picture.link" 
+        :style="{ width: imgW + 'px', height: imgH + 'px !important' }"/>
 
-          <div class="carousel-caption d-none d-md-block mb-3">
-            <a
-              v-if="picture.path"
-              :href="'/images/products/' + picture.path"
-              class="btn btn-outline-light btn-sm"
-              target="_blank"
-              >Ampliar</a
-            >
-            <a
-              v-else
-              :href="picture.link"
-              class="btn btn-outline-light btn-sm"
-              target="_blank"
-              >Ampliar</a
-            >
-          </div>
-        </div>
-        <div v-show="false" class="picture-options">
-          <button
-            class="btn btn-inverse btn-icon"
-            data-target="#pictureOptionsModal"
-            data-toggle="modal"
-            @click="calculateMaxPicture"
+        <div class="carousel-caption d-none d-md-block mb-3">
+          <a
+            v-if="picture.path"
+            :href="'/images/products/' + picture.path"
+            class="btn btn-outline-light btn-sm"
+            target="_blank"
+            >Ampliar</a
           >
-            <i class="fas fa-cog icon-white"></i>
-          </button>
+          <a
+            v-else
+            :href="picture.link"
+            class="btn btn-outline-light btn-sm"
+            target="_blank"
+            >Ampliar</a
+          >
         </div>
       </div>
-    
-      <a
-        class="carousel-control-prev"
-        href="#carouselExampleIndicators"
-        role="button"
-        data-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a
-        class="carousel-control-next"
-        href="#carouselExampleIndicators"
-        role="button"
-        data-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
+      <div v-show="false" class="picture-options">
+        <button
+          class="btn btn-inverse btn-icon"
+          data-target="#pictureOptionsModal"
+          data-toggle="modal"
+          @click="calculateMaxPicture"
+        >
+          <i class="fas fa-cog icon-white"></i>
+        </button>
+      </div>
     </div>
 
-    <div v-else class="add-pictures">
-      <button
-        v-show="false"
-        class="btn btn-inverse"
-        data-target="#pictureOptionsModal"
-        data-toggle="modal"
-        @click="calculateMaxPicture"
-      >
-        Agregar imágenes
-      </button>
-    </div>
-
-    <!-- MODAL -->
-    <div
-      class="modal fade"
-      id="pictureOptionsModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
+    <a
+      class="carousel-control-prev"
+      href="#carouselExampleIndicators"
+      role="button"
+      data-slide="prev"
     >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Modificar Imágenes
-            </h5>
-
-            <button @click="addNewPictureInput">Nueva imagen</button>
-            <button
-              class="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <hr />
-
-            <!-- CURRENT PICTURES -->
-            <table class="table table-responsive">
-              <thead>
-                <tr>
-                  <th scope="col">Imagen</th>
-                  <th scope="col">No</th>
-                  <th scope="col">Link</th>
-                  <th scope="col">Opciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="picture in pictures" :key="picture.id">
-                  <th scope="row">
-                    <img
-                      v-if="picture.link == null"
-                      class="d-block"
-                      :src="'/images/products/' + picture.path"
-                    />
-                    <img v-else class="d-block" :src="picture.link" />
-                  </th>
-                  <td>{{ picture.no }}</td>
-                  <td v-if="picture.link == null">NA</td>
-                  <td v-else>
-                    <input
-                      class="form-control"
-                      type="text"
-                      v-model="picture.link"
-                    />
-                  </td>
-                  <td>
-                    <button
-                      class="btn btn-danger btn-sm btn-rounded"
-                      @click="deletePicture(picture.id)"
-                    >
-                      Eliminar
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <!-- New Images -->
-            <div>
-              <div v-for="pictureInput in pictureInputs" :key="pictureInput.no">
-                <label for="1">{{ pictureInput.no }}</label>
-                <input
-                  type="file"
-                  accept="image/png, image/jpeg"
-                  :value="pictureInput.path"
-                  @input="pictureChange($event, pictureInput)"
-                />
-                <input
-                  type="text"
-                  :value="pictureInput.link"
-                  @input="pictureLinkChange($event, pictureInput)"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="modal-footer">
-            <button
-              class="btn btn-secondary"
-              type="button"
-              data-dismiss="modal"
-            >
-              Cancelar
-            </button>
-            <button
-              class="btn btn-success btn-icon-split"
-              @click="savePictures"
-            >
-              <span class="icon text-white-50">
-                <i class="fas fa-trash"></i>
-              </span>
-              <span class="text">Guardar</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a
+      class="carousel-control-next"
+      href="#carouselExampleIndicators"
+      role="button"
+      data-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["foreign_key", "type"],
+  // props: ["foreign_key", "type"],
+
+  props: {
+    foreign_key: {
+      required: true,
+    },
+    type: {
+      required: true,
+    },
+    imgW: {
+      required: false,
+      default: 500,
+    },
+    imgH: {
+      required: false,
+      default: 300,
+    },
+  },
 
   data() {
     return {
@@ -409,26 +303,24 @@ export default {
 
 <style scoped>
 .carousel-inner img {
-  width: 400px;
-  height: 350px !important;
-  object-fit: cover; 
-}
+  object-fit: cover;
+  }
 
 .carousel {
   max-width: 300px;
   max-height: 500px;
-  margin-left: 130px;
+  margin-left: 0px;
 }
 
 @media (max-width: 600px) {
- .carousel {
+  .carousel {
     margin-left: 10px;
   }
 }
 
-.carousel-inner a{
-    background-color: rgba(0, 0, 0, 0.5);
-    color:white;
+.carousel-inner a {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
 }
 
 .icon-white {

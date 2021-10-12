@@ -59,7 +59,14 @@
                     width="20px"
                   />
                 </div> -->
-                <carousel :foreign_key="location.id" type="L"></carousel>
+                <div class="carousel-margen">
+                  <carousel
+                    :foreign_key="location.id"
+                    type="L"
+                    img-w="400"
+                    img-h="350"
+                  ></carousel>
+                </div>
               </div>
             </div>
           </div>
@@ -159,5 +166,9 @@ export default {
   #anaquel {
     margin-left: 80px;
   }
+}
+
+.carousel-margen {
+  margin-left: 130px;
 }
 </style>
