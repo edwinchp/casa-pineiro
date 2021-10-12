@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <div
       v-if="pictures.length > 0"
       id="carouselExampleIndicators"
@@ -56,6 +57,7 @@
           </button>
         </div>
       </div>
+    
       <a
         class="carousel-control-prev"
         href="#carouselExampleIndicators"
@@ -407,14 +409,28 @@ export default {
 
 <style scoped>
 .carousel-inner img {
-  max-width: 200px;
-  max-height: 300px;
+  width: 400px;
+  height: 350px !important;
+  object-fit: cover; 
 }
 
 .carousel {
-  max-width: 200px;
-  max-height: 300px;
+  max-width: 300px;
+  max-height: 500px;
+  margin-left: 130px;
 }
+
+@media (max-width: 600px) {
+ .carousel {
+    margin-left: 10px;
+  }
+}
+
+.carousel-inner a{
+    background-color: rgba(0, 0, 0, 0.5);
+    color:white;
+}
+
 .icon-white {
   color: white;
   padding-left: 3px;

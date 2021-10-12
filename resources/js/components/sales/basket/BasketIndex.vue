@@ -436,25 +436,16 @@
                                   />
                                 </div>
                               </div>
-                              <div class="d-flex justify-content-end">
-                                <div class="input-group mb-3 mr-3">
-                                  <div class="input-group-prepend">
-                                    <h6 class="mr-4 mt-2">
-                                      <strong>Cambio: </strong>
-                                    </h6>
-                                    <span class="input-group-text">$</span>
-                                  </div>
-                                  <input
-                                    disabled
-                                    type="text"
-                                    class="form-control"
-                                    aria-label="Amount (to the nearest dollar)"
-                                    :value="getChange"
-                                  />
-                                </div>
-                              </div>
+                              
                             </div>
                           </div>
+                          <div class="sell-change" v-if="basket.length> 0">
+                                <div class="row mr-2">
+                                    <h5 class="text-right">
+                                     Cambio: <strong>${{getChange}}</strong>
+                                    </h5>                                                             
+                                </div>
+                              </div>
 
                           <div class="sell-summary" v-if="basket.length > 0">
                             <div class="row mr-1">

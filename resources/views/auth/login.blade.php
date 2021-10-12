@@ -16,14 +16,17 @@
 </head>
 
 <body class="fix-menu"> 
-<div class="loading"></div>
+<!-- <div class="loading"></div> -->
+<div class="loading show">
+    <div class="spin"></div>     
+</div>  
 
         <!-- Container-fluid starts -->
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="overlay">
-                    <h1 class="deepshadow mt-4">CASA PINEIRO</h1>
+                     <h1 class="deepshadow mt-4">CASA PINEIRO</h1>
                     </div>
                     <!-- Authentication card start -->
                     <div class="login-card card-block auth-body mr-auto ml-auto">
@@ -38,7 +41,7 @@
                                 </div>
                                 <hr/>
                                 <div class="input-group">
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Correo electrónico">
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Correo electrónico">
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -84,18 +87,50 @@
 </body>
 <style>
 
-.loading {
-    position: fixed;
+
+    /* position: fixed;
     left: 0px;
     top: 0px;
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background: url('images/carga4.gif') 50% 50% no-repeat rgb(249,249,249);
+    background: url('images/carga5.gif') 50% 50% no-repeat rgb(249,249,249);
     opacity: 1;
-  
-  
-}
+    filter: saturate(10);  
+*/
+
+.loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: 1s all;
+        opacity: 0;
+    }
+    .loading.show {
+        opacity: 5;
+    }
+    .loading .spin {
+        border: 5px solid hsla(555, 100%, 62%, 0.2);
+        border-top-color: blue;
+        border-radius: 100%;
+        width: 5em;
+        height: 5em;
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }            
+
+
 
 .overlay .deepshadow{
   font-family: "Avant Garde", 'Avantgarde', "Century Gothic", 'CenturyGothic', "AppleGothic", sans-serif;
