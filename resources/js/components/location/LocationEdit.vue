@@ -84,7 +84,9 @@
               </div>
 
               <div class="p-1">
-                <button class="btn btn-danger">Eliminar</button>
+                <button class="btn btn-danger" @click="deleteLocation">
+                  Eliminar
+                </button>
               </div>
 
               <div class="p-1">
@@ -141,6 +143,34 @@ export default {
             timer: 5000,
           });
         });
+    },
+
+    deleteLocation() {
+      this.$fire({
+        title: "¿Estás seguro?",
+        text: "Esta ubicación se borrará definitivamente.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, borrar!",
+        cancelButtonText: "Cancelar",
+        focusCancel: true,
+      }).then((result) => {
+        axios.delete("/api/location/" + this.location.id).then((resp) => {
+          if (result.value && resp.status == 200) {
+            this.$fire({
+              title: "¡Listo!",
+              text: "Eliminado con éxito",
+              type: "success",
+              timer: 2500,
+            });
+            setTimeout(function () {
+              window.location.href = "/location";
+            }, 2600);
+          }
+        });
+      });
     },
 
     storeIdChanged(event) {
