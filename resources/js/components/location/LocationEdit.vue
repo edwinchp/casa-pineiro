@@ -157,19 +157,20 @@ export default {
         cancelButtonText: "Cancelar",
         focusCancel: true,
       }).then((result) => {
-        axios.delete("/api/location/" + this.location.id).then((resp) => {
-          if (result.value && resp.status == 200) {
-            this.$fire({
-              title: "¡Listo!",
-              text: "Eliminado con éxito",
-              type: "success",
-              timer: 2500,
-            });
-            setTimeout(function () {
-              window.location.href = "/location";
-            }, 2600);
-          }
-        });
+        if (typeof result.value !== "undefined")
+          axios.delete("/api/location/" + this.location.id).then((resp) => {
+            if (resp.status == 200) {
+              this.$fire({
+                title: "¡Listo!",
+                text: "Eliminado con éxito",
+                type: "success",
+                timer: 2500,
+              });
+              setTimeout(function () {
+                window.location.href = "/location";
+              }, 2600);
+            }
+          });
       });
     },
 

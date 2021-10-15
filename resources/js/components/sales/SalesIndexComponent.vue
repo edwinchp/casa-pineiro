@@ -90,8 +90,8 @@
                                   <!-- <th>Precio Unit</th> -->
                                   <th>Precio Total</th>
                                   <!-- <th>Cliente</th> -->
-                                  <th>Recibido</th>
-                                  <th>Cambio</th>
+                                  <!-- <th>Recibido</th>
+                                  <th>Cambio</th> -->
                                   <th>Vendedor</th>
                                   <th>Hora</th>
                                   <th>Opciones</th>
@@ -133,7 +133,7 @@
                                     </div>
                                   </td> -->
 
-                                  <td class="table-number">
+                                  <!-- <td class="table-number">
                                     <div class="row">
                                       <div class="col-xl-11">
                                         <div class="">
@@ -151,7 +151,7 @@
                                         </div>
                                       </div>
                                     </div>
-                                  </td>
+                                  </td> -->
 
                                   <td class="table-number">
                                     <div class="row">
@@ -370,17 +370,18 @@ export default {
         cancelButtonText: "Cancelar",
         focusCancel: true,
       }).then((result) => {
-        axios.delete("api/sales/" + id).then((resp) => {
-          if (result.value && resp.status == 200) {
-            this.$fire({
-              title: "¡Listo!",
-              text: "Eliminado con éxito",
-              type: "success",
-              timer: 2500,
-            });
-            this.getSales(1);
-          }
-        });
+        if (typeof result.value !== "undefined")
+          axios.delete("api/sales/" + id).then((resp) => {
+            if (resp.status == 200) {
+              this.$fire({
+                title: "¡Listo!",
+                text: "Eliminado con éxito",
+                type: "success",
+                timer: 2500,
+              });
+              this.getSales(1);
+            }
+          });
       });
     },
   },

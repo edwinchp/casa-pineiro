@@ -41,7 +41,7 @@ class ApiProductController extends Controller
             return response()->json($productsWithPictures, 200);
         }
 
-        $products = Product::where('store_id', '=', $request->store_id)->orderBy('created_at', 'DESC')->paginate(8);
+        $products = Product::where('store_id', '=', $request->store_id)->where('status', 'A')->orderBy('created_at', 'DESC')->paginate(8);
 
         $productsWithPictures = $this->setPrimaryPicture($products);
 
@@ -159,7 +159,23 @@ class ApiProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $message = '';
+        if ($product->status == 'A') {
+            $message = 'Product inactivated';
+            $product->status = 'I';
+        } else {
+            $message = 'Product activated';
+            $product->status = 'A';
+        }
+        $product->save();
+
+        // Delete completetly, not recommended due to dependencies with Sales
+        //$pics = $this->getPicturePaths($product, 'P');
+        //Storage::delete($pics);
+        //$product->delete();
+
+        return $message;
     }
 
 
@@ -237,7 +253,8 @@ class ApiProductController extends Controller
             'store_id',
             '=',
             $request->store_id
-        )->where('bar_code', '=', $request->barcode)->get();
+        )->where('bar_code', '=', $request->barcode)
+            ->where('status', 'A')->get();
 
 
         // If user requests for all stores
@@ -245,7 +262,8 @@ class ApiProductController extends Controller
             $product = Product::whereIn(
                 'store_id',
                 $stores_ids
-            )->where('bar_code', '=', $request->barcode)->get();
+            )->where('bar_code', '=', $request->barcode)
+                ->where('status', 'A')->get();
         }
 
 

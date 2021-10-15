@@ -10,6 +10,7 @@
       autocomplete="off"
       @input="inputChange"
       v-model="input"
+      :disabled="!isActive"
     />
     <div class="invalid-feedback">{{ inputField.feedback }}</div>
   </div>
@@ -21,6 +22,10 @@ export default {
     inputText: "",
     inputField: Object,
     iconClass: String,
+    isActive: {
+      required: false,
+      default: true,
+    },
   },
 
   data() {

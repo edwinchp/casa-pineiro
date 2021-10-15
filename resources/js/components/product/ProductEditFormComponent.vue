@@ -20,6 +20,7 @@
                         :inputField="inputFields.name"
                         iconClass="fas fa-square"
                         v-model="product.name"
+                        :is-active="isActive"
                       ></input-text>
                     </div>
                   </div>
@@ -35,6 +36,7 @@
                         :inputField="inputFields.bar_code"
                         iconClass="fas fa-barcode"
                         v-model="product.bar_code"
+                        :is-active="isActive"
                       ></input-text>
                     </div>
                     <div class="col-md-6">
@@ -45,6 +47,7 @@
                         :inputField="{}"
                         iconClass="fas fa-circle"
                         v-model="product.brand"
+                        :is-active="isActive"
                       ></input-text>
                     </div>
                   </div>
@@ -60,6 +63,7 @@
                         :inputField="inputFields.price"
                         iconClass="fas fa-dollar-sign"
                         v-model="product.price"
+                        :is-active="isActive"
                       ></input-text>
                     </div>
                     <div class="col-md-4">
@@ -70,6 +74,7 @@
                         :inputField="inputFields.cost_price"
                         iconClass="fas fa-dollar-sign"
                         v-model="product.cost_price"
+                        :is-active="isActive"
                       ></input-text>
                     </div>
                     <div class="col-md-4">
@@ -80,13 +85,14 @@
                         :inputField="inputFields.qty"
                         iconClass="fas fa-boxes"
                         v-model="product.qty"
+                        :is-active="isActive"
                       ></input-text>
                     </div>
                   </div>
                   <!-- END ROW 3 -->
 
                   <!-- ROW 4 -->
-                  <div class="row">
+                  <div class="row" v-if="isActive">
                     <div
                       class="
                         dropdown-inverse dropdown
@@ -268,13 +274,14 @@
                     rows="5"
                     class="form-control"
                     v-model="product.description"
+                    :disabled="!isActive"
                   ></textarea>
                 </div>
               </div>
             </div>
 
             <div class="form-row pt-3">
-              <div class="p-1">
+              <div class="p-1" v-if="isActive">
                 <button class="btn btn-success" @click="saveProduct">
                   Guardar
                 </button>
@@ -286,15 +293,15 @@
 
               <div class="p-1">
                 <button
-                  class="btn btn-danger"
-                  data-target="#confirmDeleteModal"
-                  data-toggle="modal"
+                  class="btn"
+                  :class="isActive ? 'btn-danger' : 'btn-success'"
+                  @click="inactivateProduct"
                 >
-                  Eliminar
+                  {{ product.status == "A" ? "Descontinuar" : "Activar" }}
                 </button>
               </div>
 
-              <div class="p-1">
+              <div class="p-1" v-if="isActive">
                 <upload-picture
                   :foreign_key="product_id"
                   type="P"
@@ -307,62 +314,6 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Upload picture -->
-
-    <!-- Confirm delete Modal-->
-    <div
-      class="modal fade"
-      id="confirmDeleteModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Eliminar producto
-            </h5>
-            <button
-              class="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ¿Seguro que desea eleminar el producto
-            <strong>Dummy product</strong>? <br />
-            Esta opción no podrá deshacerse.
-          </div>
-          <div class="modal-footer">
-            <button
-              class="btn btn-secondary"
-              type="button"
-              data-dismiss="modal"
-            >
-              Cancelar
-            </button>
-            <form action="" method="post">
-              <button
-                type="submit"
-                href="#"
-                class="btn btn-danger btn-icon-split"
-              >
-                <span class="icon text-white-50">
-                  <i class="fas fa-trash"></i>
-                </span>
-                <span class="text">Eliminar</span>
-              </button>
-            </form>
           </div>
         </div>
       </div>
@@ -436,7 +387,11 @@ export default {
     };
   },
 
-  computed: {},
+  computed: {
+    isActive() {
+      return this.product.status == "A" ? true : false;
+    },
+  },
 
   methods: {
     getBarCodes() {
@@ -680,6 +635,35 @@ export default {
         this.selectedStoreId = this.product.store_id;
       });
       callback();
+    },
+
+    inactivateProduct() {
+      let text = this.isActive
+        ? "El producto ya no se podrá vender"
+        : "El producto se mostrará nuevamente para su venta";
+      this.$fire({
+        title: "¿Estás seguro?",
+        text: text,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, adelante!",
+        cancelButtonText: "Cancelar",
+        focusCancel: true,
+      }).then((result) => {
+        if (typeof result.value !== "undefined")
+          axios.delete("/api/products/" + this.product.id).then((resp) => {
+            if (resp.status == 200) {
+              this.$fire({
+                title: "¡Listo!",
+                type: "success",
+                timer: 2500,
+              });
+            }
+            this.findProduct();
+          });
+      });
     },
   },
 

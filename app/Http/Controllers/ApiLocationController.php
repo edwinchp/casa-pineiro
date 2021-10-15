@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use App\Location;
 use App\Store;
 use App\Product;
-use Storage;
 
 
 class ApiLocationController extends Controller
@@ -136,7 +136,7 @@ class ApiLocationController extends Controller
     {
         $location = Location::findOrFail($id);
 
-        $pictures = $this->getPicturePaths($location);
+        $pictures = $this->getPicturePaths($location, 'L');
         Storage::delete($pictures);
         $location->delete();
         return response()->json(['message' => 'Location deleted', 'location' => $location], 200);
@@ -158,19 +158,5 @@ class ApiLocationController extends Controller
             array_push($locationsArray, $location);
         }
         return $locationsArray;
-    }
-
-    protected function getPicturePaths($location)
-    {
-        $paths = array();
-        $pics = $location->pictures->where('type', 'L');
-
-        foreach ($pics as $pic) {
-            if ($pic->path != null) {
-                array_push($paths, '/images/products/' . $pic->path);
-            }
-        }
-
-        return $paths;
     }
 }
