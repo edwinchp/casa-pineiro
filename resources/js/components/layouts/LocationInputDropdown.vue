@@ -18,13 +18,7 @@
         data-dropdown-in="fadeIn"
         data-dropdown-out="fadeOut"
         x-placement="bottom-start"
-        style="
-          position: absolute;
-          transform: translate3d(0px, 40px, 0px);
-          top: 0px;
-          left: 0px;
-          will-change: transform;
-        "
+        style=""
       >
         <a
           v-for="(d, index) in data"
@@ -36,12 +30,13 @@
         >
           {{ shortName(d.name, 30) }}</a
         >
-        <div class="dropdown-divider"></div>
+        <div v-if="targetExists" class="dropdown-divider"></div>
         <a
+          v-if="targetExists"
           class="dropdown-item waves-light waves-effect"
           href="#"
           @click="removeItem"
-          >Remover ubicación</a
+          ><i class="fas fa-trash pr-2"></i>Remover ubicación</a
         >
       </div>
     </div>
@@ -214,5 +209,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.dropdown-menu {
+  max-height: 280px;
+  overflow-y: auto;
+}
 </style>
