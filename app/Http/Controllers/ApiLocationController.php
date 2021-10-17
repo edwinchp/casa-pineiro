@@ -82,7 +82,7 @@ class ApiLocationController extends Controller
      */
     public function show($id)
     {
-        //
+        return Location::findOrFail($id);
     }
 
     /**

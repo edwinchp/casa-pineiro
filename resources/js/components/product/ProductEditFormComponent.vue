@@ -93,99 +93,60 @@
 
                   <!-- ROW 4 -->
                   <div class="row" v-if="isActive">
-                    <div
-                      class="
-                        dropdown-inverse dropdown
-                        open
-                        col-lg-2 col-md-4 col-sm-12
-                        pt-3
-                      "
-                    >
-                      <button
-                        class="btn btn-light border border-dark dropdown-toggle"
-                        type="button"
-                        id="dropdown-7"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Proveedor
-                      </button>
-                      <div
-                        class="dropdown-menu"
-                        aria-labelledby="dropdown-7"
-                        data-dropdown-in="fadeIn"
-                        data-dropdown-out="fadeOut"
-                        x-placement="bottom-start"
-                        style="
-                          position: absolute;
-                          transform: translate3d(0px, 40px, 0px);
-                          top: 0px;
-                          left: 0px;
-                          will-change: transform;
-                        "
-                      >
-                        <a
-                          class="dropdown-item waves-light waves-effect"
-                          href="#"
-                          >Gamesa</a
+                    <div class="col-lg-2 pt-1">
+                      <label for="">Provedor</label><br />
+                      <div class="dropdown-inverse dropdown open">
+                        <button
+                          class="
+                            btn btn-light
+                            border border-dark
+                            dropdown-toggle
+                          "
+                          type="button"
+                          id="dropdown-7"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
                         >
-                        <a
-                          class="dropdown-item waves-light waves-effect"
-                          href="#"
-                          >Sabrita</a
+                          Proveedor
+                        </button>
+                        <div
+                          class="dropdown-menu"
+                          aria-labelledby="dropdown-7"
+                          data-dropdown-in="fadeIn"
+                          data-dropdown-out="fadeOut"
+                          x-placement="bottom-start"
+                          style="
+                            position: absolute;
+                            transform: translate3d(0px, 40px, 0px);
+                            top: 0px;
+                            left: 0px;
+                            will-change: transform;
+                          "
                         >
+                          <a
+                            class="dropdown-item waves-light waves-effect"
+                            href="#"
+                            >Gamesa</a
+                          >
+                          <a
+                            class="dropdown-item waves-light waves-effect"
+                            href="#"
+                            >Sabrita</a
+                          >
+                        </div>
                       </div>
                     </div>
 
-                    <div
-                      class="
-                        dropdown-inverse dropdown
-                        open
-                        col-lg-2 col-md-4 col-sm-12
-                        pt-3
-                        py-3
-                      "
-                    >
-                      <button
-                        class="btn btn-light border border-dark dropdown-toggle"
-                        type="button"
-                        id="dropdown-7"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Ubicación
-                      </button>
-                      <div
-                        class="dropdown-menu"
-                        aria-labelledby="dropdown-7"
-                        data-dropdown-in="fadeIn"
-                        data-dropdown-out="fadeOut"
-                        x-placement="bottom-start"
-                        style="
-                          position: absolute;
-                          transform: translate3d(0px, 40px, 0px);
-                          top: 0px;
-                          left: 0px;
-                          will-change: transform;
-                        "
-                      >
-                        <a
-                          class="dropdown-item waves-light waves-effect"
-                          href="#"
-                          >Vidriera</a
-                        >
-                        <a
-                          class="dropdown-item waves-light waves-effect"
-                          href="#"
-                          >Anaquel</a
-                        >
-                      </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 pt-1">
+                      <location-input-dropdown
+                        :store-id="selectedStoreId"
+                        :current-id="product_id"
+                      ></location-input-dropdown>
                     </div>
-                    <div class="col-lg-8 col-md-4 col-sm-12 pt-3">
-                      <!-- <label for="delivery_option">Tienda</label> -->
 
+                    <div class="col-lg-2 col-md-4 col-sm-12 pt-1">
+                      <label for="">Tienda</label><br />
                       <store-input-dropdown
                         @storeIdChanged="selectedStoreId = $event"
                         :currentStoreId="selectedStoreId"
@@ -325,9 +286,16 @@
 import Carousel from "../layouts/Carousel.vue";
 import InputText from "../layouts/InputText.vue";
 import StoreInputDropdown from "../layouts/StoreInputDropdown.vue";
+import LocationInputDropdown from "../layouts/LocationInputDropdown.vue";
 import UploadPicture from "../layouts/UploadPicture.vue";
 export default {
-  components: { InputText, Carousel, StoreInputDropdown, UploadPicture },
+  components: {
+    InputText,
+    Carousel,
+    StoreInputDropdown,
+    UploadPicture,
+    LocationInputDropdown,
+  },
   props: ["product_id"],
   data() {
     return {
