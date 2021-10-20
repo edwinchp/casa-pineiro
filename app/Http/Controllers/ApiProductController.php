@@ -41,8 +41,11 @@ class ApiProductController extends Controller
             return response()->json($productsWithPictures, 200);
         }
 
-        $products = Product::where('store_id', '=', $request->store_id)->where('status', 'A')->orderBy('created_at', 'DESC')->paginate(8);
+        $products = Product::where('products.store_id', '=', $request->store_id)
+            ->leftJoin('locations', 'locations.id', '=', 'products.location_id')
+            ->where('products.status', 'A')->select('products.*', 'locations.name as location_name')->paginate(8);
 
+        //return $products;
         $productsWithPictures = $this->setPrimaryPicture($products);
 
 
@@ -192,7 +195,7 @@ class ApiProductController extends Controller
 
         //$userProducts = User::find(Auth::id())->getUserProducts($request->store_id);
         //$userProducts = Product::all();
-        $userProducts = Product::where('store_id', '=', $request->store_id)->get();
+        $userProducts = Product::where('store_id', '=', $request->store_id)->where('status', 'A')->get();
 
         return response()->json($userProducts, 200);
     }

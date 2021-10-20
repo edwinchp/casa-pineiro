@@ -255,7 +255,7 @@
                   data-target="#product-details"
                   @click="selectedProduct = product"
                 >
-                  Anaquel 1
+                  {{ product.location_name }}
                 </a>
               </div>
             </div>
