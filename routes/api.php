@@ -52,6 +52,9 @@ Route::middleware('auth:api')->group(function () {
     // Location
     Route::resource('location', 'ApiLocationController');
 
+    // Supplier
+    Route::resource('supplier', 'ApiSupplierController');
+
     // Testing
     Route::get('testing-products', 'ApiProductController@testingProducts');
     Route::post('/logout', 'ApiUserController@logout');

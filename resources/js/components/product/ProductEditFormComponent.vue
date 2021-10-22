@@ -94,65 +94,27 @@
                   <!-- ROW 4 -->
                   <div class="row" v-if="isActive">
                     <div class="d-flex justify-content-start">
-                    <div class="pt-1">
-                      <label for="">Provedor</label><br />
-                      <div class="dropdown-inverse dropdown open">
-                        <button
-                          class="
-                            btn btn-light
-                            border border-dark
-                            dropdown-toggle
-                          "
-                          type="button"
-                          id="dropdown-7"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          Proveedor
-                        </button>
-                        <div
-                          class="dropdown-menu"
-                          aria-labelledby="dropdown-7"
-                          data-dropdown-in="fadeIn"
-                          data-dropdown-out="fadeOut"
-                          x-placement="bottom-start"
-                          style="
-                            position: absolute;
-                            transform: translate3d(0px, 40px, 0px);
-                            top: 0px;
-                            left: 0px;
-                            will-change: transform;
-                          "
-                        >
-                          <a
-                            class="dropdown-item waves-light waves-effect"
-                            href="#"
-                            >Gamesa</a
-                          >
-                          <a
-                            class="dropdown-item waves-light waves-effect"
-                            href="#"
-                            >Sabrita</a
-                          >
-                        </div>
+                      <div class="pt-1">
+                        <supplier-input-dropdown
+                          :store-id="selectedStoreId"
+                          :current-id="product_id"
+                        ></supplier-input-dropdown>
                       </div>
-                    </div>
 
-                    <div class="pt-1">
-                      <location-input-dropdown
-                        :store-id="selectedStoreId"
-                        :current-id="product_id"
-                      ></location-input-dropdown>
-                    </div>
+                      <div class="pt-1">
+                        <location-input-dropdown
+                          :store-id="selectedStoreId"
+                          :current-id="product_id"
+                        ></location-input-dropdown>
+                      </div>
 
-                    <div class="pt-1">
-                      <label for="">Tienda</label><br />
-                      <store-input-dropdown
-                        @storeIdChanged="selectedStoreId = $event"
-                        :currentStoreId="selectedStoreId"
-                      ></store-input-dropdown>
-                    </div>
+                      <div class="pt-1">
+                        <label for="">Tienda</label><br />
+                        <store-input-dropdown
+                          @storeIdChanged="selectedStoreId = $event"
+                          :currentStoreId="selectedStoreId"
+                        ></store-input-dropdown>
+                      </div>
                     </div>
                   </div>
 
@@ -289,6 +251,7 @@ import Carousel from "../layouts/Carousel.vue";
 import InputText from "../layouts/InputText.vue";
 import StoreInputDropdown from "../layouts/StoreInputDropdown.vue";
 import LocationInputDropdown from "../layouts/LocationInputDropdown.vue";
+import SupplierInputDropdown from "../layouts/SupplierInputDropdown.vue";
 import UploadPicture from "../layouts/UploadPicture.vue";
 export default {
   components: {
@@ -297,6 +260,7 @@ export default {
     StoreInputDropdown,
     UploadPicture,
     LocationInputDropdown,
+    SupplierInputDropdown,
   },
   props: ["product_id"],
   data() {

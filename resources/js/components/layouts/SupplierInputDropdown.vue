@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label>Ubicación</label><br />
+    <label>Proveedor</label><br />
     <div class="dropdown-inverse dropdown open">
       <button
         class="btn btn-light border border-dark dropdown-toggle"
@@ -37,7 +37,7 @@
           class="dropdown-item waves-light waves-effect"
           href="#"
           @click="removeItem"
-          ><i class="fas fa-trash pr-2"></i>Remover ubicación</a
+          ><i class="fas fa-trash pr-2"></i>Remover proveedor</a
         >
       </div>
       <div
@@ -79,7 +79,7 @@ export default {
           store_id: this.storeId,
         },
       };
-      axios.get("/api/location", params).then((resp) => {
+      axios.get("/api/supplier", params).then((resp) => {
         this.data = resp.data;
         //this.selectedId = this.data[0].id;
         //this.selectedName = this.data[0].name;
@@ -97,7 +97,7 @@ export default {
       console.log("exists? " + this.targetExists);
       if (this.targetExists) {
         const response = await axios.get(
-          "/api/location/" + this.target.location_id
+          "/api/supplier/" + this.target.supplier_id
         );
         this.targetData = response.data;
         this.selectedName = this.targetData.name;
@@ -111,7 +111,7 @@ export default {
         price: this.target.price,
         qty: this.target.qty,
         store_id: this.target.store_id,
-        location_id: obj.id,
+        supplier_id: obj.id,
       };
 
       // this.selectedId = obj.id;
@@ -119,7 +119,7 @@ export default {
       // this.$emit("idChanged", this.selectedId);
       this.$fire({
         title: "¿Estás seguro?",
-        text: "La ubicación cambiará a " + obj.name,
+        text: "El proveedor cambiará a " + obj.name,
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -149,12 +149,12 @@ export default {
         price: this.target.price,
         qty: this.target.qty,
         store_id: this.target.store_id,
-        location_id: null,
+        supplier_id: null,
       };
 
       this.$fire({
         title: "¿Estás seguro?",
-        text: "La ubicación se eliminará",
+        text: "El proveedor se eliminará",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -208,11 +208,21 @@ export default {
         return name;
       }
     },
+
+    getName() {
+      if (this.targetExists) {
+        return shortName(this.selectedName, 20);
+      } else if (this.selectedName == null) {
+        return "Seleccionar...";
+      } else {
+        return "Cargando...";
+      }
+    },
   },
 
   computed: {
     targetExists() {
-      return this.target.location_id != null;
+      return this.target.supplier_id != null;
     },
   },
 
