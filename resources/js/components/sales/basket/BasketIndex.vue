@@ -14,7 +14,7 @@
                           <h4>Nueva venta</h4>
                         </div>
                         <div class="p-2">
-                          <div class="dropdown-inverse dropdown open show">
+                          <!-- <div class="dropdown-inverse dropdown open show">
                             <button
                               class="
                                 btn btn-inverse
@@ -72,7 +72,7 @@
                                 >Quitar productos</a
                               >
                             </div>
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                     </div>
@@ -686,6 +686,7 @@ export default {
         this.allowPayment = true;
         return parseFloat(this.change).toFixed(2);
       } else {
+        this.allowPayment = false;
         return "";
       }
     },

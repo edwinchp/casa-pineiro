@@ -179,14 +179,13 @@
             <div class="row">
               <div class="col-xl-11">
                 <!-- <a :href="'products/' + product.id + '/edit'">
-                  {{ shortProductName(product.name) }}
                 </a> -->
                 <a
                   data-toggle="modal"
                   data-target="#product-details"
                   @click="selectedProduct = product"
                 >
-                  {{ shortProductName(product.name) }}
+                  {{ shortName(product.name, 35) }}
                 </a>
               </div>
             </div>
@@ -248,15 +247,8 @@
             <div class="row">
               <div class="col-xl-11">
                 <!-- <a :href="'products/' + product.id + '/edit'">
-                  {{ shortProductName(product.name) }}
                 </a> -->
-                <a
-                  data-toggle="modal"
-                  data-target="#product-details"
-                  @click="selectedProduct = product"
-                >
-                  {{ product.location_name }}
-                </a>
+                  {{ shortName(product.location_name, 30) }}
               </div>
             </div>
           </td>
@@ -332,9 +324,16 @@ export default {
       this.addToCart(this.selectedProduct);
     },
 
-    shortProductName(product) {
-      let shortName = product.substring(0, 35);
-      return product.length >= 35 ? shortName + "..." : shortName;
+    shortName(name, maxLength) {
+      if(name == null){
+        return name;
+      }
+      let short = name.substring(0, maxLength);
+      if (short.length < name.length) {
+        return short + "...";
+      } else {
+        return short;
+      }
     },
 
     editProduct(product) {

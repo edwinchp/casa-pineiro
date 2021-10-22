@@ -53,10 +53,16 @@ class Product extends Model
         //     ->orWhere('brand', 'LIKE', '%' . $foundByUser . '%');
         return $query->where([
             ['store_id', '=', $store_id],
-            ['name', 'LIKE', '%' . $foundByUser . '%'],
-        ])->orWhere([
-            ['bar_code', 'LIKE', '%' . $foundByUser . '%'],
-        ]);
+        ])
+        ->whereNested(function($query) use ($foundByUser){
+            $query->where('name', 'LIKE', '%' . $foundByUser . '%')
+            ->orWhere('bar_code', 'LIKE', '%' . $foundByUser . '%')
+            ->orWhere('brand', 'LIKE', '%' . $foundByUser . '%');
+        })
+        // ->orWhere([
+        //     ['bar_code', 'LIKE', '%' . $foundByUser . '%'],
+        // ]);
+        ;
     }
 
     public function scopeFilterByNameBarcodeAndBrandToAllStores($query, $foundByUser, $store_ids)

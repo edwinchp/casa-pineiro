@@ -93,7 +93,8 @@
 
                   <!-- ROW 4 -->
                   <div class="row" v-if="isActive">
-                    <div class="col-lg-2 pt-1">
+                    <div class="d-flex justify-content-start">
+                    <div class="pt-1">
                       <label for="">Provedor</label><br />
                       <div class="dropdown-inverse dropdown open">
                         <button
@@ -138,19 +139,20 @@
                       </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-4 col-sm-12 pt-1">
+                    <div class="pt-1">
                       <location-input-dropdown
                         :store-id="selectedStoreId"
                         :current-id="product_id"
                       ></location-input-dropdown>
                     </div>
 
-                    <div class="col-lg-2 col-md-4 col-sm-12 pt-1">
+                    <div class="pt-1">
                       <label for="">Tienda</label><br />
                       <store-input-dropdown
                         @storeIdChanged="selectedStoreId = $event"
                         :currentStoreId="selectedStoreId"
                       ></store-input-dropdown>
+                    </div>
                     </div>
                   </div>
 
