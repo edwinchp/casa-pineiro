@@ -40,12 +40,22 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              Mi perfil
+              {{ userInformation.user.name }}
             </a>
             <div
               class="dropdown-menu my-profile"
               aria-labelledby="navbarDropdown"
             >
+              <a
+                v-if="userInformation.user.role.id == 1"
+                class="dropdown-item"
+                href="/register"
+                >Crear usuario</a
+              >
+              <div
+                v-if="userInformation.user.role.id == 1"
+                class="dropdown-divider"
+              ></div>
               <a class="dropdown-item" href="/sales">Ventas</a>
               <a class="dropdown-item" href="/location">Ubicación</a>
               <a class="dropdown-item" href="/products">Productos</a>
@@ -89,7 +99,8 @@
             </button>
           </div>
           <div class="modal-body">
-            Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.
+            Seleccione "Cerrar sesión" a continuación si está listo para
+            finalizar su sesión actual.
           </div>
           <div class="modal-footer">
             <button
@@ -316,6 +327,7 @@ export default {
       received: "",
       allowPayment: false,
       change: "",
+      userInformation: {},
     };
   },
 
@@ -362,6 +374,12 @@ export default {
       axios.get("/api/customer/").then((response) => {
         console.log(response);
         this.customers = response.data;
+      });
+    },
+
+    getUserInformation() {
+      axios.get("/api/user-information/").then((response) => {
+        this.userInformation = response.data;
       });
     },
 
@@ -476,6 +494,7 @@ export default {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("user_token");
     this.getCustomers();
+    this.getUserInformation();
     this.updateTable(this.windowWidth);
   },
 };

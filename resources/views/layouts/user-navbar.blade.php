@@ -1,6 +1,3 @@
-
-
-        <div>
-          <user-navbar />
-        </div>
-
+<div>
+  <user-navbar />
+</div>

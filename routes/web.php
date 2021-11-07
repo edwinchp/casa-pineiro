@@ -45,8 +45,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('customer', 'CustomerController');
     Route::resource('supplier', 'SupplierController');
     Route::resource('location', 'LocationController');
+    Route::get('/register', 'UserController@create');
+    Route::post('/register', 'UserController@store')->name('register');
+
     //Route::get('/products/{id}/edit', 'ProductController@edit')->middleware('checkProduct');
 });
+
 
 
 Route::get('productss', function () {

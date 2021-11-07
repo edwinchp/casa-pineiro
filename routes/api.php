@@ -58,7 +58,7 @@ Route::middleware('auth:api')->group(function () {
     // Testing
     Route::get('testing-products', 'ApiProductController@testingProducts');
     Route::post('/logout', 'ApiUserController@logout');
-    Route::get('/current-user', 'ApiUserController@currentUser');
+    Route::get('/user-information', 'ApiUserController@userInformation');
     Route::get('/testing/string', 'TestingController@string');
     Route::get('/testing/integer', 'TestingController@integer');
     Route::get('/testing/array', 'TestingController@array');

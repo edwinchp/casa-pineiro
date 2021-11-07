@@ -35,8 +35,13 @@ class ApiUserController extends Controller
         return redirect('/');
     }
 
-    public function currentUser()
+    public function userInformation()
     {
-        return Auth::user()->role;
+        $user = Auth::user();
+        Auth::user()->role;
+        Auth::user()->stores;
+        return [
+            'user' => $user,
+        ];
     }
 }
