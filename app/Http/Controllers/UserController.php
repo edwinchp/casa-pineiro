@@ -49,13 +49,16 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|unique:users,email',
-            'password' => 'required',
+            'password' => 'required|min:8',
+            'password_confirmation' => 'required|same:password',
             'role_id' => 'required|integer',
             'store_id' => 'required|integer',
         ]);
 
-        if($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
+        //return $request;
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
 
@@ -73,7 +76,6 @@ class UserController extends Controller
             //'created_at' => 
         ]);
 
-        
         session()->flash('success');
         return redirect()->back();
     }
