@@ -248,13 +248,13 @@
               <div class="col-xl-11">
                 <!-- <a :href="'products/' + product.id + '/edit'">
                 </a> -->
-                  {{ shortName(product.location_name, 30) }}
+                {{ shortName(product.location_name, 30) }}
               </div>
             </div>
           </td>
 
           <td>
-            <a :href="product.primary_picture" target="blank"
+            <a @click="showPicture(product.primary_picture, product.name)"
               ><img
                 :src="product.primary_picture"
                 alt=""
@@ -325,7 +325,7 @@ export default {
     },
 
     shortName(name, maxLength) {
-      if(name == null){
+      if (name == null) {
         return name;
       }
       let short = name.substring(0, maxLength);
@@ -433,6 +433,17 @@ export default {
         text: message,
         type: "warning",
         timer: 3000,
+      });
+    },
+
+    showPicture(url, name) {
+      this.$fire({
+        title: name,
+        html: '<a href="' + url + '" target="blank">Ver en tamaño completo</a>',
+        imageUrl: url,
+        imageWidth: 700,
+        imageHeight: 300,
+        imageAlt: "Custom image",
       });
     },
   },
