@@ -6,53 +6,18 @@
           <i class="icofont icofont-truck-alt"></i>
         </div>
         <div class="d-inline-block">
-          <h2>Proveedor</h2>
+          <h2>Proveedores</h2>
 
           <button
             class="color-nuevo btn"
             data-toggle="tooltip"
             data-placement="bottom"
-            data-original-title="Nuevo producto"
           >
             <a href="supplier/create" class="a-primary">Nuevo</a>
           </button>
 
-          <div class="dropdown-inverse dropdown">
-            <button
-              class="color-nuevo btn border border-dark dropdown-toggle"
-              type="button"
-              id="dropdown-7"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Tienda
-            </button>
-            <div
-              class="dropdown-menu"
-              aria-labelledby="dropdown-7"
-              data-dropdown-in="fadeIn"
-              data-dropdown-out="fadeOut"
-              x-placement="bottom-start"
-              style="
-                position: absolute;
-                transform: translate3d(0px, 40px, 0px);
-                top: 0px;
-                left: 0px;
-                will-change: transform;
-              "
-            >
-              <a class="dropdown-item waves-light waves-effect" href="#"
-                >Tendejón Evelyn</a
-              >
-              <a class="dropdown-item waves-light waves-effect" href="#"
-                >Ferretería cables</a
-              >
-              <a class="dropdown-item waves-light waves-effect" href="#"
-                >Dunosusa</a
-              >
-            </div>
-          </div>
+          <store-dropdown @storeIdChanged="selectedStoreId = $event">
+          </store-dropdown>
         </div>
       </div>
     </div>
@@ -66,12 +31,13 @@
           </div>-->
         <div class="container-fluid mt-3">
           <div class="row ml-5 pl-3">
-            <supplier-card></supplier-card>
-            <supplier-card></supplier-card>
-            <supplier-card></supplier-card>
-            <supplier-card></supplier-card>
-            <supplier-card></supplier-card>
-            <supplier-card></supplier-card>
+            <supplier-card
+              v-for="supplier in suppliers"
+              :key="supplier.id"
+              :id="supplier.id"
+              :name="supplier.name"
+              :visit-day="supplier.visit_day"
+            ></supplier-card>
           </div>
         </div>
       </div>
@@ -81,9 +47,47 @@
 
 <script>
 import SupplierCard from "./SupplierCard.vue";
+import StoreDropdown from "../layouts/StoreDropdown.vue";
 export default {
   components: {
     SupplierCard,
+    StoreDropdown,
+  },
+
+  data() {
+    return {
+      suppliers: [],
+      selectedStoreId: null,
+    };
+  }, // end data
+
+  methods: {
+    getSuppliers() {
+      var p = {
+        params: {
+          store_id: this.selectedStoreId, // CHANGE THIS !!!!!!!!!!!!!!!!!!!!
+        },
+      };
+      axios.get("/api/supplier", p).then((response) => {
+        this.suppliers = response.data;
+      });
+    },
+
+    waitStoreId() {
+      if (this.selectedStoreId == null) {
+        setTimeout(() => {
+          console.log("Waiting for selectedStoreId in SupplierIndex");
+          this.waitStoreId();
+        }, 800);
+      } else {
+        console.log("selectedStoreId = " + this.selectedStoreId);
+        this.getSuppliers();
+      }
+    },
+  }, // end methods
+
+  created() {
+    this.waitStoreId();
   },
 };
 </script>

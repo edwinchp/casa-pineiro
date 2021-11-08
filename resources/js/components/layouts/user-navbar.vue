@@ -59,6 +59,7 @@
               <a class="dropdown-item" href="/sales">Ventas</a>
               <a class="dropdown-item" href="/location">Ubicación</a>
               <a class="dropdown-item" href="/products">Productos</a>
+              <a class="dropdown-item" href="/supplier">Proveedores</a>
               <div class="dropdown-divider"></div>
               <a
                 class="dropdown-item"
