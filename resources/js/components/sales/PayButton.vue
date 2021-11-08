@@ -19,8 +19,7 @@ export default {
     },
 
     store_id: {
-      required: false,
-      default: 0,
+      required: true,
     },
 
     total: {
@@ -49,7 +48,7 @@ export default {
   methods: {
     checkout() {
       let formData = {
-        store_id: 1,
+        store_id: this.store_id,
         status: 1,
         products: this.basket,
         total: this.total,

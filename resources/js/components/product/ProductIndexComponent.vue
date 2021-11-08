@@ -17,7 +17,7 @@
             <a href="products/create" class="a-primary">Nuevo</a>
           </button>
 
-          <div v-if="stores.length > 0" class="dropdown-inverse dropdown open">
+          <div v-if="stores.length > 1" class="dropdown-inverse dropdown open">
             <button
               class="btn btn-success dropdown-toggle waves-effect waves-light"
               type="button"
@@ -352,6 +352,7 @@ export default {
       this.selectedStoreName = store.name;
       this.getProducts(1);
       this.getAllProducts();
+      this.$root.$emit("clearCart", []);
     },
 
     productChangedInCart() {

@@ -1,37 +1,40 @@
 <template>
-  <div v-if="stores.length > 0" class="dropdown-inverse dropdown open">
-    <button
-      class="btn btn-inverse dropdown-toggle waves-effect waves-light"
-      type="button"
-      id="dropdown-7"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
-    >
-      {{ selectedStoreName }}
-    </button>
-    <div
-      class="dropdown-menu"
-      aria-labelledby="dropdown-7"
-      data-dropdown-in="fadeIn"
-      data-dropdown-out="fadeOut"
-      x-placement="bottom-start"
-      style="
-        position: absolute;
-        transform: translate3d(0px, 40px, 0px);
-        top: 0px;
-        left: 0px;
-        will-change: transform;
-      "
-    >
-      <a
-        v-for="(store, index) in stores"
-        :key="index"
-        @click="selectStore(store)"
-        class="dropdown-item waves-light waves-effect"
+  <div v-if="stores.length > 1">
+    <label for="">Tienda</label><br />
+    <div class="dropdown-inverse dropdown open">
+      <button
+        class="btn btn-inverse dropdown-toggle waves-effect waves-light"
+        type="button"
+        id="dropdown-7"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
       >
-        {{ store.name }}</a
+        {{ selectedStoreName }}
+      </button>
+      <div
+        class="dropdown-menu"
+        aria-labelledby="dropdown-7"
+        data-dropdown-in="fadeIn"
+        data-dropdown-out="fadeOut"
+        x-placement="bottom-start"
+        style="
+          position: absolute;
+          transform: translate3d(0px, 40px, 0px);
+          top: 0px;
+          left: 0px;
+          will-change: transform;
+        "
       >
+        <a
+          v-for="(store, index) in stores"
+          :key="index"
+          @click="selectStore(store)"
+          class="dropdown-item waves-light waves-effect"
+        >
+          {{ store.name }}</a
+        >
+      </div>
     </div>
   </div>
 </template>

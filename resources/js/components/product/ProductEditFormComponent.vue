@@ -109,7 +109,6 @@
                       </div>
 
                       <div class="pt-1">
-                        <label for="">Tienda</label><br />
                         <store-input-dropdown
                           @storeIdChanged="selectedStoreId = $event"
                           :currentStoreId="selectedStoreId"

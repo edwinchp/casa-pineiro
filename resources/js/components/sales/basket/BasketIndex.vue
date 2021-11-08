@@ -436,16 +436,15 @@
                                   />
                                 </div>
                               </div>
-                              
                             </div>
                           </div>
-                          <div class="sell-change" v-if="basket.length> 0">
-                                <div class="row mr-2">
-                                    <h5 class="text-right">
-                                     Cambio: <strong>${{getChange}}</strong>
-                                    </h5>                                                             
-                                </div>
-                              </div>
+                          <div class="sell-change" v-if="basket.length > 0">
+                            <div class="row mr-2">
+                              <h5 class="text-right">
+                                Cambio: <strong>${{ getChange }}</strong>
+                              </h5>
+                            </div>
+                          </div>
 
                           <div class="sell-summary" v-if="basket.length > 0">
                             <div class="row mr-1">
@@ -462,6 +461,7 @@
                                 :change="getChange"
                                 :allowPayment="allowPayment"
                                 @paymentSuccess="paymentSuccess"
+                                :store_id="userInformation.user.stores[0].id"
                               ></pay-button>
                             </div>
                           </div>
@@ -502,6 +502,8 @@ export default {
       received: "",
       allowPayment: false,
       change: "",
+
+      userInformation: {},
     };
   },
 
@@ -657,6 +659,12 @@ export default {
         timer: 2500,
       });
     },
+
+    getUserInformation() {
+      axios.get("/api/user-information/").then((response) => {
+        this.userInformation = response.data;
+      });
+    },
   }, // end methods
 
   computed: {
@@ -708,6 +716,8 @@ export default {
         console.log("huevos con erros");
         console.log(error);
       });
+
+    this.getUserInformation();
   },
 };
 </script>

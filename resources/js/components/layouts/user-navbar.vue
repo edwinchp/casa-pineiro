@@ -282,6 +282,7 @@
                         :allowPayment="allowPayment"
                         @paymentSuccess="paymentSuccess"
                         :textSize="16"
+                        :store_id="userInformation.user.stores[0].id"
                       >
                       </pay-button>
                     </div>
@@ -477,6 +478,10 @@ export default {
   mounted() {
     this.$root.$on("sharingCart", (data) => {
       this.miniCart = data;
+    });
+
+    this.$root.$on("clearCart", (data) => {
+      this.miniCart.splice(0, this.miniCart.length);
     });
 
     this.$nextTick(() => {
