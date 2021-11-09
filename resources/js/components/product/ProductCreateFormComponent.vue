@@ -76,7 +76,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-row pt-4">
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <label for="qty">Precio</label>
                   <input-text
                     :inputText="product.price"
@@ -86,7 +86,7 @@
                   ></input-text>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <label for="cp_price">Precio de compra</label>
                   <input-text
                     :inputText="product.cost_price"
@@ -96,7 +96,7 @@
                   ></input-text>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <label for="qty">Cantidad</label>
                   <input-text
                     :inputText="product.qty"
@@ -104,6 +104,25 @@
                     :inputField="inputFields.qty"
                     iconClass="fas fa-boxes"
                   ></input-text>
+                </div>
+
+                <div class="col-md-3">
+                  <label for="unit">Unidad</label>
+                  <select
+                    class="custom-select mr-sm-2"
+                    id="inlineFormCustomSelect"
+                    v-model="product.unit"
+                  >
+                    <option value="" selected>Seleccionar...</option>
+                    <option
+                      v-for="unit in units"
+                      :key="unit"
+                      :value="unit"
+                      :selected="unit == product.unit"
+                    >
+                      {{ unit }}
+                    </option>
+                  </select>
                 </div>
               </div>
 
@@ -197,7 +216,9 @@ export default {
         offer_price: "",
         offer_ends: null,
         picture_link: "",
+        unit: "",
       },
+      units: ["PZ", "G", "LT", "ML"],
       stores: [],
       selectedStoreId: "",
       imageUrl: null,
@@ -257,6 +278,7 @@ export default {
         formData.append("price", this.product.price);
         formData.append("cost_price", this.product.cost_price); // CHANGE THIS IN THE FUTURE!!!!!!!!!1
         formData.append("qty", this.product.qty);
+        formData.append("unit", this.product.unit);
         formData.append("description", this.product.description);
         formData.append("store_id", this.selectedStoreId);
         formData.append("picture_link", this.product.picture_link);

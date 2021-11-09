@@ -55,7 +55,7 @@
 
                   <!-- ROW 3 -->
                   <div class="form-row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <label for="price">Precio al público</label>
                       <input-text
                         :inputText="product.price"
@@ -66,7 +66,7 @@
                         :is-active="isActive"
                       ></input-text>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <label for="cost_price">Precio de compra</label>
                       <input-text
                         :inputText="product.cost_price"
@@ -77,7 +77,7 @@
                         :is-active="isActive"
                       ></input-text>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <label for="qty">Cantidad</label>
                       <input-text
                         :inputText="product.qty"
@@ -87,6 +87,23 @@
                         v-model="product.qty"
                         :is-active="isActive"
                       ></input-text>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="qty">Unidad</label>
+                      <select
+                        class="custom-select mr-sm-2"
+                        id="inlineFormCustomSelect"
+                        v-model="product.unit"
+                      >
+                        <option
+                          v-for="unit in units"
+                          :key="unit"
+                          :value="unit"
+                          :selected="unit == product.unit"
+                        >
+                          {{ unit }}
+                        </option>
+                      </select>
                     </div>
                   </div>
                   <!-- END ROW 3 -->
@@ -265,6 +282,7 @@ export default {
   data() {
     return {
       product: {},
+      units: ["PZ", "G", "LT", "ML"],
       productPictures: [],
       stores: [],
       storeBarCodes: [],

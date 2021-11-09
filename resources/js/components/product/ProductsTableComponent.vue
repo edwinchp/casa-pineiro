@@ -195,20 +195,15 @@
             <div class="row">
               <div class="col-xl-11 existing-product">
                 <!--QTY READ MODE-->
-                <div class="product-current-qty">
+                <div v-if="product.unit" class="product-current-qty">
+                  {{ product.qty + " " }}
+                  <span style="font-size: 10px"
+                    ><strong>{{ product.unit }}</strong></span
+                  >
+                </div>
+                <div v-else class="product-current-qty">
                   {{ product.qty }}
                 </div>
-
-                <!--<div v-if="!product.editing" class="product-item">
-                  <input
-                    class="form-control"
-                    type="number"
-                    v-model="product.qty"
-                    @keyup.enter="doneEdit(product)"
-                    @blur="doneEdit(product)"
-                    @keyup.esc="cancelEdit(product)"
-                  />
-                </div>-->
               </div>
             </div>
           </td>
