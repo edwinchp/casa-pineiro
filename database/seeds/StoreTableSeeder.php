@@ -13,19 +13,12 @@ class StoreTableSeeder extends Seeder
     public function run()
     {
         $stores = [
-            ['name' => 'Tendejón Evelyn'],
             ['name' => 'Ferretería Cables'],
-            ['name' => 'Dunosusa'],
-            ['name' => 'Los Arcos'],
-            ['name' => 'Pajaritos'],
-            ['name' => 'Aurrerá'],
-            ['name' => 'El Sagrado Corazón de Jesús'],
-            ['name' => 'Los Huevos'],
-            ['name' => 'El Detallista'],
-            ['name' => 'El Detallista II'],
-            ['name' => 'El Chumín'],
+            ['name' => 'Tendejón Evelyn'],
+            ['name' => 'Mary Kay'],
         ];
 
+        // Create stores
         foreach ($stores as $store) {
             DB::table('stores')->insert(
                 [
@@ -34,18 +27,10 @@ class StoreTableSeeder extends Seeder
             );
         }
 
-        for($i = 1; $i < 4; $i++){
-            DB::table('store_user')->insert([
-                'store_id' => $i,
-                'user_id' => 1
-            ]);
-        }
-
-        for($i = 3; $i < 6; $i++){
-            DB::table('store_user')->insert([
-                'store_id' => $i,
-                'user_id' => 2
-            ]);
-        }
+        // Assign stores to users
+        DB::table('store_user')->insert([
+            'store_id' => 1,
+            'user_id' => 1 // Admin user
+        ]);
     }
 }

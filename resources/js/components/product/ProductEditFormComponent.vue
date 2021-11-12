@@ -282,7 +282,7 @@ export default {
   data() {
     return {
       product: {},
-      units: ["PZ", "G", "LT", "ML"],
+      units: ["PZ", "KG", "GR", "LT", "M"],
       productPictures: [],
       stores: [],
       storeBarCodes: [],

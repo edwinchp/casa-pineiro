@@ -218,7 +218,7 @@ export default {
         picture_link: "",
         unit: "",
       },
-      units: ["PZ", "G", "LT", "ML"],
+      units: ["PZ", "KG", "GR", "LT", "M"],
       stores: [],
       selectedStoreId: "",
       imageUrl: null,

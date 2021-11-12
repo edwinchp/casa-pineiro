@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             //Casa Pineiro
             $table->double("price");
             $table->double("cost_price")->nullable();
-            $table->integer("qty");
+            $table->double("qty");
             $table->double("offer_price")->nullable();
             $table->timestamp("offer_ends")->nullable();
 

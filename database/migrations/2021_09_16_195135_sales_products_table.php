@@ -19,7 +19,7 @@ class SalesProductsTable extends Migration
             $table->integer('product_id');
             $table->string('name');
             $table->integer('store_id');
-            $table->integer('qty');
+            $table->double('qty');
             $table->double('price');
             $table->double('sub_total');
             $table->integer('is_offer')->nullable();

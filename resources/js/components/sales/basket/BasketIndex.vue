@@ -346,9 +346,8 @@
                                           <div class="row">
                                             <div class="col-xl-11">
                                               <a
-                                                href=""
-                                                data-toggle="modal"
-                                                data-target="#myModal"
+                                                :href='"/products/"+product.product_id+"/edit"'
+                                                target="blank"
                                                 >{{
                                                   shortProductName(product.name)
                                                 }}</a
@@ -360,12 +359,43 @@
                                           ${{ product.price }}
                                         </td>
                                         <td class="table-input">
-                                          <input
+                                          <div class="form-group row">
+                                            <div class="col-sm-12">
+                                              <div class="input-group">
+                                                <input
+                                                  type="text"
+                                                  class="form-control"
+                                                  id="inlineFormInputGroupUsername"
+                                                  placeholder="Cantidad"
+                                                  v-model="product.qty"
+                                                />
+                                                <div
+                                                  class="input-group-prepend"
+                                                >
+                                                  <div
+                                                    v-if="product.unit"
+                                                    class="input-group-text"
+                                                  >
+                                                    {{ product.unit }}
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <!-- <input
                                             type="text"
                                             class="form-control form-control-sm"
                                             placeholder="Cantidad"
-                                            :value="product.qty"
+                                            v-model="product.qty"
+                                            size="3"
+                                            name="qty"
+                                            id="qty"
                                           />
+                                          <label for="qty">{{
+                                            product.unit
+                                          }}</label> -->
+
+                                          <!-- <quantity-input :product="product"></quantity-input> -->
                                         </td>
                                         <td>
                                           <div class="table-options">
@@ -543,6 +573,7 @@ export default {
         current_qty: product.qty,
         price: product.price,
         status: 1,
+        unit: product.unit,
       });
       product.qty--;
     },
