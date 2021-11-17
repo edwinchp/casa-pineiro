@@ -32,6 +32,7 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown">
             <a
+              v-if="userInformation"
               class="nav-link dropdown-toggle"
               href="#"
               id="navbarDropdown"
@@ -46,16 +47,10 @@
               class="dropdown-menu my-profile"
               aria-labelledby="navbarDropdown"
             >
-              <a
-                v-if="userInformation.user.role.id == 1"
-                class="dropdown-item"
-                href="/register"
+              <a v-if="isAdmin" class="dropdown-item" href="/register"
                 >Crear usuario</a
               >
-              <div
-                v-if="userInformation.user.role.id == 1"
-                class="dropdown-divider"
-              ></div>
+              <div v-if="isAdmin" class="dropdown-divider"></div>
               <a class="dropdown-item" href="/sales">Ventas</a>
               <a class="dropdown-item" href="/location">Ubicación</a>
               <a class="dropdown-item" href="/products">Productos</a>
@@ -314,8 +309,12 @@
 
 <script>
 import PayButton from "../sales/PayButton.vue";
+import { userInformationMixin } from "../mixins/userInformationMixin";
+
 export default {
   components: { PayButton },
+
+  mixins: [userInformationMixin],
 
   data() {
     return {
@@ -329,7 +328,7 @@ export default {
       received: "",
       allowPayment: false,
       change: "",
-      userInformation: {},
+      //userInformation: {},
     };
   },
 
@@ -379,11 +378,11 @@ export default {
       });
     },
 
-    getUserInformation() {
-      axios.get("/api/user-information/").then((response) => {
-        this.userInformation = response.data;
-      });
-    },
+    // getUserInformation() {
+    //   axios.get("/api/user-information/").then((response) => {
+    //     this.userInformation = response.data;
+    //   });
+    // },
 
     shortProductName(product) {
       let short = product.substring(0, 30);
@@ -500,7 +499,7 @@ export default {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("user_token");
     this.getCustomers();
-    this.getUserInformation();
+    //this.getUserInformation();
     this.updateTable(this.windowWidth);
   },
 };

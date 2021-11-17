@@ -83,7 +83,7 @@
                 <a class="m-1 btn btn-secondary" href="/location">Atrás</a>
               </div>
 
-              <div class="p-1">
+              <div v-if="isAdmin" class="p-1">
                 <button class="btn btn-danger" @click="deleteLocation">
                   Eliminar
                 </button>
@@ -105,6 +105,7 @@
 
 
 <script>
+import { userInformationMixin } from "../mixins/userInformationMixin";
 import StoreInputDropdown from "../layouts/StoreInputDropdown.vue";
 import UploadPicture from "../layouts/UploadPicture.vue";
 import Carousel from "../layouts/Carousel.vue";
@@ -113,6 +114,8 @@ export default {
   props: ["location"],
 
   components: { StoreInputDropdown, UploadPicture, Carousel },
+
+  mixins: [userInformationMixin],
 
   data() {
     return {
@@ -178,6 +181,20 @@ export default {
       this.locationData.store_id = event;
       this.selectedStoreId = event;
     },
+  },
+
+  computed: {
+    isLoading() {
+      //return this.userInformationMixin.user;
+    },
+
+    huevos() {
+      return typeof this.isAdmin === "undefined";
+    },
+  },
+
+  created() {
+    console.log("userinfo");
   },
 };
 </script>

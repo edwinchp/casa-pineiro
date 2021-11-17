@@ -20,7 +20,7 @@
                         :inputField="inputFields.name"
                         iconClass="fas fa-square"
                         v-model="product.name"
-                        :is-active="isActive"
+                        :is-active="isActive && isAdmin"
                       ></input-text>
                     </div>
                   </div>
@@ -36,7 +36,7 @@
                         :inputField="inputFields.bar_code"
                         iconClass="fas fa-barcode"
                         v-model="product.bar_code"
-                        :is-active="isActive"
+                        :is-active="isActive && isAdmin"
                       ></input-text>
                     </div>
                     <div class="col-md-6">
@@ -47,7 +47,7 @@
                         :inputField="{}"
                         iconClass="fas fa-circle"
                         v-model="product.brand"
-                        :is-active="isActive"
+                        :is-active="isActive && isAdmin"
                       ></input-text>
                     </div>
                   </div>
@@ -63,7 +63,7 @@
                         :inputField="inputFields.price"
                         iconClass="fas fa-dollar-sign"
                         v-model="product.price"
-                        :is-active="isActive"
+                        :is-active="isActive && isAdmin"
                       ></input-text>
                     </div>
                     <div class="col-md-3">
@@ -74,7 +74,7 @@
                         :inputField="inputFields.cost_price"
                         iconClass="fas fa-dollar-sign"
                         v-model="product.cost_price"
-                        :is-active="isActive"
+                        :is-active="isActive && isAdmin"
                       ></input-text>
                     </div>
                     <div class="col-md-3">
@@ -85,7 +85,7 @@
                         :inputField="inputFields.qty"
                         iconClass="fas fa-boxes"
                         v-model="product.qty"
-                        :is-active="isActive"
+                        :is-active="isActive && isAdmin"
                       ></input-text>
                     </div>
                     <div class="col-md-3">
@@ -94,6 +94,7 @@
                         class="custom-select mr-sm-2"
                         id="inlineFormCustomSelect"
                         v-model="product.unit"
+                        :disabled="!isActive || !isAdmin"
                       >
                         <option
                           v-for="unit in units"
@@ -111,7 +112,7 @@
                   <!-- ROW 4 -->
                   <div class="row" v-if="isActive">
                     <div class="d-flex justify-content-start">
-                      <div class="pt-1">
+                      <div v-if="isAdmin" class="pt-1">
                         <supplier-input-dropdown
                           :store-id="selectedStoreId"
                           :current-id="product_id"
@@ -125,7 +126,7 @@
                         ></location-input-dropdown>
                       </div>
 
-                      <div class="pt-1">
+                      <div v-if="isAdmin" class="pt-1">
                         <store-input-dropdown
                           @storeIdChanged="selectedStoreId = $event"
                           :currentStoreId="selectedStoreId"
@@ -215,14 +216,14 @@
                     rows="5"
                     class="form-control"
                     v-model="product.description"
-                    :disabled="!isActive"
+                    :disabled="!isActive || !isAdmin"
                   ></textarea>
                 </div>
               </div>
             </div>
 
             <div class="form-row pt-3">
-              <div class="p-1" v-if="isActive">
+              <div class="p-1" v-if="isActive && isAdmin">
                 <button class="btn btn-success" @click="saveProduct">
                   Guardar
                 </button>
@@ -232,7 +233,7 @@
                 <a class="m-1 btn btn-secondary" href="/products">Atrás</a>
               </div>
 
-              <div class="p-1">
+              <div v-if="isAdmin" class="p-1">
                 <button
                   class="btn"
                   :class="isActive ? 'btn-danger' : 'btn-success'"
@@ -269,6 +270,8 @@ import StoreInputDropdown from "../layouts/StoreInputDropdown.vue";
 import LocationInputDropdown from "../layouts/LocationInputDropdown.vue";
 import SupplierInputDropdown from "../layouts/SupplierInputDropdown.vue";
 import UploadPicture from "../layouts/UploadPicture.vue";
+import { userInformationMixin } from "../mixins/userInformationMixin";
+
 export default {
   components: {
     InputText,
@@ -279,6 +282,9 @@ export default {
     SupplierInputDropdown,
   },
   props: ["product_id"],
+
+  mixins: [userInformationMixin],
+
   data() {
     return {
       product: {},

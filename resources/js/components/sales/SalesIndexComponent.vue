@@ -178,6 +178,7 @@
                                   <td>
                                     <div class="table-options">
                                       <a
+                                        v-if="isAdmin"
                                         href="#"
                                         data-toggle="tooltip"
                                         data-placement="bottom"
@@ -211,6 +212,7 @@
 </template>
 
 <script>
+import { userInformationMixin } from "../mixins/userInformationMixin";
 import StoreDropdown from "../layouts/StoreDropdown.vue";
 import PaginationComponent from "../layouts/PaginationComponent.vue";
 import FilterDropdown from "../layouts/FilterDropdown.vue";
@@ -223,6 +225,8 @@ export default {
     FilterDropdown,
     SaleDetails,
   },
+
+  mixins: [userInformationMixin],
 
   data() {
     return {
