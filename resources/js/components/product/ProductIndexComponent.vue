@@ -8,14 +8,7 @@
         <div class="d-inline-block">
           <h2>Productos</h2>
 
-          <button
-            class="btn btn-success"
-            data-toggle="tooltip"
-            data-placement="bottom"
-            data-original-title="Nuevo producto"
-          >
-            <a href="products/create" class="a-primary">Nuevo</a>
-          </button>
+          <a href="products/create" class="btn btn-success mb-1">Nuevo</a>
 
           <div v-if="stores.length > 1" class="dropdown-inverse dropdown open">
             <button

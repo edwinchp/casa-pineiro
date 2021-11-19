@@ -26,6 +26,7 @@
                   class="form-control"
                   name="bar_code"
                   autocomplete="off"
+                  v-model="supplier.name"
                 />
               </div>
             </div>
@@ -37,7 +38,11 @@
                     <i class="fas fa-user-tie"></i>
                   </span>
                 </div>
-                <input type="text" class="form-control" name="brand" />
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="supplier.supplier_name"
+                />
               </div>
             </div>
 
@@ -49,68 +54,34 @@
                     <i class="fas fa-phone-square-alt"></i>
                   </span>
                 </div>
-                <input type="text" class="form-control" name="brand" />
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="supplier.phone_number"
+                />
               </div>
             </div>
 
-            <div
-              class="
-                dropdown-inverse dropdown
-                open
-                col-lg-6 col-md-12 col-sm-12
-                row
-                pt-3
-              "
-            >
-              <button
-                class="btn btn-light border border-dark dropdown-toggle"
-                type="button"
-                id="dropdown-7"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
+            <div class="col-lg-6 col-md-12 col-sm-12 pt-3">
+              <label for="visit_day">Día de visita</label>
+              <select
+                class="custom-select mr-sm-2"
+                id="inlineFormCustomSelect"
+                v-model="supplier.visit_day"
               >
-                Día de visita
-              </button>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="dropdown-7"
-                data-dropdown-in="fadeIn"
-                data-dropdown-out="fadeOut"
-                x-placement="bottom-start"
-                style="
-                  position: absolute;
-                  transform: translate3d(0px, 40px, 0px);
-                  top: 0px;
-                  left: 0px;
-                  will-change: transform;
-                "
-              >
-                <a class="dropdown-item waves-light waves-effect" href="#"
-                  >Lunes</a
+                <!-- :disabled="!isActive || !isAdmin" -->
+                <option
+                  v-for="day in days"
+                  :key="day"
+                  :value="day"
+                  :selected="day == supplier.visit_day"
                 >
-                <a class="dropdown-item waves-light waves-effect" href="#"
-                  >Martes</a
-                >
-                <a class="dropdown-item waves-light waves-effect" href="#"
-                  >Miércoles</a
-                >
-                <a class="dropdown-item waves-light waves-effect" href="#"
-                  >Jueves</a
-                >
-                <a class="dropdown-item waves-light waves-effect" href="#"
-                  >Viernes</a
-                >
-                <a class="dropdown-item waves-light waves-effect" href="#"
-                  >Sábado</a
-                >
-                <a class="dropdown-item waves-light waves-effect" href="#"
-                  >Domingo</a
-                >
-              </div>
+                  {{ day }}
+                </option>
+              </select>
             </div>
 
-            <div class="col-lg-6 col-md-12 col-sm-12 row pt-3">
+            <div v-show="false" class="col-lg-6 col-md-12 col-sm-12 row pt-3">
               <label for="brand">Crédito autorizado</label>
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -136,7 +107,13 @@
           <div class="options ml-5">
             <div class="form-row pt-3">
               <div class="p-1">
-                <button class="btn btn-success">Guardar</button>
+                <button
+                  class="btn btn-success"
+                  @click="saveSupplier"
+                  :disabled="!supplier.name.length > 0 && !supplier.name != ''"
+                >
+                  Guardar
+                </button>
               </div>
 
               <div class="p-1">
@@ -151,7 +128,42 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      supplier: {
+        store_id: 1, /////////// CHANGE THIS
+        name: "",
+        phone_number: "",
+        visit_day: "",
+      },
+
+      days: [
+        "Lunes",
+        "Martes",
+        "Miércoles",
+        "Jueves",
+        "Viernes",
+        "Sábado",
+        "Domingo",
+      ],
+    };
+  }, // end data
+
+  methods: {
+    saveSupplier() {
+      axios
+        .post("/api/supplier", this.supplier)
+        .then((response) => {
+          window.location.href = "/supplier/" + response.data.id + "/edit";
+        })
+        .catch((error) => {
+          alert("Ingrese los valores requeridos");
+          alert(error);
+        });
+    },
+  }, // end methods
+};
 </script>
 
 <style>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use App\Supplier;
+use App\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -99,7 +101,25 @@ class ApiSupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'store_id' => 'required',
+            'name' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json($errors->all(), 400);
+        }
+
+        $supplier = Supplier::findOrFail($id);
+
+        foreach ($request->except(['created_at', 'updated_at']) as $key => $value) {
+            $supplier->{$key} = $value;
+        }
+
+        $supplier->update();
+
+        return response()->json($supplier, 200);
     }
 
     /**
@@ -110,6 +130,18 @@ class ApiSupplierController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $supplier = Supplier::find($id);
+
+
+        foreach ($supplier->products as $product) {
+            $product->supplier()->dissociate();
+            $product->save();
+        }
+
+        $supplier->delete();
+
+
+
+        return response()->json("Supplier deleted", 200);
     }
 }

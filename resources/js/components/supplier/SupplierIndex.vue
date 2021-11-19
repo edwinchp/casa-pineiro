@@ -8,13 +8,7 @@
         <div class="d-inline-block">
           <h2>Proveedores</h2>
 
-          <button
-            class="color-nuevo btn"
-            data-toggle="tooltip"
-            data-placement="bottom"
-          >
-            <a href="supplier/create" class="a-primary">Nuevo</a>
-          </button>
+          <a href="supplier/create" class="btn color-nuevo a-primary">Nuevo</a>
 
           <store-dropdown @storeIdChanged="selectedStoreId = $event">
           </store-dropdown>
@@ -115,7 +109,6 @@ export default {
 
 .color-nuevo {
   background-color: rgba(187, 74, 8, 0.87);
-  border-color: black;
   color: white;
 }
 

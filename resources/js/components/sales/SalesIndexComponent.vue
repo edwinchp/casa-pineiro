@@ -18,14 +18,11 @@
                         <div class="d-inline-block">
                           <h2>Ventas</h2>
 
-                          <button
-                            class="btn btn-primary"
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            data-original-title="Nuevo producto"
+                          <a
+                            href="sales/basket"
+                            class="btn btn-primary a-primary mb-1"
+                            >Nuevo</a
                           >
-                            <a href="sales/basket" class="a-primary">Nuevo</a>
-                          </button>
 
                           <store-dropdown
                             @storeIdChanged="selectedStoreId"

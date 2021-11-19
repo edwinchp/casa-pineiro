@@ -54,14 +54,14 @@ class Product extends Model
         return $query->where([
             ['store_id', '=', $store_id],
         ])
-        ->whereNested(function($query) use ($foundByUser){
-            $query->where('name', 'LIKE', '%' . $foundByUser . '%')
-            ->orWhere('bar_code', 'LIKE', '%' . $foundByUser . '%')
-            ->orWhere('brand', 'LIKE', '%' . $foundByUser . '%');
-        })
-        // ->orWhere([
-        //     ['bar_code', 'LIKE', '%' . $foundByUser . '%'],
-        // ]);
+            ->whereNested(function ($query) use ($foundByUser) {
+                $query->where('name', 'LIKE', '%' . $foundByUser . '%')
+                    ->orWhere('bar_code', 'LIKE', '%' . $foundByUser . '%')
+                    ->orWhere('brand', 'LIKE', '%' . $foundByUser . '%');
+            })
+            // ->orWhere([
+            //     ['bar_code', 'LIKE', '%' . $foundByUser . '%'],
+            // ]);
         ;
     }
 
@@ -79,5 +79,10 @@ class Product extends Model
     public function pictures()
     {
         return $this->hasMany('App\Picture', 'foreign_key');
+    }
+
+    public function supplier()
+    {
+        return $this->belongsTo('App\Supplier');
     }
 }
