@@ -76,6 +76,21 @@ class Product extends Model
             ]);
     }
 
+
+
+    public function scopeFilterByNameBarcodeBrandAndSupplier($query, $foundByUser, $store_id, $supplier_id)
+    {
+        return $query->where([
+            ['store_id', '=', $store_id],
+            ['supplier_id', '=', $supplier_id],
+        ])
+            ->whereNested(function ($query) use ($foundByUser) {
+                $query->where('name', 'LIKE', '%' . $foundByUser . '%')
+                    ->orWhere('bar_code', 'LIKE', '%' . $foundByUser . '%')
+                    ->orWhere('brand', 'LIKE', '%' . $foundByUser . '%');
+            });
+    }
+
     public function pictures()
     {
         return $this->hasMany('App\Picture', 'foreign_key');

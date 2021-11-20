@@ -38,16 +38,24 @@ class ApiProductController extends Controller
                 return response()->json($products, 200);
             }
 
+            if ($request->supplier_id) {
+                $products = Product::filterByNameBarcodeBrandAndSupplier($request->productsFound, $request->store_id, $request->supplier_id)->get();
+                return response()->json($products, 200);
+            }
+
             return response()->json($productsWithPictures, 200);
-        }
+        } // end searchbox
 
         $products = Product::where('products.store_id', '=', $request->store_id)
             ->leftJoin('locations', 'locations.id', '=', 'products.location_id')
             ->where('products.status', 'A')->select('products.*', 'locations.name as location_name')->paginate(8);
 
-        //return $products;
-        $productsWithPictures = $this->setPrimaryPicture($products);
 
+        if ($request->supplier_id) {
+            $products = Product::where("supplier_id", "=", $request->supplier_id)->paginate(8);
+        }
+
+        $productsWithPictures = $this->setPrimaryPicture($products);
 
         return [
             'pagination' => [
