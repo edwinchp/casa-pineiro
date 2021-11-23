@@ -11,7 +11,7 @@
 
 <!-- From Custom template -->
 <!-- Favicon icon -->
-<link rel="icon" href="{{asset('custom-template/assets/images/favicon.ico')}}" type="image/x-icon">
+<link rel="icon" href="{{asset('images/layouts/cable-de-energia-flip.png')}}" type="image/x-icon">
 <!-- Google font-->
 <link href="{{URL::to('https://fonts.googleapis.com/css?family=Open+Sans:400,600,800')}}" rel="stylesheet">
 <!-- Required Fremwork -->

@@ -123,7 +123,12 @@
                   </div>
 
                   <div class="p-1">
-                    <button class="btn btn-danger">Eliminar</button>
+                    <button
+                      class="btn btn-danger"
+                      @click="deleteSupplier(supplier_id)"
+                    >
+                      Eliminar
+                    </button>
                   </div>
 
                   <div class="p-1" v-show="false">
@@ -136,7 +141,7 @@
 
           <div class="col-md-6 pt-5">
             <div class="section-header">
-              <div class="col-xl-10">
+              <div class="col-md-6">
                 <div class="input-group search-box">
                   <span class="input-group-addon" id="name"
                     ><i class="icofont icofont-search"></i
@@ -149,6 +154,15 @@
                     @keyup="findProducts"
                   />
                 </div>
+              </div>
+
+              <div class="col-md-4">
+                <a
+                  href="/products/create"
+                  class="btn btn-success mb-1"
+                  target="blank"
+                  >Nuevo producto</a
+                >
               </div>
             </div>
             <div class="mr-3">
@@ -305,6 +319,35 @@ export default {
 
     setNewPage(event) {
       this.getProducts(event);
+    },
+
+    deleteSupplier(id) {
+      this.$fire({
+        title: "¿Estás seguro?",
+        text: "Se borrará definitivamente. Los productos se desvincularán de éste.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, borrar!",
+        cancelButtonText: "Cancelar",
+        focusCancel: true,
+      }).then((result) => {
+        if (typeof result.value !== "undefined")
+          axios.delete("/api/supplier/" + id).then((resp) => {
+            if (resp.status == 200) {
+              this.$fire({
+                title: "¡Listo!",
+                text: "Eliminado con éxito",
+                type: "success",
+                timer: 2500,
+              });
+              setTimeout(function () {
+                window.location.href = "/supplier";
+              }, 2600);
+            }
+          });
+      });
     },
   }, // end methods
 
