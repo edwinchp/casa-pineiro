@@ -71,6 +71,9 @@ Route::middleware('auth:api')->group(function () {
 
     //Customer
     Route::resource('customer', 'ApiCustomerController');
+
+    // Other
+    Route::get('/dashboard', 'DashboardController@indexApi');
 });
 
 /**
