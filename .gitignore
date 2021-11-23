@@ -12,5 +12,5 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 public/vendor
-public/images
+public/images/products
 public/js/app.js

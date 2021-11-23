@@ -18,7 +18,7 @@
                 <div class="row">
                   <div class="col-lg-12 col-sm-12">
                     <div class="row pt-3">
-                      <label for="bar_code">Nombre de proveedor</label>
+                      <label for="bar_code">Nombre</label>
 
                       <div class="input-group">
                         <div class="input-group-prepend">
@@ -119,7 +119,7 @@
                   </div>
 
                   <div class="p-1">
-                    <button class="btn btn-secondary">Atrás</button>
+                    <a href="/supplier" class="m-1 btn btn-secondary">Atrás</a>
                   </div>
 
                   <div class="p-1">
@@ -136,7 +136,7 @@
 
           <div class="col-md-6 pt-5">
             <div class="section-header">
-              <div class="col-xl-6">
+              <div class="col-xl-10">
                 <div class="input-group search-box">
                   <span class="input-group-addon" id="name"
                     ><i class="icofont icofont-search"></i
@@ -163,7 +163,12 @@
                 <tbody>
                   <tr v-for="product in products" :key="product.id">
                     <td>
-                      {{ product.name }}
+                      <a
+                        :href="'/products/' + product.id + '/edit'"
+                        target="blank"
+                      >
+                        {{ shortAttribute(product.name, 38) }}
+                      </a>
                     </td>
                     <td>
                       <div v-if="product.unit" class="product-current-qty">
@@ -180,8 +185,19 @@
                       {{ "$" + product.price }}
                     </td>
                   </tr>
+                  <tr v-if="products.length < 1 && searchIsActive">
+                    <td>
+                      <img src="/images/layouts/not_found.png" alt="" />
+                      <span>Sin resultados</span>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
+              <pagination-component
+                v-if="!searchIsActive"
+                :pagination="pagination"
+                @pageChanged="setNewPage"
+              ></pagination-component>
             </div>
           </div>
         </div>
@@ -192,10 +208,12 @@
 
 
 <script>
-import ProductsTableComponent from "../product/ProductsTableComponent.vue";
+import PaginationComponent from "../layouts/PaginationComponent.vue";
+import { genericMixin } from "../mixins/genericMixin";
 export default {
   props: ["supplier_id"],
-  components: { ProductsTableComponent },
+  components: { PaginationComponent },
+  mixins: [genericMixin],
   data() {
     return {
       supplier: {
@@ -215,6 +233,7 @@ export default {
       products: [],
       productsFound: "",
       productTimeOut: "",
+      pagination: {},
     };
   }, // end data
 
@@ -252,11 +271,12 @@ export default {
         .get("/api/products/?page=" + page, {
           params: {
             store_id: 1,
-            supplier_id: 7,
+            supplier_id: this.supplier_id,
           },
         })
         .then((response) => {
           this.products = response.data.products;
+          this.pagination = response.data.pagination;
         });
     },
 
@@ -266,7 +286,7 @@ export default {
           params: {
             productsFound: this.productsFound,
             store_id: 1,
-            supplier_id: 7,
+            supplier_id: this.supplier_id,
           },
         })
         .then((response) => {
@@ -281,6 +301,10 @@ export default {
       } else {
         this.getProducts(1);
       }
+    },
+
+    setNewPage(event) {
+      this.getProducts(event);
     },
   }, // end methods
 
@@ -312,5 +336,10 @@ export default {
 
 .table {
   font-size: 12px;
+}
+
+.table img {
+  width: 300px;
+  margin-left: 100px;
 }
 </style>
