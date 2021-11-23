@@ -4,13 +4,13 @@
       <a class="navbar-brand" href="/">Casa Pineiro</a>
 
       <button
-        v-if="miniCart.length > 0"
+        v-if="basket.length > 0"
         class="btn btn-outline-success my-2 my-sm-0"
         data-toggle="modal"
-        data-target="#miniCartModal"
+        data-target="#basketModal"
       >
         Carrito
-        <span class="badge badge-warning">{{ getTotalQtyMiniCart }}</span>
+        <span class="badge badge-warning">{{ getTotalQtyBasket }}</span>
       </button>
 
       <button
@@ -123,7 +123,7 @@
 
     <div
       class="modal fade"
-      id="miniCartModal"
+      id="basketModal"
       tabindex="-20"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -158,20 +158,20 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(product, p) in miniCart" :key="p">
+                <tr v-for="(product, p) in basket" :key="p">
                   <th scope="row">{{ shortProductName(product.name) }}</th>
                   <td>${{ product.price }}</td>
                   <td>
                     <button
                       class="btn btn-dark btn-sm btn-td"
-                      @click="reduceCartQty(product)"
+                      @click="reduceProductQty(product)"
                     >
                       -
                     </button>
                     {{ product.qty }}
                     <button
                       class="btn btn-dark btn-sm btn-td"
-                      @click="addCartQty(product)"
+                      @click="addProductQty(product)"
                       :disabled="product.qty >= product.current_qty"
                     >
                       +
@@ -181,7 +181,7 @@
                   <td>
                     <button
                       class="btn btn-danger btn-sm btn-td btn-td-delete"
-                      @click="removeFromCart(product)"
+                      @click="removeProductFromCart(product)"
                     >
                       <span class="icon text-white-50">
                         <i class="fas fa-trash"></i>
@@ -238,9 +238,7 @@
                 <div class="d-flex justify-content-end">
                   <div class="input-group mb-3 mr-3">
                     <span class="text"
-                      ><strong
-                        >Total: ${{ getTotalPriceMiniCart }}</strong
-                      ></span
+                      ><strong>Total: ${{ getTotalPriceBasket }}</strong></span
                     >
                   </div>
                 </div>
@@ -255,24 +253,24 @@
                       role="group"
                       aria-label="First group"
                     >
-                      <!-- <form action="" @submit="checkoutCart(miniCart)">
+                      <!-- <form action="" @submit="checkoutBasket(basket)">
                         <button
-                          @click.prevent="checkoutCart(miniCart)"
+                          @click.prevent="checkoutBasket(basket)"
                           type="submit"
                           data-dismiss="modal"
                           class="btn btn-success"
                         >
                           <span class="text"
                             ><strong
-                              >Pagar ${{ getTotalPriceMiniCart }}</strong
+                              >Pagar ${{ getTotalPriceBasket }}</strong
                             ></span
                           >
                         </button>
                       </form> -->
 
                       <pay-button
-                        :basket="miniCart"
-                        :total="getTotalPriceMiniCart"
+                        :basket="basket"
+                        :total="getTotalPriceBasket"
                         :received="getReceived"
                         :change="getChange"
                         :allowPayment="allowPayment"
@@ -310,15 +308,16 @@
 <script>
 import PayButton from "../sales/PayButton.vue";
 import { userInformationMixin } from "../mixins/userInformationMixin";
+import {basketMixin} from "../mixins/basketMixin";
 
 export default {
   components: { PayButton },
 
-  mixins: [userInformationMixin],
+  mixins: [userInformationMixin, basketMixin],
 
   data() {
     return {
-      miniCart: [],
+      basket: [],
       customers: null,
       customer_id: null,
       showContent: false,
@@ -336,18 +335,18 @@ export default {
     /**
      * MINI CART
      */
-    getTotalQtyMiniCart() {
+    getTotalQtyBasket() {
       let total = 0;
-      for (var i = 0; i < this.miniCart.length; i++) {
-        total = total + this.miniCart[i].qty;
+      for (var i = 0; i < this.basket.length; i++) {
+        total = total + this.basket[i].qty;
       }
       return total;
     },
 
-    getTotalPriceMiniCart() {
+    getTotalPriceBasket() {
       let total = 0;
-      for (var i = 0; i < this.miniCart.length; i++) {
-        total = total + this.miniCart[i].qty * this.miniCart[i].price;
+      for (var i = 0; i < this.basket.length; i++) {
+        total = total + this.basket[i].qty * this.basket[i].price;
       }
       return parseFloat(total).toFixed(2);
     },
@@ -358,10 +357,10 @@ export default {
 
     getChange() {
       if (
-        parseFloat(this.getReceived) >= parseFloat(this.getTotalPriceMiniCart)
+        parseFloat(this.getReceived) >= parseFloat(this.getTotalPriceBasket)
       ) {
         this.change =
-          parseFloat(this.getReceived) - parseFloat(this.getTotalPriceMiniCart);
+          parseFloat(this.getReceived) - parseFloat(this.getTotalPriceBasket);
         this.allowPayment = true;
         return this.change;
       } else {
@@ -390,35 +389,13 @@ export default {
       return short;
     },
 
-    addCartQty(product) {
-      product.qty = product.qty + 1;
-      this.$root.$emit("cartUpdated", product.product_id);
-    },
-
-    reduceCartQty(product) {
-      product.qty = product.qty - 1;
-      this.$root.$emit("cartUpdated", product.product_id);
-      if (product.qty == 0) {
-        this.removeFromCart(product);
-      }
-    },
-
-    removeFromCart(product) {
-      this.miniCart.splice(
-        this.miniCart.findIndex((a) => a.product_id === product.product_id),
-        1
-      );
-      if (this.miniCart.length < 1) {
-        location.reload();
-      }
-    },
-
+    
     getSubTotal(price, qty) {
       return parseFloat(price * qty).toFixed(2);
     },
 
-    checkoutCart(miniCart) {
-      miniCart.forEach((product) => {
+    checkoutBasket(basket) {
+      basket.forEach((product) => {
         const formData = new FormData();
 
         formData.append("product_id", product.product_id);
@@ -442,8 +419,8 @@ export default {
             console.log(error);
           });
       });
-      this.miniCart.splice(0, this.miniCart.length);
-      // get the total of items of this.miniCart
+      this.basket.splice(0, this.basket.length);
+      // get the total of items of this.basket
     },
 
     logout() {
@@ -467,7 +444,7 @@ export default {
     },
 
     paymentSuccess() {
-      this.miniCart = [];
+      this.basket = [];
       document.getElementById("closeModal").click();
       setTimeout(() => {
         location.reload();
@@ -477,11 +454,11 @@ export default {
 
   mounted() {
     this.$root.$on("sharingCart", (data) => {
-      this.miniCart = data;
+      this.basket = data;
     });
 
     this.$root.$on("clearCart", (data) => {
-      this.miniCart.splice(0, this.miniCart.length);
+      this.basket.splice(0, this.basket.length);
     });
 
     this.$nextTick(() => {

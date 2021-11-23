@@ -121,18 +121,23 @@
                                   <div class="container">
                                     <div class="row">
                                       <div class="col-12">
-                                        <div class="table-responsive">
+                                        <div class="stable-responsive">
                                           <table
                                             v-if="
                                               searchProductIsActive &&
                                               productsFound.length > 0
                                             "
-                                            class="table users table-hover"
+                                            class="
+                                              table
+                                              users
+                                              table-hover table-responsive
+                                            "
                                           >
                                             <thead class="thead-green">
                                               <tr id="tablita">
                                                 <th scope="col">Producto</th>
                                                 <th scope="col">Precio</th>
+                                                <th scope="col">Cantidad</th>
                                                 <th></th>
                                               </tr>
                                             </thead>
@@ -155,6 +160,28 @@
                                                 </td>
 
                                                 <td>${{ product.price }}</td>
+                                                <td>
+                                                  <div
+                                                    v-if="product.unit"
+                                                    class="product-current-qty"
+                                                  >
+                                                    {{
+                                                      product.original_qty + " "
+                                                    }}
+                                                    <span
+                                                      style="font-size: 10px"
+                                                      ><strong>{{
+                                                        product.unit
+                                                      }}</strong></span
+                                                    >
+                                                  </div>
+                                                  <div
+                                                    v-else
+                                                    class="product-current-qty"
+                                                  >
+                                                    {{ product.original }}
+                                                  </div>
+                                                </td>
 
                                                 <td>
                                                   <button
@@ -342,11 +369,20 @@
                                         v-for="product in basket"
                                         :key="product.product_id"
                                       >
-                                        <td class="table-name">
+                                        <td
+                                          class="table-name"
+                                          data-toggle="tooltip"
+                                          data-placement="bottom"
+                                          :title="product.name"
+                                        >
                                           <div class="row">
                                             <div class="col-xl-11">
                                               <a
-                                                :href='"/products/"+product.product_id+"/edit"'
+                                                :href="
+                                                  '/products/' +
+                                                  product.product_id +
+                                                  '/edit'
+                                                "
                                                 target="blank"
                                                 >{{
                                                   shortProductName(product.name)
@@ -362,6 +398,30 @@
                                           <div class="form-group row">
                                             <div class="col-sm-12">
                                               <div class="input-group">
+                                                <button
+                                                  class="
+                                                    btn btn-dark btn-sm btn-td
+                                                  "
+                                                  @click="
+                                                    reduceProductQty(product)
+                                                  "
+                                                >
+                                                  -
+                                                </button>
+                                                <button
+                                                  class="
+                                                    btn btn-dark btn-sm btn-td
+                                                  "
+                                                  @click="
+                                                    addProductQty(product)
+                                                  "
+                                                  :disabled="
+                                                    product.qty >=
+                                                    product.current_qty
+                                                  "
+                                                >
+                                                  +
+                                                </button>
                                                 <input
                                                   type="text"
                                                   class="form-control"
@@ -514,8 +574,10 @@
 <script>
 import BarcodeFinder from "./BarcodeFinder.vue";
 import PayButton from "../PayButton.vue";
+import { basketMixin } from "../../mixins/basketMixin";
 export default {
   components: { BarcodeFinder, PayButton },
+  mixins: [basketMixin],
 
   data() {
     return {
@@ -552,6 +614,7 @@ export default {
           console.log(response.data);
           if (response.data !== "") {
             this.product = response.data;
+            this.product.original_qty = response.data.qty;
             this.addToBasket(this.product);
           }
         });
@@ -606,13 +669,13 @@ export default {
       console.log("product.qtyy>0: " + product.qty > 0);
 
       // If product "A" is already added, increase cart qty and decrease current product "A" qty.
-      if (duplicate && productInBacket.qty != product.qty) {
+      if (duplicate && product.qty > 0) {
         console.log("duplicate found");
         for (var i = 0; i < this.basket.length; i++) {
           if (this.basket[i].product_id === product.id) {
             this.basket[i].qty = this.basket[i].qty + 1;
             //this.basket[i].current_qty--;
-            //product.qty--;
+            product.qty--;
           }
         }
       }
@@ -622,17 +685,13 @@ export default {
         this.pushToBasket(product, 1);
       }
 
-      if (productInBacket.qty == product.qty) {
-        this.fireWarning("Sin productos");
-      }
-
       this.barcode = null;
       //this.product = {};
     },
 
     shortProductName(product) {
-      let short = product.substring(0, 30);
-      short = short.length >= 30 ? short + "... " : short;
+      let short = product.substring(0, 15);
+      short = short.length >= 15 ? short + "... " : short;
       return short;
     },
 
@@ -648,6 +707,9 @@ export default {
         })
         .then((resp) => {
           this.productsFound = resp.data;
+          this.productsFound.forEach((product) => {
+            product.original_qty = product.qty;
+          });
         });
       //let data = await response.json();
       //console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaasync getFoundProducts()")
@@ -754,5 +816,14 @@ export default {
 </script>
 
 <style scoped>
+.btn-td {
+  font-size: 20px;
+  margin: 10px;
+  text-align: center;
+  margin: 0px 10px;
+}
+.btn-td-delete {
+  font-size: 15px;
+}
 </style>
 
