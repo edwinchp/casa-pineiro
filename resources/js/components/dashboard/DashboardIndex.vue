@@ -1,28 +1,27 @@
 <template>
   <div>
-    <!--Your html here-->
-    <!-- <ul>
-      <li>{{ dashboardData.today }}</li>
-      <li>{{ dashboardData.month }}</li>
-      <li>{{ dashboardData.products }}</li>
-    </ul> -->
-
     <section class="home">
       <div class="row">
         <div class="content col-md-6 col-lg-3">
           <h1 class="heading">Bienvenido</h1>
-          <button class="button hoy">
-            <h3>hoy</h3>
-            <span>$100.00</span>
-          </button>
-          <button class="button mes">
-            <h3>este mes</h3>
-            <span>$2000.00</span>
-          </button>
-          <button class="button produc">
-            <h3>productos</h3>
-            <span>4000</span>
-          </button>
+          <a href="/sales">
+            <button class="button hoy" type="button">
+              <h3>hoy</h3>
+              <span> ${{ dashboardData.today }}</span>
+            </button></a
+          >
+          <a href="/sales">
+            <button class="button mes">
+              <h3>este mes</h3>
+              <span> ${{ dashboardData.month }}</span>
+            </button></a
+          >
+          <a href="/products">
+            <button class="button produc">
+              <h3>productos</h3>
+              <span>{{ dashboardData.products }}</span>
+            </button></a
+          >
         </div>
 
         <div class="image-container col-md-6 col-lg-9">
@@ -181,6 +180,7 @@ section {
 .home .row .content .hoy:hover {
   color: #68b1ff;
   border: solid 2px #68b1ff;
+  
 }
 
 .home .row .content .mes {
@@ -238,7 +238,6 @@ section {
   color: #90c418;
   border: solid 2px #90c418;
 }
-
 
 @media (max-width: 450px) {
   .home .row .content {

@@ -8,9 +8,9 @@
         align-items-center
       "
     >
-      <a href="#" class="logo d-flex flex-row align-items-center"
+      <a href="/" class="logo d-flex flex-row align-items-center"
         >Ferretería<span class="pl-2 pr-1"> Cable</span
-        ><img src="images/layouts/cable-de-energia-flip.png" alt=""
+        ><img src="/images/layouts/cable-de-energia-flip.png" alt=""
       /></a>
 
       <button
@@ -39,8 +39,14 @@
         class="collapse navbar-collapse"
         v-bind:class="{ show: showContent }"
       >
-        <button type="button" class="btn btn-primary">Nueva venta</button>
-        <button type="button" class="btn btn-success">NUevo Producto</button>
+        <a href="/sales/create">
+          <button type="button" class="btn btn-primary">Nueva Ventas</button></a
+        >
+        <a href="/products/create">
+          <button type="button" class="btn btn-success">
+            Nuevo Producto
+          </button></a
+        >
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown">
             <a
@@ -60,12 +66,12 @@
               class="dropdown-menu my-profile"
               aria-labelledby="navbarDropdown"
             >
-              <div v-if="isAdmin" class="dropdown-divider"></div>
-              <a href="/register"
+              <a v-if="isAdmin" href="/register"
                 ><i class="icofont icofont-user dropdown-item">
                   Crear usuario
                 </i></a
               >
+              <div v-if="isAdmin" class="dropdown-divider"></div>
               <a href="/sales"
                 ><i class="icofont icofont-money dropdown-item"> Ventas</i></a
               >
@@ -84,7 +90,7 @@
                   Proveedores</i
                 ></a
               >
-              <a href="#" data-toggle="modal" data-target="#logo"
+              <a href="#" data-toggle="modal" data-target="#logoutModal"
                 ><i class="icofont icofont-exit dropdown-item">
                   Cerrar sesión</i
                 ></a
@@ -593,8 +599,16 @@ export default {
   margin-left: 0;
 }
 
+.btn-primary a {
+  color: white;
+}
+
 .btn-success {
   border-radius: 0.5rem;
   margin-left: 0.5rem;
+}
+
+.btn-success a {
+  color: white;
 }
 </style>
