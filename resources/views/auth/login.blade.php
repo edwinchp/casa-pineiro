@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="overlay">
-                     <h1 class="deepshadow mt-4">CASA PINEIRO</h1>
+                     <h1 class="deepshadow mt-4">FERRETERÍA CABLES</h1>
                     </div>
                     <!-- Authentication card start -->
                     <div class="login-card card-block auth-body mr-auto ml-auto">
@@ -151,7 +151,7 @@
 body, html {
     height: 100%;
     background-repeat: no-repeat;
-    background: url(/images/fondo12.jpg) no-repeat center center fixed;
+    background: url(/images/layouts/fondo12.jpg) no-repeat center center fixed;
     background-size: 100% 100%;
     background-attachment: fixed;
 }

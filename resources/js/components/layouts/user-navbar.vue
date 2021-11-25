@@ -1,7 +1,17 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-      <a class="navbar-brand" href="/">Casa Pineiro</a>
+    <nav
+      class="
+        navbar navbar-expand-lg navbar-light
+        bg-light
+        fixed-top
+        align-items-center
+      "
+    >
+      <a href="#" class="logo d-flex flex-row align-items-center"
+        >Ferretería<span class="pl-2 pr-1"> Cable</span
+        ><img src="images/layouts/cable-de-energia-flip.png" alt=""
+      /></a>
 
       <button
         v-if="basket.length > 0"
@@ -29,6 +39,8 @@
         class="collapse navbar-collapse"
         v-bind:class="{ show: showContent }"
       >
+        <button type="button" class="btn btn-primary">Nueva venta</button>
+        <button type="button" class="btn btn-success">NUevo Producto</button>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown">
             <a
@@ -43,25 +55,39 @@
             >
               {{ userInformation.user.name }}
             </a>
+
             <div
               class="dropdown-menu my-profile"
               aria-labelledby="navbarDropdown"
             >
-              <a v-if="isAdmin" class="dropdown-item" href="/register"
-                >Crear usuario</a
-              >
               <div v-if="isAdmin" class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/sales">Ventas</a>
-              <a class="dropdown-item" href="/location">Ubicación</a>
-              <a class="dropdown-item" href="/products">Productos</a>
-              <a class="dropdown-item" href="/supplier">Proveedores</a>
-              <div class="dropdown-divider"></div>
-              <a
-                class="dropdown-item"
-                href="#"
-                data-toggle="modal"
-                data-target="#logoutModal"
-                >Cerrar sesión</a
+              <a href="/register"
+                ><i class="icofont icofont-user dropdown-item">
+                  Crear usuario
+                </i></a
+              >
+              <a href="/sales"
+                ><i class="icofont icofont-money dropdown-item"> Ventas</i></a
+              >
+              <a href="/products"
+                ><i class="icofont icofont-food-basket dropdown-item">
+                  Productos</i
+                ></a
+              >
+              <a href="/location"
+                ><i class="icofont icofont-location-pin dropdown-item">
+                  Ubicación</i
+                ></a
+              >
+              <a href="/supplier"
+                ><i class="icofont icofont-truck-alt dropdown-item">
+                  Proveedores</i
+                ></a
+              >
+              <a href="#" data-toggle="modal" data-target="#logo"
+                ><i class="icofont icofont-exit dropdown-item">
+                  Cerrar sesión</i
+                ></a
               >
             </div>
           </li>
@@ -308,7 +334,7 @@
 <script>
 import PayButton from "../sales/PayButton.vue";
 import { userInformationMixin } from "../mixins/userInformationMixin";
-import {basketMixin} from "../mixins/basketMixin";
+import { basketMixin } from "../mixins/basketMixin";
 
 export default {
   components: { PayButton },
@@ -389,7 +415,6 @@ export default {
       return short;
     },
 
-    
     getSubTotal(price, qty) {
       return parseFloat(price * qty).toFixed(2);
     },
@@ -493,6 +518,10 @@ export default {
   }
 }
 
+.collapse {
+  margin-right: 3rem;
+}
+
 .btn-td {
   font-size: 20px;
   margin: 10px;
@@ -501,5 +530,71 @@ export default {
 }
 .btn-td-delete {
   font-size: 15px;
+}
+
+.logo img {
+  width: 17px;
+  height: 17px;
+  transform: scaleY(1);
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: bolder;
+  color: rgb(68, 66, 66);
+  margin-right: 2rem;
+}
+
+.logo span {
+  color: black;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 10%;
+  border-radius: 1rem;
+}
+
+.dropdown-menu a {
+  color: rgb(41, 40, 40);
+  padding: 15px 15px;
+  text-decoration: none;
+  display: block;
+  width: 13rem;
+}
+
+.dropdown-menu a i {
+  padding-right: 0;
+  text-align: left;
+}
+
+.dropdown-menu a:hover {
+  background-color: #a8a4a4;
+}
+.dropdown-menu i:hover {
+  background-color: #a8a4a4;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.btn-primary {
+  border-radius: 0.5rem;
+  margin-left: 0;
+}
+
+.btn-success {
+  border-radius: 0.5rem;
+  margin-left: 0.5rem;
 }
 </style>
