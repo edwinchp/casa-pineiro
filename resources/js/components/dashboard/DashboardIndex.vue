@@ -180,7 +180,6 @@ section {
 .home .row .content .hoy:hover {
   color: #68b1ff;
   border: solid 2px #68b1ff;
-  
 }
 
 .home .row .content .mes {

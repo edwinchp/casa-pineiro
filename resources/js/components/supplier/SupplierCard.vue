@@ -4,7 +4,6 @@
       <div class="sabrita" id="sabrita">
         <img
           class="card-img-top rounded-circle"
-          src="images/sabritas.png"
           alt=""
           width="20px"
         />

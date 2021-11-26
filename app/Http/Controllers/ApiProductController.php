@@ -48,7 +48,7 @@ class ApiProductController extends Controller
 
         $products = Product::where('products.store_id', '=', $request->store_id)
             ->leftJoin('locations', 'locations.id', '=', 'products.location_id')
-            ->where('products.status', 'A')->select('products.*', 'locations.name as location_name')->paginate(8);
+            ->where('products.status', 'A')->select('products.*', 'locations.name as location_name')->orderBy('products.created_at', 'DESC')->paginate(8);
 
 
         if ($request->supplier_id) {

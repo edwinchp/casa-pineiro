@@ -568,6 +568,7 @@ export default {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 10%;
   border-radius: 1rem;
+  margin-top: -3px;
 }
 
 .dropdown-menu a {

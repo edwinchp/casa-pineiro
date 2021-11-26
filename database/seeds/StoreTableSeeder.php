@@ -14,8 +14,8 @@ class StoreTableSeeder extends Seeder
     {
         $stores = [
             ['name' => 'Ferretería Cables'],
-            ['name' => 'Tendejón Evelyn'],
-            ['name' => 'Mary Kay'],
+            // ['name' => 'Tendejón Evelyn'],
+            // ['name' => 'Mary Kay'],
         ];
 
         // Create stores

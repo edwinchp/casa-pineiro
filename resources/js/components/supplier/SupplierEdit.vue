@@ -96,17 +96,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <div class="col-lg-6 col-sm-12">
-                    <div class="sabrita" id="sabrita">
-                      <img
-                        class="card-img-top rounded-circle"
-                        src="/images/sabritas.png"
-                        alt=""
-                        width="20px"
-                      />
-                    </div>
-                  </div>
                 </div>
               </div>
 
