@@ -34,20 +34,14 @@
                 <div class="row pt-3">
                   <div class="col-md-6">
                     <label for="bar_code">Código de barras</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"
-                          ><i class="fas fa-barcode"></i
-                        ></span>
-                      </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="bar_code"
-                        autocomplete="off"
-                        v-model="product.bar_code"
-                      />
-                    </div>
+                    <input-text
+                      :inputText="product.bar_code"
+                      @inputChanged="barCodeChanged($event)"
+                      :inputField="inputFields.bar_code"
+                      iconClass="fas fa-barcode"
+                      v-model="product.bar_code"
+                      :is-active="isActive && isAdmin"
+                    ></input-text>
                   </div>
                   <div class="col-md-6">
                     <label for="brand">Marca</label>
@@ -261,6 +255,9 @@ export default {
           feedback: "",
         },
       },
+      storeBarCodes: [],
+      storeBarCodesTimeout: null,
+      storeBarCodesStatus: "",
     };
   },
 
@@ -295,7 +292,7 @@ export default {
       let errors = 0;
       let keys = Object.keys(this.inputFields);
       keys.forEach((key) => {
-        if (this.inputFields[key].class.length > 0) {
+        if (this.inputFields[key].class == "is-invalid") {
           errors++;
         }
       });
@@ -368,9 +365,34 @@ export default {
     },
 
     barCodeChanged(event) {
-      // this.product.name = event;
-      // this.inputFields.name.class = "";
-      // this.inputFields.name.feedback = "";
+      this.product.bar_code = event;
+      this.inputFields.bar_code.class = "";
+      this.inputFields.bar_code.feedback = "";
+      this.barCodeValidateIfValid();
+    },
+
+    barCodeValidateIfValid() {
+      clearTimeout(this.storeBarCodesTimeout);
+      this.storeBarCodesTimeout = setTimeout(() => {
+        //console.log(this.product.bar_code);
+        this.storeBarCodesStatus = this.storeBarCodes.includes(
+          this.product.bar_code
+        );
+
+        if (this.storeBarCodesStatus) {
+          this.inputFields.bar_code.class = "is-invalid";
+          this.inputFields.bar_code.feedback =
+            "Este código de barras ya existe.";
+        } else {
+          this.inputFields.bar_code.class = "is-valid";
+          this.inputFields.bar_code.feedback = "";
+        }
+
+        if (this.product.bar_code != "" && this.product.bar_code.length <= 3) {
+          this.inputFields.bar_code.class = "is-invalid";
+          this.inputFields.bar_code.feedback = "4 caracteres como mínimo.";
+        }
+      }, 500);
     },
 
     priceChanged(event) {
@@ -407,12 +429,28 @@ export default {
       this.inputFields.picture_link.class = "";
       this.inputFields.picture_link.feedback = "";
     },
+
+    getBarCodes() {
+      axios
+        .get("/api/allProducts", {
+          params: {
+            store_id: 1,
+          },
+        })
+        .then((response) => {
+          this.storeBarCodes = [];
+          response.data.forEach((product) => {
+            this.storeBarCodes.push(product.bar_code);
+          });
+        });
+    },
   },
 
   created() {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("user_token");
     this.getStores();
+    this.getBarCodes();
     this.inputOk = this.inputFields;
   },
 };

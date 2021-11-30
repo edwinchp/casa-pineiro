@@ -541,6 +541,11 @@ export default {
           this.inputFields.bar_code.class = "is-valid";
           this.inputFields.bar_code.feedback = "";
         }
+
+        if (this.product.bar_code != "" && this.product.bar_code.length <= 3) {
+          this.inputFields.bar_code.class = "is-invalid";
+          this.inputFields.bar_code.feedback = "4 caracteres como mínimo.";
+        }
       }, 200);
     },
 
