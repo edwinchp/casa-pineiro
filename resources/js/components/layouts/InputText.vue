@@ -31,6 +31,7 @@ export default {
   data() {
     return {
       input: "",
+      counter: 0,
     };
   },
 
@@ -47,7 +48,12 @@ export default {
         console.log("waiting inputText: " + typeof this.inputText);
         setTimeout(() => {
           this.waitUntilInputTextIsReady();
-        }, 800);
+          this.counter++;
+          if (this.counter > 7) {
+            alert("Upps, algo salió mal.");
+            window.location.reload();
+          }
+        }, 2000);
       }
     },
   },
