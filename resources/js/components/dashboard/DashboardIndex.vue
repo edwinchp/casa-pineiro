@@ -123,7 +123,8 @@ section {
 .home {
   box-shadow: 0 0.2rem 1rem rgb(73, 72, 72);
   margin: 100px;
-  margin-top: 10rem;
+  margin-top: 7rem;
+  
 }
 
 .home .row .content .heading {

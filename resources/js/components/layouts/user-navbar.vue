@@ -40,13 +40,14 @@
         v-bind:class="{ show: showContent }"
       >
         <a href="/sales/create">
-          <button type="button" class="btn btn-primary">Nueva Ventas</button></a
+          <button type="button" class="btn btn-primary">Nueva Venta</button></a
         >
         <a href="/products/create">
           <button type="button" class="btn btn-success">
             Nuevo Producto
           </button></a
         >
+
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown">
             <a
@@ -62,39 +63,27 @@
               {{ userInformation.user.name }}
             </a>
 
-            <div
-              class="dropdown-menu my-profile"
-              aria-labelledby="navbarDropdown"
-            >
-              <a v-if="isAdmin" href="/register"
-                ><i class="icofont icofont-user dropdown-item">
-                  Crear usuario
-                </i></a
-              >
-              <div v-if="isAdmin" class="dropdown-divider"></div>
-              <a href="/sales"
-                ><i class="icofont icofont-money dropdown-item"> Ventas</i></a
-              >
-              <a href="/products"
-                ><i class="icofont icofont-food-basket dropdown-item">
-                  Productos</i
-                ></a
-              >
-              <a href="/location"
-                ><i class="icofont icofont-location-pin dropdown-item">
-                  Ubicación</i
-                ></a
-              >
-              <a href="/supplier"
-                ><i class="icofont icofont-truck-alt dropdown-item">
-                  Proveedores</i
-                ></a
-              >
-              <a href="#" data-toggle="modal" data-target="#logoutModal"
-                ><i class="icofont icofont-exit dropdown-item">
-                  Cerrar sesión</i
-                ></a
-              >
+            <div class="dropdown my-profile" aria-labelledby="navbarDropdown">
+              <div class="dropdown-content">
+                <a v-if="isAdmin" href="/register"
+                  ><i class="fas fa-user"></i>Crear usuario</a
+                >
+                <div v-if="isAdmin" class="dropdown-divider"></div>
+
+                <a href="/sales"><i class="fas fa-shopping-cart"></i>Ventas</a>
+                <a href="/products"
+                  ><i class="fas fa-air-freshener"></i>Productos</a
+                >
+                <a href="/location"
+                  ><i class="fas fa-map-marker-alt"></i>Ubicaciones</a
+                >
+                <a href="/supplier"
+                  ><i class="fas fa-shipping-fast"></i>Proveedores</a
+                >
+                <a href="#" data-toggle="modal" data-target="#logoutModal"
+                  ><i class="fas fa-sign-out-alt"></i>Cerrar sesión</a
+                >
+              </div>
             </div>
           </li>
         </ul>
@@ -555,43 +544,50 @@ export default {
   color: black;
 }
 
+.dropbtn {
+  color: rgb(0, 0, 0);
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  background: rgb(226, 225, 225);
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
 }
 
-.dropdown-menu {
+.dropdown-content {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 100px;
+  min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 10%;
+  z-index: 100%;
   border-radius: 1rem;
-  margin-top: -3px;
+  margin-left: 0.6rem;
 }
 
-.dropdown-menu a {
+.dropdown-content a {
   color: rgb(41, 40, 40);
   padding: 15px 15px;
   text-decoration: none;
   display: block;
   width: 13rem;
+  font-size: 1rem;
 }
 
-.dropdown-menu a i {
-  padding-right: 0;
-  text-align: left;
+.dropdown-content a i {
+  padding-right: 1rem;
+  text-align: center;
 }
 
-.dropdown-menu a:hover {
-  background-color: #a8a4a4;
-}
-.dropdown-menu i:hover {
-  background-color: #a8a4a4;
+.dropdown-content a:hover {
+  background-color: #b9b6b6;
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown:hover .dropdown-content {
   display: block;
 }
 
