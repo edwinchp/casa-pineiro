@@ -495,7 +495,7 @@ export default {
   created() {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("user_token");
-    this.getCustomers();
+    //this.getCustomers();
     //this.getUserInformation();
     this.updateTable(this.windowWidth);
   },
