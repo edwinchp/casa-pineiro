@@ -70,9 +70,9 @@
                 >
                 <div v-if="isAdmin" class="dropdown-divider"></div>
 
-                <a href="/sales"><i class="fas fa-shopping-cart"></i>Ventas</a>
+                <a href="/sales"><i class="icofont icofont-money"></i>Ventas</a>
                 <a href="/products"
-                  ><i class="fas fa-air-freshener"></i>Productos</a
+                  ><i class="icofont icofont-food-basket"></i>Productos</a
                 >
                 <a href="/location"
                   ><i class="fas fa-map-marker-alt"></i>Ubicaciones</a
@@ -254,13 +254,6 @@
                       class="form-control"
                       :value="getChange"
                     />
-                  </div>
-                </div>
-                <div class="d-flex justify-content-end">
-                  <div class="input-group mb-3 mr-3">
-                    <span class="text"
-                      ><strong>Total: ${{ getTotalPriceBasket }}</strong></span
-                    >
                   </div>
                 </div>
                 <div class="d-flex justify-content-end">

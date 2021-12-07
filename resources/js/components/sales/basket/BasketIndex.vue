@@ -190,6 +190,9 @@
                                                     "
                                                     type="button"
                                                     class="btn btn-outline-dark"
+                                                    :disabled="
+                                                      product.status !== 'A'
+                                                    "
                                                   >
                                                     <i
                                                       class="fa fa-cart-plus"
@@ -537,7 +540,7 @@
                           </div>
 
                           <div class="sell-summary" v-if="basket.length > 0">
-                            <div class="row mr-1">
+                            <div class="row mr-1" v-show="false">
                               <h3 class="text-right">
                                 Total: <strong>${{ getTotal }}</strong>
                               </h3>

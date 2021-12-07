@@ -6,7 +6,7 @@
     id="pagar"
     :style="getTextSize"
   >
-    <strong>Pagar</strong>
+    <strong>Pagar ${{total}}</strong>
   </button>
 </template>
 

@@ -313,4 +313,9 @@ export default {
   text-align: center;
   font-size: 20px;
 }
+
+table img {
+  cursor: pointer; 
+  max-height: 45px
+}
 </style>
