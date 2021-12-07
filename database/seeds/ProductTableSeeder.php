@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Faker\Factory as Faker;
 
 class ProductTableSeeder extends Seeder
 {
@@ -91,13 +92,37 @@ class ProductTableSeeder extends Seeder
         ];
 
         $start_date = '2013-03-06';
-        $date = DateTime::createFromFormat('Y-m-d',$start_date);
+        $date = DateTime::createFromFormat('Y-m-d', $start_date);
         $date->modify('+1 month');
 
-        foreach ($products as $product) {
+        // foreach ($products as $product) {
+        //     DB::table('products')->insert([
+        //         'bar_code' => rand(1000000000, 9000000000),
+        //         'name' => $product['name'],
+        //         'description' => 'This is a pretty good description... ' . Str::random(40),
+        //         'brand' => 'The brand ' . Str::random(10),
+        //         'qty' => rand(0, 99),
+        //         'price' => rand(10, 50),
+        //         'cost_price' => rand(10, 50),
+        //         'offer_price' => rand(300, 499),
+        //         //'offer_ends' => date("Y-m-d H:i:s"),
+        //         'offer_ends' => date("Y-m-d H:i:s"),
+        //         'delivery_cost' => rand(10, 100),
+        //         'editing' => false,
+        //         'picture_link' => $product['picture_1'],
+        //         'store_id' => $product['store_id'],
+        //         'created_by' => 0,
+        //         'created_at' => date("Y-m-d H:i:s")
+        //     ]);
+        // }
+
+
+        $faker = Faker::create('App\Product');
+
+        for ($i = 0; $i < 10; $i++) {
             DB::table('products')->insert([
                 'bar_code' => rand(1000000000, 9000000000),
-                'name' => $product['name'],
+                'name' => $faker->text($maxNbChars = 100),
                 'description' => 'This is a pretty good description... ' . Str::random(40),
                 'brand' => 'The brand ' . Str::random(10),
                 'qty' => rand(0, 99),
@@ -108,10 +133,10 @@ class ProductTableSeeder extends Seeder
                 'offer_ends' => date("Y-m-d H:i:s"),
                 'delivery_cost' => rand(10, 100),
                 'editing' => false,
-                'picture_link' => $product['picture_1'],
-                'store_id' => $product['store_id'],
+                'store_id' => 1,
                 'created_by' => 0,
-                'created_at' => date("Y-m-d H:i:s")
+                'created_at' => date("Y-m-d H:i:s"),
+                'picture_link' => $faker->imageUrl(800, 600, 'cats')
             ]);
         }
     }
