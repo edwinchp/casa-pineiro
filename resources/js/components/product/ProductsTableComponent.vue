@@ -4,12 +4,12 @@
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Existentes</th>
+          <th>Precio de venta</th>
+          <th>Imagen</th>
           <th v-show="this.editingProduct">Nuevos</th>
           <!-- <th>Precio de compra</th> -->
-          <th>Precio de venta</th>
           <th>Ubicación</th>
-          <th>Imagen</th>
+          <th>Existentes</th>
           <th>Opciones</th>
         </tr>
       </thead>
@@ -25,31 +25,9 @@
               <div class="col-xl-11">
                 <!-- <a :href="'products/' + product.id + '/edit'">
                 </a> -->
-                <a
-                  data-toggle="modal"
-                  data-target="#product-details"
-                  style="cursor: pointer"
-                  @click="selectedProduct = product"
-                >
+                <a style="cursor: pointer" @click="showPicture(product)">
                   {{ shortName(product.name, 35) }}
                 </a>
-              </div>
-            </div>
-          </td>
-
-          <td class="table-existing-product">
-            <div class="row">
-              <div class="col-xl-11 existing-product">
-                <!--QTY READ MODE-->
-                <div v-if="product.unit" class="product-current-qty">
-                  {{ product.qty + " " }}
-                  <span style="font-size: 10px"
-                    ><strong>{{ product.unit }}</strong></span
-                  >
-                </div>
-                <div v-else class="product-current-qty">
-                  {{ product.qty }}
-                </div>
               </div>
             </div>
           </td>
@@ -84,6 +62,12 @@
             </div>
           </td>
 
+          <td>
+            <a @click="showPicture(product)"
+              ><img :src="product.primary_picture" alt="" class="rounded" />
+            </a>
+          </td>
+
           <td class="table-name">
             <div class="row">
               <div class="col-xl-11">
@@ -100,14 +84,21 @@
             </div>
           </td>
 
-          <td>
-            <a @click="showPicture(product.primary_picture, product.name)"
-              ><img
-                :src="product.primary_picture"
-                alt=""
-                class="img-70 rounded"
-              />
-            </a>
+          <td class="table-existing-product">
+            <div class="row">
+              <div class="col-xl-11 existing-product">
+                <!--QTY READ MODE-->
+                <div v-if="product.unit" class="product-current-qty">
+                  {{ product.qty + " " }}
+                  <span style="font-size: 10px"
+                    ><strong>{{ product.unit }}</strong></span
+                  >
+                </div>
+                <div v-else class="product-current-qty">
+                  {{ product.qty }}
+                </div>
+              </div>
+            </div>
           </td>
           <td>
             <!--READ MODE-->
@@ -283,14 +274,20 @@ export default {
       });
     },
 
-    showPicture(url, name) {
+    showPicture(product) {
+      this.selectedProduct = product;
       this.$fire({
-        title: name,
-        html: '<a href="' + url + '" target="blank">Ver en tamaño completo</a>',
-        imageUrl: url,
-        imageWidth: 700,
-        imageHeight: 300,
+        title: product.name,
+        footer:
+          '<a href="products/' + product.id + '/edit">Editar producto</a>',
+        imageUrl: product.primary_picture,
+        imageWidth: 250,
+        html:
+          '<ul class="list-group"><li class="list-group-item d-flex justify-content-between align-items-center">Precio<span><strong>$' +
+          product.price +
+          "</strong></span></li></ul>",
         imageAlt: "Custom image",
+        imageClass: "img-responsive",
       });
     },
   },
@@ -315,7 +312,7 @@ export default {
 }
 
 table img {
-  cursor: pointer; 
-  max-height: 45px
+  cursor: pointer;
+  max-height: 45px;
 }
 </style>
