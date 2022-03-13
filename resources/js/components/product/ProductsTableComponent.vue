@@ -3,8 +3,8 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>Nombre</th>
-          <th>Precio de venta</th>
+          <th style="width: 0px;">Nombre</th>
+          <th>Precio</th>
           <th>Imagen</th>
           <th v-show="this.editingProduct">Nuevos</th>
           <!-- <th>Precio de compra</th> -->
@@ -22,7 +22,7 @@
         <tr v-for="(product, index) in products" :key="index">
           <td class="table-name">
             <div class="row">
-              <div class="col-xl-11">
+              <div class="">
                 <!-- <a :href="'products/' + product.id + '/edit'">
                 </a> -->
                 <a style="cursor: pointer" @click="showPicture(product)">
@@ -54,7 +54,7 @@
             </div>
           </td> -->
 
-          <td class="table-sell-product">
+          <td class="table-price">
             <div class="row">
               <div class="col-xl-11">
                 <strong>${{ product.price }}</strong>

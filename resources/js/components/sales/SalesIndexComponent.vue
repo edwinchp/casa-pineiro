@@ -38,7 +38,7 @@
                           </button>
                         </div>
                       </div>
-                      <div class="card-block text-center">
+                      <div class="card-block text-center sales-info">
                         <div class="row">
                           <div class="col-4 b-r-default">
                             <h2>{{ getSalesData.sales_total }}</h2>
@@ -447,6 +447,16 @@ export default {
   color: white;
   text-decoration: none;
   cursor: pointer;
+}
+
+@media (max-width: 400px) {
+  .sales-info h2 {
+    font-size: 14px;
+  }
+
+  .sales-info p {
+    font-size: 12px;
+  }
 }
 </style>
 

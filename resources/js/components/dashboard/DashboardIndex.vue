@@ -258,8 +258,10 @@ section {
   }
 
   .home {
-    margin: 40px;
-    margin-top: 8rem;
+    margin: 30px;
+    margin-top: 5rem;
+    width: 320px;
+
   }
 }
 </style>
